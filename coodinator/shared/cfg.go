@@ -5,6 +5,10 @@ import "encoding/json"
 type Config struct {
 	Addr  string `json:"addr"`
 	Debug bool   `json:"debug"`
+
+	Storage string `json:"storage"`
+
+	DockerHost string `json:"docker_host"`
 }
 
 var cfg *Config
