@@ -9,6 +9,8 @@ type Config struct {
 	Storage string `json:"storage"`
 
 	DockerHost string `json:"docker_host"`
+
+	MySQL string `json:"mysql"`
 }
 
 var cfg *Config
