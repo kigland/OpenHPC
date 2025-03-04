@@ -4,10 +4,10 @@ init:
 	git submodule update --init --recursive
 
 docker:
-	docker build -t "gin-template" .
+	docker build -t "HPC-Scheduler" .
 
 docker-run:
-	docker run -d --restart always -p 127.0.0.1:8080:8080 "gin-template"
+	docker run -d --restart always -p 127.0.0.1:8080:8080 "HPC-Scheduler"
 
 build:
 	bash build.sh
@@ -17,5 +17,8 @@ build-debug:
 
 run:
 	./build/serv
+
+clean:
+	rm -rf out
 
 .PHONY: init docker docker-run build build-debug run

@@ -1,9 +1,9 @@
 package controller
 
 import (
-	"github.com/KevinZonda/GinTemplate/controller/ping"
-	"github.com/KevinZonda/GinTemplate/controller/types"
 	"github.com/gin-gonic/gin"
+	"github.com/kigland/HPC-Scheduler/coodinator/controller/ping"
+	"github.com/kigland/HPC-Scheduler/coodinator/controller/types"
 )
 
 func Init(r gin.IRouter) {

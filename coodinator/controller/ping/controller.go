@@ -1,8 +1,8 @@
 package ping
 
 import (
-	"github.com/KevinZonda/GinTemplate/controller/types"
 	"github.com/gin-gonic/gin"
+	"github.com/kigland/HPC-Scheduler/coodinator/controller/types"
 )
 
 type Controller struct{}
