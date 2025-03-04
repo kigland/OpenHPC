@@ -3,6 +3,7 @@ package container
 import (
 	"fmt"
 	"path/filepath"
+	"time"
 
 	"github.com/docker/docker/api/types/container"
 	"github.com/kigland/HPC-Scheduler/coodinator/models/dbmod"
@@ -12,10 +13,11 @@ import (
 
 type UserSpecificConf struct {
 	dbmod.User
-	RequestedMem int // in MB
-	RequestedCPU int // in Core
-	RequestedGPU int // in Cards
-	ImageName    string
+	RequestedMem  int // in MB
+	RequestedCPU  int // in Core
+	RequestedGPU  int // in Cards
+	RequestedTime time.Duration
+	ImageName     string
 }
 
 func UserToSpecificConf(user dbmod.User) UserSpecificConf {
