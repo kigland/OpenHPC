@@ -1,0 +1,27 @@
+.vscode
+.idea
+
+# go
+*_priv.go
+*.go~
+
+.env
+*.exe
+*.out
+*.exe~
+*.dll
+*.so
+*.dylib
+*.a
+*.lib
+*.obj
+*.pdb
+*.exp
+*.lib
+
+# build
+build/
+out/
+
+# macOS
+.DS_Store
