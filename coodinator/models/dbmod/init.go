@@ -5,5 +5,5 @@ import (
 )
 
 func AutoMigrate(db *gorm.DB) {
-	db.AutoMigrate(&User{}, &GC{})
+	db.AutoMigrate(&User{}, &GC{}, &Token{})
 }
