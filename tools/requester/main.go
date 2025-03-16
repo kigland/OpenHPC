@@ -18,11 +18,24 @@ import (
 	"github.com/kigland/HPC-Scheduler/lib/dockerHelper/image"
 )
 
-func main() {
-	rl, err := readline.New("> ")
-	panicx.NotNilErr(err)
-	defer rl.Close()
+func getRDS(username string, imageName image.AllowedImages) (rdsDir string, rdsMountAt string) {
+	rdsDir = filepath.Join("/data/rds", strings.ToLower(username))
+	rdsMountAt = imageName.HomeDir()
+	if rdsMountAt != "" {
+		rdsMountAt = filepath.Join(rdsMountAt, "rds")
+	} else {
+		rdsMountAt = "/rds"
+	}
+	if _, err := os.Stat(rdsDir); err != nil {
+		fmt.Println("RDS directory not found, skipping...")
+		rdsDir = ""
+	}
+	return rdsDir, rdsMountAt
+}
 
+var rl *readline.Instance
+
+func InputPort() int {
 	fmt.Println("Port of the container (40000-41000):")
 	portStr, err := rl.Readline()
 	panicx.NotNilErr(err)
@@ -31,23 +44,35 @@ func main() {
 	panicx.NotNilErr(err)
 	if port < 40000 || port > 41000 {
 		log.Fatalf("Invalid port: %d", port)
-		return
+		return 0
 	}
+	return port
+}
 
+func InputUsername() string {
 	fmt.Println("Username:")
 	username, err := rl.Readline()
 	panicx.NotNilErr(err)
 	username = strings.TrimSpace(username)
 	if username == "" {
 		log.Fatalf("Username cannot be empty")
-		return
+		return ""
 	}
+	return username
+}
+
+func main() {
+	var err error
+	rl, err = readline.New("> ")
+	panicx.NotNilErr(err)
+	defer rl.Close()
+
+	port := InputPort()
+
+	username := InputUsername()
 
 	cli, err := client.NewClientWithOpts(client.WithHost(consts.DOCKER_UNIX_SOCKET), client.WithAPIVersionNegotiation())
-	if err != nil {
-		log.Fatalf("Failed to create docker client: %v", err)
-		return
-	}
+	panicx.NotNilErr(err)
 
 	passwd := kon.RndId(32) // 256bit = 32bytes
 
@@ -63,15 +88,8 @@ func main() {
 	dk := dockerHelper.NewDockerHelper(cli)
 	img.ContainerName = kon.NewContainerName(username)
 
-	rdsDir := filepath.Join("/data/rds", strings.ToLower(username))
-	if _, err := os.Stat(rdsDir); err == nil {
-		img = img.WithRDS(rdsDir, "/home/jovyan/rds")
-	} else {
-		fmt.Println(rdsDir)
-		fmt.Println("RDS directory not found, skipping...", err)
-	}
-
-	fmt.Println(img)
+	rdsDir, rdsMountAt := getRDS(username, imageName)
+	img = img.WithRDS(rdsDir, rdsMountAt)
 
 	id, err := dk.StartContainer(img)
 	if err != nil {
@@ -91,5 +109,7 @@ func main() {
 	fmt.Println("--------------------------------")
 	fmt.Println("URL  : http://127.0.0.2:" + strconv.Itoa(port))
 	fmt.Println("Token: " + passwd)
+	fmt.Println("CID  : " + id)
+	fmt.Println("RDS  : " + rdsMountAt)
 	fmt.Println("--------------------------------")
 }
