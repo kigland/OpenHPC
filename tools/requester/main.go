@@ -30,6 +30,21 @@ func getRDS(username string, imageName image.AllowedImages) (rdsDir string, rdsM
 		fmt.Println("RDS directory not found, skipping...")
 		rdsDir = ""
 	}
+	fmt.Println("RDS Subfolder?")
+	subfolder, err := rl.Readline()
+	panicx.NotNilErr(err)
+	subfolder = strings.TrimSpace(subfolder)
+	if strings.Contains(subfolder, "..") {
+		log.Fatalf("Subfolder cannot contain '..'")
+		return "", ""
+	}
+	if subfolder != "" {
+		rdsDir = filepath.Join(rdsDir, subfolder)
+	}
+	if _, err := os.Stat(rdsDir); err != nil {
+		fmt.Println("RDS directory not found, skipping...")
+		rdsDir = ""
+	}
 	return rdsDir, rdsMountAt
 }
 
