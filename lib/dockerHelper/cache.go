@@ -16,3 +16,15 @@ func (ops StartContainerOptions) WithPipCache(homeDir string) StartContainerOpti
 	ops.Binds = append(ops.Binds, PIP_CACHE_VOLUME+":"+pipCacheDir)
 	return ops
 }
+
+func (ops StartContainerOptions) WithRDS(rdsDir, mountAt string) StartContainerOptions {
+	if rdsDir == "" || mountAt == "" {
+		return ops
+	}
+	if ops.Volumes == nil {
+		ops.Volumes = map[string]struct{}{}
+	}
+	ops.Volumes[mountAt] = struct{}{}
+	ops.Binds = append(ops.Binds, rdsDir+":"+mountAt+":rw")
+	return ops
+}

@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"log"
+	"os"
 	"strconv"
 	"strings"
 	"time"
@@ -60,6 +61,12 @@ func main() {
 
 	dk := dockerHelper.NewDockerHelper(cli)
 	img.ContainerName = kon.NewContainerName(username)
+
+	rdsDir := "/data/rds" + strings.ToLower(username)
+	if _, err := os.Stat(rdsDir); err == nil {
+		img = img.WithRDS(rdsDir, "/home/jovyan/rds")
+	}
+
 	id, err := dk.StartContainer(img)
 	if err != nil {
 		log.Fatalf("Failed to start container: %v", err)
