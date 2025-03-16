@@ -22,11 +22,7 @@ const (
 
 func (a AllowedImages) HomeDir() string {
 	switch a {
-	case ImageJupyterHub:
-		return "/home/jupyter"
-	case ImageTorchBook:
-		return "/home/torch"
-	case ImageMLBook:
+	case ImageMLBook, ImageJupyterHub, ImageTorchBook:
 		return "/home/jovyan"
 	}
 	return ""
