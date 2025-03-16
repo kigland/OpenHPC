@@ -23,7 +23,12 @@ tester:
 	go build -v -o out/tester/docker tester/docker/main.go
 	go build -v -o out/tester/docker-jupyter tester/docker-jupyter/main.go
 
+tools:
+	go build -v -o out/tools/requester tools/requester/main.go
+
+tool: tools
+
 clean:
 	rm -rf out
 
-.PHONY: init docker docker-run build build-debug run tester clean
+.PHONY: init docker docker-run build build-debug run tester clean tools tool
