@@ -19,7 +19,7 @@ func main() {
 		return
 	}
 
-	passwd := kon.RndId(16)
+	passwd := kon.RndId(32) // 256bit = 32bytes
 
 	img := image.Factory{
 		Password: passwd,
