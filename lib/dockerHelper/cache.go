@@ -24,7 +24,7 @@ func (ops StartContainerOptions) WithRDS(rdsDir, mountAt string) StartContainerO
 	if ops.Volumes == nil {
 		ops.Volumes = map[string]struct{}{}
 	}
-	ops.Volumes[mountAt] = struct{}{}
+	ops.Volumes[rdsDir] = struct{}{}
 	ops.Binds = append(ops.Binds, rdsDir+":"+mountAt+":rw")
 	return ops
 }
