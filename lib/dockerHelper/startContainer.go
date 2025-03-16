@@ -25,6 +25,7 @@ type StartContainerOptions struct {
 	AttachStderr    bool
 	AttachStdin     bool
 	Binds           []string
+	AutoRemove      bool
 
 	Resources container.Resources
 }
@@ -47,8 +48,9 @@ func (sco StartContainerOptions) ToContainerConfig() *container.Config {
 
 func (sco StartContainerOptions) ToHostConfig() *container.HostConfig {
 	return &container.HostConfig{
-		Resources: sco.Resources,
-		Binds:     sco.Binds,
+		Resources:  sco.Resources,
+		Binds:      sco.Binds,
+		AutoRemove: sco.AutoRemove,
 	}
 }
 
