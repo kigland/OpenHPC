@@ -18,8 +18,10 @@ build-debug:
 run:
 	./build/serv
 
-build-tester:
-	go build -v -o out/tester-docker tester/docker/main.go
+tester:
+	mkdir -p out/tester
+	go build -v -o out/tester/docker tester/docker/main.go
+	go build -v -o out/tester/docker-jupyter tester/docker-jupyter/main.go
 
 clean:
 	rm -rf out

@@ -25,6 +25,7 @@ type StartContainerOptions struct {
 	AttachStderr    bool
 	AttachStdin     bool
 	Binds           []string
+	PortBindings    nat.PortMap
 	AutoRemove      bool
 
 	Resources container.Resources
@@ -48,9 +49,10 @@ func (sco StartContainerOptions) ToContainerConfig() *container.Config {
 
 func (sco StartContainerOptions) ToHostConfig() *container.HostConfig {
 	return &container.HostConfig{
-		Resources:  sco.Resources,
-		Binds:      sco.Binds,
-		AutoRemove: sco.AutoRemove,
+		Resources:    sco.Resources,
+		PortBindings: sco.PortBindings,
+		Binds:        sco.Binds,
+		AutoRemove:   sco.AutoRemove,
 	}
 }
 

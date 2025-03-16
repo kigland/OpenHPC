@@ -1,7 +1,9 @@
 package main
 
 import (
+	"fmt"
 	"log"
+	"time"
 
 	"github.com/docker/docker/api/types/container"
 	"github.com/docker/docker/client"
@@ -15,19 +17,24 @@ func main() {
 		log.Fatalf("Failed to create docker client: %v", err)
 		return
 	}
+	img := consts.JupyterHubStartOps("test", "127.0.0.1", "8000")
+	img.Resources = container.Resources{
+		DeviceRequests: dockerHelper.GetGPUDeviceRequests(1),
+	}
 	dk := dockerHelper.NewDockerHelper(cli)
-	id, err := dk.StartContainer(dockerHelper.StartContainerOptions{
-		ImageName: "ubuntu",
-		Resources: container.Resources{
-			DeviceRequests: dockerHelper.GetGPUDeviceRequests(1),
-		},
-		AttachStdout: true,
-		AttachStderr: true,
-		Cmd:          []string{"nvidia-smi"},
-	})
+	id, err := dk.StartContainer(img)
 	if err != nil {
 		log.Fatalf("Failed to start container: %v", err)
 		return
 	}
 	log.Printf("Container started: %s", id)
+
+	time.Sleep(4 * time.Second)
+
+	logs, err := dk.GetLogs(id, true)
+	if err != nil {
+		log.Fatalf("Failed to get logs: %v", err)
+		return
+	}
+	fmt.Println(logs)
 }
