@@ -1,5 +1,6 @@
 # Test Tracker
 
-| Date | Component | Operator | Environment | Description |
-|------|-----------|----------|-------------|-------------|
-| 16/03/2025 2:54 GMT | Docker Helper (Lib) | Kevin | Lab1 + Docker Socket | Assign GPU to container success |
+| Date | Component | Operator | Environment | Description | Status |
+|------|-----------|----------|-------------|-------------|:------:|
+| 16/03/2025 2:54 GMT | Docker Helper (Lib) | Kevin | Lab1 + Docker Socket | Assign GPU to container | ✅ |
+| 16/03/2025 12:37 GMT | Docker Helper (Lib) | Kevin | Lab1 + Docker Socket | Container with Port Binding & Naming | ✅ |
