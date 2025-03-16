@@ -20,9 +20,9 @@ func main() {
 	}
 
 	img := image.Factory{
-		Password: "test",
-		BindHost: "127.0.0.1",
-		BindPort: "8000",
+		Password: "6e644622daba40ba9d0a5999d6dd5734",
+		BindHost: "127.0.0.2",
+		BindPort: "41000",
 	}.Image(image.ImageJupyterHub).WithGPU(1)
 
 	dk := dockerHelper.NewDockerHelper(cli)
