@@ -26,4 +26,4 @@ tester:
 clean:
 	rm -rf out
 
-.PHONY: init docker docker-run build build-debug run
+.PHONY: init docker docker-run build build-debug run tester clean
