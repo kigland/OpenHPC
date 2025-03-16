@@ -25,7 +25,7 @@ func main() {
 		Password: passwd,
 		BindHost: "127.0.0.2",
 		BindPort: "41000",
-	}.Image(image.ImageMLBook).WithGPU(1)
+	}.Image(image.ImageTorchBook).WithGPU(1)
 	img.AutoRemove = true
 
 	dk := dockerHelper.NewDockerHelper(cli)
