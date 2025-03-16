@@ -7,6 +7,7 @@ import (
 
 	"github.com/docker/docker/api/types/container"
 	"github.com/docker/docker/api/types/image"
+	"github.com/docker/docker/api/types/strslice"
 	"github.com/docker/go-connections/nat"
 )
 
@@ -18,13 +19,17 @@ type StartContainerOptions struct {
 	NetworkDisabled bool `json:",omitempty"`
 	ExposedPorts    nat.PortSet
 	ContainerName   string
-
-	Binds []string
+	Tty             bool
+	Cmd             []string
+	AttachStdout    bool
+	AttachStderr    bool
+	AttachStdin     bool
+	Binds           []string
 
 	Resources container.Resources
 }
 
-func (sco StartContainerOptions) toContainerConfig() *container.Config {
+func (sco StartContainerOptions) ToContainerConfig() *container.Config {
 	return &container.Config{
 		Image:           sco.ImageName,
 		Env:             sco.Env,
@@ -32,10 +37,15 @@ func (sco StartContainerOptions) toContainerConfig() *container.Config {
 		Volumes:         sco.Volumes,
 		ExposedPorts:    sco.ExposedPorts,
 		NetworkDisabled: sco.NetworkDisabled,
+		Tty:             sco.Tty,
+		Cmd:             strslice.StrSlice(sco.Cmd),
+		AttachStdout:    sco.AttachStdout,
+		AttachStderr:    sco.AttachStderr,
+		AttachStdin:     sco.AttachStdin,
 	}
 }
 
-func (sco StartContainerOptions) toHostConfig() *container.HostConfig {
+func (sco StartContainerOptions) ToHostConfig() *container.HostConfig {
 	return &container.HostConfig{
 		Resources: sco.Resources,
 		Binds:     sco.Binds,
@@ -51,7 +61,7 @@ func (d *DockerHelper) StartContainer(opts StartContainerOptions) (containerID s
 	defer out.Close()
 	io.Copy(os.Stdout, out)
 
-	resp, err := cli.ContainerCreate(context.Background(), opts.toContainerConfig(), opts.toHostConfig(), nil, nil, opts.ContainerName)
+	resp, err := cli.ContainerCreate(context.Background(), opts.ToContainerConfig(), opts.ToHostConfig(), nil, nil, opts.ContainerName)
 	if err != nil {
 		return "", err
 	}

@@ -18,6 +18,9 @@ build-debug:
 run:
 	./build/serv
 
+build-tester:
+	go build -v -o out/tester-docker tester/docker/main.go
+
 clean:
 	rm -rf out
 
