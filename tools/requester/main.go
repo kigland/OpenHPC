@@ -75,5 +75,8 @@ func main() {
 		return
 	}
 	fmt.Println(logs)
+	fmt.Println("--------------------------------")
+	fmt.Println("URL  : http://127.0.0.2:" + strconv.Itoa(port))
 	fmt.Println("Token: " + passwd)
+	fmt.Println("--------------------------------")
 }
