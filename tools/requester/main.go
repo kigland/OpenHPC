@@ -49,11 +49,13 @@ func main() {
 
 	passwd := kon.RndId(32) // 256bit = 32bytes
 
+	imageName := image.ImageJupyterHub
+
 	img := image.Factory{
 		Password: passwd,
 		BindHost: "127.0.0.2",
 		BindPort: strconv.Itoa(port),
-	}.Image(image.ImageJupyterHub).WithGPU(1)
+	}.Image(imageName).WithGPU(1).WithPipCache(imageName.HomeDir())
 	img.AutoRemove = true
 
 	dk := dockerHelper.NewDockerHelper(cli)

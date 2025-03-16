@@ -20,6 +20,18 @@ const (
 	ImageMLBook     AllowedImages = "kevinzonda/mlbook"
 )
 
+func (a AllowedImages) HomeDir() string {
+	switch a {
+	case ImageJupyterHub:
+		return "/home/jupyter"
+	case ImageTorchBook:
+		return "/home/torch"
+	case ImageMLBook:
+		return "/home/jovyan"
+	}
+	return ""
+}
+
 func (f Factory) Image(img AllowedImages) dockerHelper.StartContainerOptions {
 	switch img {
 	case ImageJupyterHub, ImageTorchBook, ImageMLBook:
