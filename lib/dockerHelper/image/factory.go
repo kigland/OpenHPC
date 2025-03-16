@@ -15,7 +15,7 @@ type Factory struct {
 type AllowedImages string
 
 const (
-	ImageJupyterHub AllowedImages = "jupyterhub/singleuser"
+	ImageJupyterHub AllowedImages = "kevinzonda/notebook"
 )
 
 func (f Factory) Image(img AllowedImages) dockerHelper.StartContainerOptions {
