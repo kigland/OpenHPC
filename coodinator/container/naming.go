@@ -9,7 +9,7 @@ const PREFIX = "KHS"
 
 const DEFAULT_ID_LENGTH = 8
 
-func rndId(length int) string {
+func RndId(length int) string {
 	if length <= 0 {
 		length = DEFAULT_ID_LENGTH
 	}
@@ -31,5 +31,5 @@ func rndId(length int) string {
 }
 
 func NewContainerName(userID string) string {
-	return PREFIX + "-" + userID + "-" + rndId(DEFAULT_ID_LENGTH)
+	return PREFIX + "-" + userID + "-" + RndId(DEFAULT_ID_LENGTH)
 }

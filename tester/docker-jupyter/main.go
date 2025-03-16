@@ -19,11 +19,14 @@ func main() {
 		return
 	}
 
+	passwd := kon.RndId(16)
+
 	img := image.Factory{
-		Password: "6e644622daba40ba9d0a5999d6dd5734",
+		Password: passwd,
 		BindHost: "127.0.0.2",
 		BindPort: "41000",
 	}.Image(image.ImageJupyterHub).WithGPU(1)
+	img.AutoRemove = true
 
 	dk := dockerHelper.NewDockerHelper(cli)
 	img.ContainerName = kon.NewContainerName("KevinZonda")
@@ -42,4 +45,5 @@ func main() {
 		return
 	}
 	fmt.Println(logs)
+	fmt.Println(passwd)
 }
