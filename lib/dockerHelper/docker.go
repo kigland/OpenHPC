@@ -13,3 +13,7 @@ func NewDockerHelper(cli *client.Client) *DockerHelper {
 		cli: cli,
 	}
 }
+
+func (d *DockerHelper) Cli() *client.Client {
+	return d.cli
+}
