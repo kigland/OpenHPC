@@ -16,20 +16,22 @@ type AllowedImages string
 
 const (
 	ImageJupyterHub AllowedImages = "kevinzonda/notebook"
+	ImageTorchBook  AllowedImages = "kevinzonda/torchbook"
+	ImageMLBook     AllowedImages = "kevinzonda/mlbook"
 )
 
 func (f Factory) Image(img AllowedImages) dockerHelper.StartContainerOptions {
 	switch img {
-	case ImageJupyterHub:
-		return f.JupyterHub()
+	case ImageJupyterHub, ImageTorchBook, ImageMLBook:
+		return f.jupyterbook(img)
 	default:
 		return dockerHelper.StartContainerOptions{}
 	}
 }
 
-func (f Factory) JupyterHub() dockerHelper.StartContainerOptions {
+func (f Factory) jupyterbook(id AllowedImages) dockerHelper.StartContainerOptions {
 	return dockerHelper.StartContainerOptions{
-		ImageName: string(ImageJupyterHub),
+		ImageName: string(id),
 		Env: []string{
 			"JUPYTER_TOKEN=" + f.Password,
 		},
@@ -42,4 +44,16 @@ func (f Factory) JupyterHub() dockerHelper.StartContainerOptions {
 			},
 		},
 	}
+}
+
+func (f Factory) JupyterHub() dockerHelper.StartContainerOptions {
+	return f.jupyterbook(ImageJupyterHub)
+}
+
+func (f Factory) TorchBook() dockerHelper.StartContainerOptions {
+	return f.jupyterbook(ImageTorchBook)
+}
+
+func (f Factory) MLBook() dockerHelper.StartContainerOptions {
+	return f.jupyterbook(ImageMLBook)
 }
