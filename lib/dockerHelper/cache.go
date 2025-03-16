@@ -2,6 +2,8 @@ package dockerHelper
 
 import "path/filepath"
 
+const PIP_CACHE_VOLUME = "pip-cache"
+
 func (ops StartContainerOptions) WithPipCache(homeDir string) StartContainerOptions {
 	if homeDir == "" {
 		return ops
@@ -11,6 +13,6 @@ func (ops StartContainerOptions) WithPipCache(homeDir string) StartContainerOpti
 		ops.Volumes = map[string]struct{}{}
 	}
 	ops.Volumes[pipCacheDir] = struct{}{}
-	ops.Binds = append(ops.Binds, pipCacheDir+":"+pipCacheDir)
+	ops.Binds = append(ops.Binds, PIP_CACHE_VOLUME+":"+pipCacheDir)
 	return ops
 }
