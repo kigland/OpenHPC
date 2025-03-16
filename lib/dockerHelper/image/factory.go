@@ -31,7 +31,7 @@ func (f Factory) JupyterHub() dockerHelper.StartContainerOptions {
 	return dockerHelper.StartContainerOptions{
 		ImageName: string(ImageJupyterHub),
 		Env: []string{
-			"JUPYTER_TOKEN=" + f.Password,
+			"JUPYTER_PASSWORD=" + f.Password,
 		},
 		PortBindings: nat.PortMap{
 			"8888/tcp": []nat.PortBinding{
