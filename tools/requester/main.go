@@ -67,6 +67,8 @@ func main() {
 		img = img.WithRDS(rdsDir, "/home/jovyan/rds")
 	}
 
+	fmt.Println(img)
+
 	id, err := dk.StartContainer(img)
 	if err != nil {
 		log.Fatalf("Failed to start container: %v", err)
