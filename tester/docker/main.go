@@ -21,9 +21,9 @@ func main() {
 		Resources: container.Resources{
 			DeviceRequests: dockerHelper.GetGPUDeviceRequests(1),
 		},
-		AttachStdout: true,
-		AttachStderr: true,
-		Cmd:          []string{"nvidia-smi"},
+		// AttachStdout: true,
+		// AttachStderr: true,
+		Cmd: []string{"nvidia-smi"},
 	})
 	if err != nil {
 		log.Fatalf("Failed to start container: %v", err)

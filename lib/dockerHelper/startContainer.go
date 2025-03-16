@@ -19,14 +19,15 @@ type StartContainerOptions struct {
 	NetworkDisabled bool `json:",omitempty"`
 	ExposedPorts    nat.PortSet
 	ContainerName   string
-	Tty             bool
 	Cmd             []string
-	AttachStdout    bool
-	AttachStderr    bool
-	AttachStdin     bool
-	Binds           []string
-	PortBindings    nat.PortMap
-	AutoRemove      bool
+	// Tty             bool
+	// AttachStdout    bool
+	// AttachStderr    bool
+	// AttachStdin     bool
+	Binds        []string
+	PortBindings nat.PortMap
+	AutoRemove   bool
+	Labels       map[string]string
 
 	Resources container.Resources
 }
@@ -39,11 +40,13 @@ func (sco StartContainerOptions) ToContainerConfig() *container.Config {
 		Volumes:         sco.Volumes,
 		ExposedPorts:    sco.ExposedPorts,
 		NetworkDisabled: sco.NetworkDisabled,
-		Tty:             sco.Tty,
 		Cmd:             strslice.StrSlice(sco.Cmd),
-		AttachStdout:    sco.AttachStdout,
-		AttachStderr:    sco.AttachStderr,
-		AttachStdin:     sco.AttachStdin,
+
+		// Tty:             sco.Tty,
+		// AttachStdout:    sco.AttachStdout,
+		// AttachStderr:    sco.AttachStderr,
+		// AttachStdin:     sco.AttachStdin,
+		Labels: sco.Labels,
 	}
 }
 

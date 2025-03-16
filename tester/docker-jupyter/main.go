@@ -5,11 +5,11 @@ import (
 	"log"
 	"time"
 
-	"github.com/docker/docker/api/types/container"
 	"github.com/docker/docker/client"
 	kon "github.com/kigland/HPC-Scheduler/coodinator/container"
 	"github.com/kigland/HPC-Scheduler/lib/consts"
 	"github.com/kigland/HPC-Scheduler/lib/dockerHelper"
+	"github.com/kigland/HPC-Scheduler/lib/dockerHelper/image"
 )
 
 func main() {
@@ -18,10 +18,13 @@ func main() {
 		log.Fatalf("Failed to create docker client: %v", err)
 		return
 	}
-	img := consts.JupyterHubStartOps("test", "127.0.0.1", "8000")
-	img.Resources = container.Resources{
-		DeviceRequests: dockerHelper.GetGPUDeviceRequests(1),
-	}
+
+	img := image.Factory{
+		Password: "test",
+		BindHost: "127.0.0.1",
+		BindPort: "8000",
+	}.Image(image.ImageJupyterHub).WithGPU(1)
+
 	dk := dockerHelper.NewDockerHelper(cli)
 	img.ContainerName = kon.NewContainerName("KevinZonda")
 	id, err := dk.StartContainer(img)

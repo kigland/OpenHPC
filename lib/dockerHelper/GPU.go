@@ -15,3 +15,8 @@ func GetGPUDeviceRequests(gpuCount int) []container.DeviceRequest {
 		},
 	}
 }
+
+func (ops StartContainerOptions) WithGPU(gpuCount int) StartContainerOptions {
+	ops.Resources.DeviceRequests = GetGPUDeviceRequests(gpuCount)
+	return ops
+}
