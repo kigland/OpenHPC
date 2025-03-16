@@ -55,7 +55,7 @@ func main() {
 		Password: passwd,
 		BindHost: "127.0.0.2",
 		BindPort: strconv.Itoa(port),
-	}.Image(imageName).WithGPU(1).WithPipCache(imageName.HomeDir())
+	}.Image(imageName).WithGPU(1)
 	img.AutoRemove = true
 
 	dk := dockerHelper.NewDockerHelper(cli)
