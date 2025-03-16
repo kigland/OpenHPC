@@ -65,6 +65,9 @@ func main() {
 	rdsDir := "/data/rds" + strings.ToLower(username)
 	if _, err := os.Stat(rdsDir); err == nil {
 		img = img.WithRDS(rdsDir, "/home/jovyan/rds")
+	} else {
+		fmt.Println(rdsDir)
+		fmt.Println("RDS directory not found, skipping...", err)
 	}
 
 	fmt.Println(img)
