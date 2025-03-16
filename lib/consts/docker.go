@@ -16,7 +16,7 @@ func JupyterHubStartOps(password string, bindHost, bindPort string) dockerHelper
 			"JUPYTER_TOKEN=" + password,
 		},
 		PortBindings: nat.PortMap{
-			"8000/tcp": []nat.PortBinding{
+			"8888/tcp": []nat.PortBinding{
 				{
 					HostIP:   bindHost,
 					HostPort: bindPort,

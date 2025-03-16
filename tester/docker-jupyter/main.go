@@ -7,6 +7,7 @@ import (
 
 	"github.com/docker/docker/api/types/container"
 	"github.com/docker/docker/client"
+	kon "github.com/kigland/HPC-Scheduler/coodinator/container"
 	"github.com/kigland/HPC-Scheduler/lib/consts"
 	"github.com/kigland/HPC-Scheduler/lib/dockerHelper"
 )
@@ -22,6 +23,7 @@ func main() {
 		DeviceRequests: dockerHelper.GetGPUDeviceRequests(1),
 	}
 	dk := dockerHelper.NewDockerHelper(cli)
+	img.ContainerName = kon.NewContainerName("KevinZonda")
 	id, err := dk.StartContainer(img)
 	if err != nil {
 		log.Fatalf("Failed to start container: %v", err)
