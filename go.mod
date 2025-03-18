@@ -12,6 +12,7 @@ require (
 require (
 	filippo.io/edwards25519 v1.1.0 // indirect
 	github.com/containerd/log v0.1.0 // indirect
+	github.com/disiqueira/gotree v1.0.0 // indirect
 	github.com/go-sql-driver/mysql v1.9.0 // indirect
 	github.com/moby/term v0.5.2 // indirect
 	github.com/morikuni/aec v1.0.0 // indirect

@@ -18,5 +18,7 @@ func main() {
 		handler.Request()
 	case "list":
 		handler.List()
+	case "list-user":
+		handler.ListUser(os.Args[2])
 	}
 }
