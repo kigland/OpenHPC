@@ -1,6 +1,9 @@
 package main
 
 import (
+	"os"
+	"strings"
+
 	"github.com/kigland/HPC-Scheduler/tools/common"
 	"github.com/kigland/HPC-Scheduler/tools/handler"
 )
@@ -10,5 +13,10 @@ func main() {
 	defer common.Rl.Close()
 	common.InitDocker()
 
-	handler.Request()
+	switch strings.ToLower(os.Args[1]) {
+	case "req", "request":
+		handler.Request()
+	case "list":
+		handler.List()
+	}
 }
