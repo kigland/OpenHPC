@@ -22,7 +22,18 @@ func contrainerToStr(c container.Summary, svcTag string) string {
 	for _, p := range c.Ports {
 		ports = append(ports, fmt.Sprintf("%d->%s:%d", p.PrivatePort, p.IP, p.PublicPort))
 	}
-	return fmt.Sprintf("[%s] %s CID: %s %s", svcTag, c.Status, c.ID, strings.Join(ports, ", "))
+	mount := ""
+	for _, m := range c.Mounts {
+		mount += fmt.Sprintf(" %s:%s", m.Source, m.Destination)
+		if m.RW {
+			mount += " (RW)"
+		} else {
+			mount += " (RO)"
+		}
+	}
+	mount = strings.TrimSpace(mount)
+
+	return fmt.Sprintf("[%s] %s CID: %s %s %s", svcTag, c.Status, c.ID, strings.Join(ports, ", "), mount)
 }
 
 func SummaryToTree(uidToContainers map[string]map[string]container.Summary) gotree.Tree {
@@ -47,7 +58,9 @@ func ListUser(u string) {
 	if _, ok := uidToContainers[u]; !ok {
 		panic("user not found")
 	}
+	tree := gotree.New(u)
 	for svcTag, c := range uidToContainers[u] {
-		fmt.Println(contrainerToStr(c, svcTag))
+		tree.Add(contrainerToStr(c, svcTag))
 	}
+	fmt.Println(tree.Print())
 }

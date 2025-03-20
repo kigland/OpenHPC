@@ -1,7 +1,6 @@
 package common
 
 import (
-	"fmt"
 	"strings"
 
 	"github.com/docker/docker/api/types/container"
@@ -27,7 +26,6 @@ func AllKHSContainers() (map[string]container.Summary, error) {
 
 func UserContainerRelations() (map[string]map[string]container.Summary, error) {
 	cs, err := AllKHSContainers()
-	fmt.Println(cs, err)
 
 	if err != nil {
 		return nil, err
@@ -52,6 +50,7 @@ func UserContainers(userID string) (map[string]container.Summary, error) {
 	if err != nil {
 		return nil, err
 	}
+	userID = strings.ToLower(userID)
 	userCs := map[string]container.Summary{}
 	for n, c := range cs {
 		if strings.HasPrefix(n, "KHS-"+userID+"-") || strings.HasPrefix(n, "/KHS-"+userID+"-") {
