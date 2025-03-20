@@ -13,11 +13,11 @@ import (
 func List() {
 	uidToContainers, err := common.UserContainerRelations()
 	panicx.NotNilErr(err)
-	tree := SummaryToTree(uidToContainers)
+	tree := SummaryToTree(uidToContainers, false)
 	fmt.Println(tree.Print())
 }
 
-func contrainerToStr(c container.Summary, svcTag string) string {
+func contrainerToStr(c container.Summary, svcTag string, showCID bool) string {
 	var ports []string
 	for _, p := range c.Ports {
 		ports = append(ports, fmt.Sprintf(":%d->%s:%d", p.PrivatePort, p.IP, p.PublicPort))
@@ -32,16 +32,19 @@ func contrainerToStr(c container.Summary, svcTag string) string {
 		}
 	}
 	mount = strings.TrimSpace(mount)
-
+	if showCID {
+		return fmt.Sprintf("[%s] %s %s %s CID: %s", svcTag, c.Status, strings.Join(ports, ", "), mount, c.ID)
+	}
 	return fmt.Sprintf("[%s] %s %s %s", svcTag, c.Status, strings.Join(ports, ", "), mount)
+
 }
 
-func SummaryToTree(uidToContainers map[string]map[string]container.Summary) gotree.Tree {
+func SummaryToTree(uidToContainers map[string]map[string]container.Summary, showCID bool) gotree.Tree {
 	tree := gotree.New("Users")
 	for uid, containers := range uidToContainers {
 		user := tree.Add(uid)
 		for svcTag, c := range containers {
-			user.Add(contrainerToStr(c, svcTag))
+			user.Add(contrainerToStr(c, svcTag, showCID))
 		}
 	}
 
@@ -60,7 +63,7 @@ func ListUser(u string) {
 	}
 	tree := gotree.New(u)
 	for svcTag, c := range uidToContainers[u] {
-		tree.Add(contrainerToStr(c, svcTag))
+		tree.Add(contrainerToStr(c, svcTag, false))
 	}
 	fmt.Println(tree.Print())
 }
