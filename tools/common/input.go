@@ -13,7 +13,7 @@ func InputPort(left int, right int) int {
 	if left > right {
 		left, right = right, left
 	}
-	fmt.Printf("Port of the container (%d-%d):", left, right)
+	fmt.Printf("Port of the container (%d-%d):\n", left, right)
 	portStr, err := Rl.Readline()
 	panicx.NotNilErr(err)
 

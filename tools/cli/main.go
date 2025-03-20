@@ -14,9 +14,9 @@ func main() {
 	common.InitDocker()
 
 	switch strings.ToLower(os.Args[1]) {
-	case "req", "request":
+	case "req", "request", "create", "c":
 		handler.Request()
-	case "list":
+	case "list", "ls":
 		handler.List()
 	case "list-user":
 		handler.ListUser(os.Args[2])
