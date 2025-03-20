@@ -1,6 +1,7 @@
 package common
 
 import (
+	"fmt"
 	"strings"
 
 	"github.com/docker/docker/api/types/container"
@@ -8,7 +9,7 @@ import (
 
 func AllKHSContainers() (map[string]container.Summary, error) {
 	docker := DockerHelper
-	containers, err := docker.ListAllContainers(true)
+	containers, err := docker.ListAllContainers(false)
 	if err != nil {
 		return nil, err
 	}
@@ -26,6 +27,7 @@ func AllKHSContainers() (map[string]container.Summary, error) {
 
 func UserContainerRelations() (map[string]map[string]container.Summary, error) {
 	cs, err := AllKHSContainers()
+	fmt.Println(cs, err)
 
 	if err != nil {
 		return nil, err

@@ -5,6 +5,7 @@ go 1.23.1
 require (
 	github.com/KevinZonda/GoX v0.0.18
 	github.com/chzyer/readline v1.5.1
+	github.com/disiqueira/gotree v1.0.0
 	github.com/gin-contrib/cors v1.7.3
 	github.com/gin-gonic/gin v1.10.0
 )
@@ -12,7 +13,6 @@ require (
 require (
 	filippo.io/edwards25519 v1.1.0 // indirect
 	github.com/containerd/log v0.1.0 // indirect
-	github.com/disiqueira/gotree v1.0.0 // indirect
 	github.com/go-sql-driver/mysql v1.9.0 // indirect
 	github.com/moby/term v0.5.2 // indirect
 	github.com/morikuni/aec v1.0.0 // indirect
