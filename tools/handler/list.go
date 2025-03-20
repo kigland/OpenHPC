@@ -33,7 +33,7 @@ func contrainerToStr(c container.Summary, svcTag string) string {
 	}
 	mount = strings.TrimSpace(mount)
 
-	return fmt.Sprintf("[%s] %s CID: %s %s %s", svcTag, c.Status, c.ID, strings.Join(ports, ", "), mount)
+	return fmt.Sprintf("[%s] %s CID: %s\n%s %s", svcTag, c.Status, c.ID, strings.Join(ports, ", "), mount)
 }
 
 func SummaryToTree(uidToContainers map[string]map[string]container.Summary) gotree.Tree {
