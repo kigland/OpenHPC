@@ -13,6 +13,7 @@ func AllKHSContainers() (map[string]container.Summary, error) {
 	if err != nil {
 		return nil, err
 	}
+	fmt.Println(containers)
 	cs := map[string]container.Summary{}
 	for _, c := range containers {
 		for _, n := range c.Names {
