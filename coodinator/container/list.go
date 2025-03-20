@@ -16,7 +16,7 @@ func AllKHSContainers() (map[string]container.Summary, error) {
 	cs := map[string]container.Summary{}
 	for _, c := range containers {
 		for _, n := range c.Names {
-			if strings.HasPrefix(n, PREFIX+"-") {
+			if strings.HasPrefix(n, PREFIX+"-") || strings.HasPrefix(n, "/"+PREFIX+"-") {
 				cs[n] = c
 				break
 			}
@@ -53,7 +53,7 @@ func UserContainers(userID string) (map[string]container.Summary, error) {
 	}
 	userCs := map[string]container.Summary{}
 	for n, c := range cs {
-		if strings.HasPrefix(n, PREFIX+"-"+userID+"-") {
+		if strings.HasPrefix(n, PREFIX+"-"+userID+"-") || strings.HasPrefix(n, "/"+PREFIX+"-"+userID+"-") {
 			userCs[n] = c
 		}
 	}
