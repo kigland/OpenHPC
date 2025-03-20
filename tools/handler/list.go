@@ -20,20 +20,20 @@ func List() {
 func contrainerToStr(c container.Summary, svcTag string) string {
 	var ports []string
 	for _, p := range c.Ports {
-		ports = append(ports, fmt.Sprintf("%d->%s:%d", p.PrivatePort, p.IP, p.PublicPort))
+		ports = append(ports, fmt.Sprintf(":%d->%s:%d", p.PrivatePort, p.IP, p.PublicPort))
 	}
 	mount := ""
 	for _, m := range c.Mounts {
 		mount += fmt.Sprintf(" %s:%s", m.Source, m.Destination)
 		if m.RW {
-			mount += " (RW)"
+			mount += "(RW)"
 		} else {
-			mount += " (RO)"
+			mount += "(RO)"
 		}
 	}
 	mount = strings.TrimSpace(mount)
 
-	return fmt.Sprintf("[%s] %s CID: %s\n%s %s", svcTag, c.Status, c.ID, strings.Join(ports, ", "), mount)
+	return fmt.Sprintf("[%s] %s %s %s", svcTag, c.Status, strings.Join(ports, ", "), mount)
 }
 
 func SummaryToTree(uidToContainers map[string]map[string]container.Summary) gotree.Tree {
