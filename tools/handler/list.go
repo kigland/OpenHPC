@@ -44,10 +44,10 @@ func containerToStr(c container.Summary, tag string, showCID bool) string {
 		tagName = svcTag.ShortName()
 	}
 	mount = strings.TrimSpace(mount)
-	scid := shortCid(c.ID)
 	if showCID {
-		return fmt.Sprintf("[%s][%s] %s %s %s CID: %s", scid, tagName, c.Status, strings.Join(ports, ", "), mount, c.ID)
+		return fmt.Sprintf("[%s] %s %s %s CID: %s", tagName, c.Status, strings.Join(ports, ", "), mount, c.ID)
 	}
+	scid := shortCid(c.ID)
 	return fmt.Sprintf("[%s][%s] %s %s %s", scid, tagName, c.Status, strings.Join(ports, ", "), mount)
 
 }
