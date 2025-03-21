@@ -29,7 +29,7 @@ func Stop() {
 func tryGetContainer(cid string) (container.Summary, bool) {
 	cs := utils.RdrErr(common.DockerHelper.AllKHSContainers())
 	for n, c := range cs {
-		if n == cid || strings.HasPrefix(c.ID, cid) {
+		if n == cid || n == "/"+cid || strings.HasPrefix(c.ID, cid) {
 			return c, true
 		}
 	}
