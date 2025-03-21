@@ -1,6 +1,8 @@
 package image
 
 import (
+	"path/filepath"
+
 	"github.com/docker/go-connections/nat"
 	"github.com/kigland/HPC-Scheduler/lib/dockerHelper"
 )
@@ -26,6 +28,14 @@ func (a AllowedImages) HomeDir() string {
 		return "/home/jovyan"
 	}
 	return ""
+}
+
+func (a AllowedImages) RdsDir() string {
+	home := a.HomeDir()
+	if home != "" {
+		return filepath.Join(home, "rds")
+	}
+	return "/rds"
 }
 
 func (f Factory) Image(img AllowedImages) dockerHelper.StartContainerOptions {

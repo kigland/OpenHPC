@@ -1,9 +1,7 @@
 package common
 
 import (
-	"errors"
 	"fmt"
-	"os"
 	"strconv"
 	"strings"
 
@@ -11,19 +9,21 @@ import (
 	kon "github.com/kigland/HPC-Scheduler/coodinator/container"
 	"github.com/kigland/HPC-Scheduler/lib/dockerHelper"
 	"github.com/kigland/HPC-Scheduler/lib/dockerHelper/image"
+	"github.com/kigland/HPC-Scheduler/lib/dockerHelper/rds"
 )
 
+var r = rds.RDS{
+	BasePath: "/data/rds",
+}
+
 func getRDS(username string, imageName image.AllowedImages) (rdsDir string, rdsMountAt string) {
-	fmt.Println("RDS Subfolder?")
+	fmt.Println("RDS Submodule?")
 	subfolder, err := Rl.Readline()
 	panicx.NotNilErr(err)
-	rdsDir, rdsMountAt, err = MountRDSInfo(imageName, username, subfolder)
+
+	rdsDir, err = r.GetRDSPath(username, subfolder)
 	if err == nil {
-		return rdsDir, rdsMountAt
-	}
-	if errors.Is(err, os.ErrNotExist) {
-		fmt.Println("RDS directory not found, skipping...")
-		return "", ""
+		return rdsDir, imageName.RdsDir()
 	}
 	panicx.NotNilErr(err)
 	return "", ""
