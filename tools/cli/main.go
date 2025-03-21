@@ -29,6 +29,8 @@ func main() {
 		handler.Token()
 	case "stop", "s":
 		handler.Stop()
+	case "ids", "id":
+		handler.IDs()
 	default:
 		help()
 	}

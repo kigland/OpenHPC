@@ -15,7 +15,7 @@ type SvcTag struct {
 	Rand       string // random id
 }
 
-func (s SvcTag) ShortName() string {
+func (s SvcTag) ShortCode() string {
 	if s.Project == "" {
 		return s.Rand + "@" + s.Owner
 	}

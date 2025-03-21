@@ -42,7 +42,7 @@ func containerToStr(c container.Summary, tag string, showCID bool) string {
 	tagName := tag
 	svcTag, err := svcTag.Parse(tag)
 	if err == nil {
-		tagName = svcTag.ShortName()
+		tagName = svcTag.ShortCode()
 	}
 	mount = strings.TrimSpace(mount)
 	if showCID {
