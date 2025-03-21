@@ -2,6 +2,7 @@ package handler
 
 import (
 	"fmt"
+	"os"
 	"strings"
 
 	"github.com/disiqueira/gotree"
@@ -12,6 +13,12 @@ import (
 )
 
 func List() {
+	if len(os.Args) == 3 {
+		user := os.Args[2]
+		ListUser(user)
+		return
+	}
+
 	uidToContainers := utils.RdrErr(common.DockerHelper.UserContainerRelations())
 	tree := SummaryToTree(uidToContainers, false)
 	fmt.Println(tree.Print())
