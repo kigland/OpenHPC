@@ -9,7 +9,7 @@ import (
 	kon "github.com/kigland/HPC-Scheduler/coodinator/container"
 	"github.com/kigland/HPC-Scheduler/lib/consts"
 	"github.com/kigland/HPC-Scheduler/lib/dockerHelper"
-	"github.com/kigland/HPC-Scheduler/lib/dockerHelper/image"
+	"github.com/kigland/HPC-Scheduler/lib/image"
 )
 
 func main() {

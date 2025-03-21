@@ -7,7 +7,7 @@ import (
 
 	kon "github.com/kigland/HPC-Scheduler/coodinator/container"
 
-	"github.com/kigland/HPC-Scheduler/lib/dockerHelper/image"
+	"github.com/kigland/HPC-Scheduler/lib/image"
 	"github.com/kigland/HPC-Scheduler/tools/common"
 )
 

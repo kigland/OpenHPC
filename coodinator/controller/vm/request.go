@@ -12,7 +12,7 @@ import (
 	"github.com/kigland/HPC-Scheduler/coodinator/models/openapi"
 	"github.com/kigland/HPC-Scheduler/coodinator/shared"
 	"github.com/kigland/HPC-Scheduler/coodinator/utils"
-	"github.com/kigland/HPC-Scheduler/lib/dockerHelper/image"
+	"github.com/kigland/HPC-Scheduler/lib/image"
 )
 
 func request(c *gin.Context) {

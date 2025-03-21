@@ -1,6 +1,8 @@
 package dockerHelper
 
-import "path/filepath"
+import (
+	"path/filepath"
+)
 
 const PIP_CACHE_VOLUME = "pip-cache"
 
@@ -17,10 +19,10 @@ func (ops StartContainerOptions) WithPipCache(homeDir string) StartContainerOpti
 	return ops
 }
 
-func (ops StartContainerOptions) WithRDS(rdsDir, mountAt string) StartContainerOptions {
-	if rdsDir == "" || mountAt == "" {
+func (ops StartContainerOptions) WithMountRW(from, to string) StartContainerOptions {
+	if from == "" || to == "" {
 		return ops
 	}
-	ops.Binds = append(ops.Binds, rdsDir+":"+mountAt+":rw")
+	ops.Binds = append(ops.Binds, from+":"+to+":rw")
 	return ops
 }

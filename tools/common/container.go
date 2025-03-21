@@ -7,13 +7,14 @@ import (
 
 	"github.com/KevinZonda/GoX/pkg/panicx"
 	kon "github.com/kigland/HPC-Scheduler/coodinator/container"
+	"github.com/kigland/HPC-Scheduler/lib/consts"
 	"github.com/kigland/HPC-Scheduler/lib/dockerHelper"
-	"github.com/kigland/HPC-Scheduler/lib/dockerHelper/image"
-	"github.com/kigland/HPC-Scheduler/lib/dockerHelper/rds"
+	"github.com/kigland/HPC-Scheduler/lib/image"
+	"github.com/kigland/HPC-Scheduler/lib/rds"
 )
 
 var r = rds.RDS{
-	BasePath: "/data/rds",
+	BasePath: consts.RDS_PATH,
 }
 
 func getRDS(username string, imageName image.AllowedImages) (rdsDir string, rdsMountAt string) {
@@ -58,7 +59,7 @@ func CreateContainer(dk *dockerHelper.DockerHelper, imageName image.AllowedImage
 	img.ContainerName = kon.NewContainerName(username)
 
 	rdsDir, rdsMountAt := getRDS(username, imageName)
-	img = img.WithRDS(rdsDir, rdsMountAt)
+	img = img.WithMountRW(rdsDir, rdsMountAt)
 
 	id, err := dk.StartContainer(img)
 	if err != nil {
