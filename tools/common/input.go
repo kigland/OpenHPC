@@ -6,14 +6,19 @@ import (
 	"strconv"
 
 	"github.com/KevinZonda/GoX/pkg/panicx"
+	"github.com/kigland/HPC-Scheduler/lib/utils"
 )
+
+func inputWithPrompt(prompt string) string {
+	fmt.Println(prompt)
+	return rlStr()
+}
 
 func InputPort(left int, right int) int {
 	if left > right {
 		left, right = right, left
 	}
-	fmt.Printf("Port of the container (%d-%d):\n", left, right)
-	portStr := rlStr()
+	portStr := inputWithPrompt(fmt.Sprintf("Port of the container (%d-%d):", left, right))
 
 	port, err := strconv.Atoi(portStr)
 	panicx.NotNilErr(err)
@@ -25,11 +30,15 @@ func InputPort(left int, right int) int {
 }
 
 func InputUsername() string {
-	fmt.Println("Username:")
-	username := rlStr()
+	username := inputWithPrompt("Username:")
 	if username == "" {
 		log.Fatalf("Username cannot be empty")
 		return ""
 	}
 	return username
+}
+
+func InputProject() string {
+	project := inputWithPrompt("Project:")
+	return utils.TrimLower(project)
 }

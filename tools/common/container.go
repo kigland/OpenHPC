@@ -48,7 +48,7 @@ func (c ContainerInfo) String() string {
 	return sb.String()
 }
 
-func CreateContainer(dk *dockerHelper.DockerHelper, imageName image.AllowedImages, username, passwd string, port int) (ContainerInfo, error) {
+func CreateContainer(dk *dockerHelper.DockerHelper, imageName image.AllowedImages, username, passwd string, port int, project string) (ContainerInfo, error) {
 	img := image.Factory{
 		Password: passwd,
 		BindHost: "127.0.0.2",
@@ -56,7 +56,7 @@ func CreateContainer(dk *dockerHelper.DockerHelper, imageName image.AllowedImage
 	}.Image(imageName).WithGPU(1)
 	img.AutoRemove = true
 
-	svgT := svcTag.New(username)
+	svgT := svcTag.New(username).WithProject(project)
 	img.ContainerName = svgT.String()
 
 	rdsDir, rdsMountAt := getRDS(username, imageName)

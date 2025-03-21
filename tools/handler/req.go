@@ -13,13 +13,14 @@ import (
 func Request() {
 	port := common.InputPort(40000, 41000)
 	username := common.InputUsername()
+	project := common.InputProject()
 	dk := common.DockerHelper
 
 	passwd := utils.RndId(32) // 256bit = 32bytes
 
 	imageName := image.ImageJupyterHub
 
-	cinfo, err := common.CreateContainer(dk, imageName, username, passwd, port)
+	cinfo, err := common.CreateContainer(dk, imageName, username, passwd, port, project)
 	if err != nil {
 		log.Fatalf("Failed to start container: %v", err)
 		return
