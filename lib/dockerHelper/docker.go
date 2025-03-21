@@ -20,3 +20,10 @@ func NewDockerHelper(cli *client.Client) *DockerHelper {
 func (d *DockerHelper) Cli() *client.Client {
 	return d.cli
 }
+
+func ShortId(cid string) string {
+	if len(cid) > 12 {
+		return cid[:12]
+	}
+	return cid
+}

@@ -7,6 +7,7 @@ import (
 
 	"github.com/disiqueira/gotree"
 	"github.com/docker/docker/api/types/container"
+	"github.com/kigland/HPC-Scheduler/lib/dockerHelper"
 	"github.com/kigland/HPC-Scheduler/lib/svcTag"
 	"github.com/kigland/HPC-Scheduler/lib/utils"
 	"github.com/kigland/HPC-Scheduler/tools/common"
@@ -47,16 +48,9 @@ func containerToStr(c container.Summary, tag string, showCID bool) string {
 	if showCID {
 		return fmt.Sprintf("[%s] %s %s %s CID: %s", tagName, c.Status, strings.Join(ports, ", "), mount, c.ID)
 	}
-	scid := shortCid(c.ID)
+	scid := dockerHelper.ShortId(c.ID)
 	return fmt.Sprintf("[%s][%s] %s %s %s", scid, tagName, c.Status, strings.Join(ports, ", "), mount)
 
-}
-
-func shortCid(cid string) string {
-	if len(cid) > 12 {
-		return cid[:12]
-	}
-	return cid
 }
 
 func SummaryToTree(uidToContainers map[string]map[string]container.Summary, showCID bool) gotree.Tree {
