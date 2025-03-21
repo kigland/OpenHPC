@@ -2,6 +2,7 @@ package common
 
 import (
 	"context"
+	"log"
 	"strings"
 
 	"github.com/kigland/HPC-Scheduler/lib/utils"
@@ -19,6 +20,11 @@ func Token(cid string) []string {
 }
 
 func Env(cid string) []string {
-	inspect := utils.RdrErr(DockerHelper.Cli().ContainerInspect(context.Background(), cid))
+	summary, ok := DockerHelper.TryGetContainer(cid)
+	if !ok {
+		log.Fatalf("Container not found or not managed by KHS")
+		return nil
+	}
+	inspect := utils.RdrErr(DockerHelper.Cli().ContainerInspect(context.Background(), summary.ID))
 	return inspect.Config.Env
 }
