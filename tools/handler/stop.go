@@ -11,14 +11,13 @@ import (
 )
 
 func Stop() {
-	cid := common.InputWithPrompt("Container ID:")
+	cid := common.InputWithPrompt("Container ID or Service Tag:")
 	summary, ok := tryGetContainer(cid)
 	if !ok {
 		panic("Container not found or not managed by KHS")
 	}
 	fmt.Println(summary.Names, summary.ID, summary.Status, summary.Image, summary.ImageID, summary.Created, summary.State)
-	fmt.Println("Are you sure to stop the container? (y/n)")
-	confirm := common.InputWithPrompt("Confirm:")
+	confirm := common.InputWithPrompt("Are you sure to stop the container? (y/n)")
 	if confirm != "y" {
 		fmt.Println("Stopping container cancelled")
 		return
