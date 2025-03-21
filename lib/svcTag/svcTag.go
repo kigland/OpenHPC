@@ -49,6 +49,7 @@ func ParseShortName(shortName string) (SvcTag, error) {
 		Rand:       parts[0],
 	}, nil
 }
+
 func Parse(tag string) (SvcTag, error) {
 	tag = strings.TrimLeft(tag, "/")
 	tag = strings.TrimSpace(tag)
