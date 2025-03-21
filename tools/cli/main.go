@@ -10,6 +10,10 @@ import (
 )
 
 func main() {
+	if len(os.Args) < 2 {
+		help()
+		return
+	}
 	common.InitRL()
 	defer common.Rl.Close()
 	common.InitDocker()
