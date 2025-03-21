@@ -15,6 +15,13 @@ type SvcTag struct {
 	Rand       string // random id
 }
 
+func (s SvcTag) ShortName() string {
+	if s.Project == "" {
+		return s.Owner + "@" + s.Rand
+	}
+	return s.Owner + "/" + s.Project + "@" + s.Rand
+}
+
 func (s SvcTag) String() string {
 	o := utils.TrimLower(s.Owner)
 	proj := utils.TrimLower(s.Project)

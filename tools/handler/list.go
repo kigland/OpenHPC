@@ -6,6 +6,7 @@ import (
 
 	"github.com/disiqueira/gotree"
 	"github.com/docker/docker/api/types/container"
+	"github.com/kigland/HPC-Scheduler/lib/svcTag"
 	"github.com/kigland/HPC-Scheduler/lib/utils"
 	"github.com/kigland/HPC-Scheduler/tools/common"
 )
@@ -16,7 +17,7 @@ func List() {
 	fmt.Println(tree.Print())
 }
 
-func contrainerToStr(c container.Summary, svcTag string, showCID bool) string {
+func containerToStr(c container.Summary, tag string, showCID bool) string {
 	var ports []string
 	for _, p := range c.Ports {
 		ports = append(ports, fmt.Sprintf(":%d->%s:%d", p.PrivatePort, p.IP, p.PublicPort))
@@ -30,11 +31,16 @@ func contrainerToStr(c container.Summary, svcTag string, showCID bool) string {
 			mount += "(RO)"
 		}
 	}
+	tagName := tag
+	svcTag, err := svcTag.Parse(tag)
+	if err == nil {
+		tagName = svcTag.ShortName()
+	}
 	mount = strings.TrimSpace(mount)
 	if showCID {
-		return fmt.Sprintf("[%s] %s %s %s CID: %s", svcTag, c.Status, strings.Join(ports, ", "), mount, c.ID)
+		return fmt.Sprintf("[%s] %s %s %s CID: %s", tagName, c.Status, strings.Join(ports, ", "), mount, c.ID)
 	}
-	return fmt.Sprintf("[%s] %s %s %s", svcTag, c.Status, strings.Join(ports, ", "), mount)
+	return fmt.Sprintf("[%s] %s %s %s", tagName, c.Status, strings.Join(ports, ", "), mount)
 
 }
 
@@ -43,7 +49,7 @@ func SummaryToTree(uidToContainers map[string]map[string]container.Summary, show
 	for uid, containers := range uidToContainers {
 		user := tree.Add(uid)
 		for svcTag, c := range containers {
-			user.Add(contrainerToStr(c, svcTag, showCID))
+			user.Add(containerToStr(c, svcTag, showCID))
 		}
 	}
 
@@ -61,7 +67,7 @@ func ListUser(u string) {
 	}
 	tree := gotree.New(u)
 	for svcTag, c := range uidToContainers[u] {
-		tree.Add(contrainerToStr(c, svcTag, false))
+		tree.Add(containerToStr(c, svcTag, false))
 	}
 	fmt.Println(tree.Print())
 }
