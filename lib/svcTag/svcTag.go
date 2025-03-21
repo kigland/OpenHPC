@@ -50,11 +50,12 @@ func ParseShortName(shortName string) (SvcTag, error) {
 	}, nil
 }
 func Parse(tag string) (SvcTag, error) {
+	tag = strings.TrimLeft(tag, "/")
+	tag = strings.TrimSpace(tag)
+
 	if strings.Contains(tag, "@") {
 		return ParseShortName(tag)
 	}
-	tag = strings.TrimLeft(tag, "/")
-	tag = strings.TrimSpace(tag)
 	parts := strings.Split(tag, "-")
 	switch len(parts) {
 	case 3:
