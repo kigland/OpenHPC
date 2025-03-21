@@ -7,3 +7,7 @@ const (
 const (
 	RDS_PATH = "/data/rds"
 )
+
+const (
+	IDENTIFIER = "KHS"
+)

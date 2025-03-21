@@ -5,9 +5,8 @@ import (
 	"log"
 	"time"
 
-	kon "github.com/kigland/HPC-Scheduler/coodinator/container"
-
 	"github.com/kigland/HPC-Scheduler/lib/image"
+	"github.com/kigland/HPC-Scheduler/lib/utils"
 	"github.com/kigland/HPC-Scheduler/tools/common"
 )
 
@@ -16,7 +15,7 @@ func Request() {
 	username := common.InputUsername()
 	dk := common.DockerHelper
 
-	passwd := kon.RndId(32) // 256bit = 32bytes
+	passwd := utils.RndId(32) // 256bit = 32bytes
 
 	imageName := image.ImageJupyterHub
 

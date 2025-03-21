@@ -6,11 +6,11 @@ import (
 	"strings"
 
 	"github.com/KevinZonda/GoX/pkg/panicx"
-	kon "github.com/kigland/HPC-Scheduler/coodinator/container"
 	"github.com/kigland/HPC-Scheduler/lib/consts"
 	"github.com/kigland/HPC-Scheduler/lib/dockerHelper"
 	"github.com/kigland/HPC-Scheduler/lib/image"
 	"github.com/kigland/HPC-Scheduler/lib/rds"
+	"github.com/kigland/HPC-Scheduler/lib/svcTag"
 )
 
 var r = rds.RDS{
@@ -56,7 +56,8 @@ func CreateContainer(dk *dockerHelper.DockerHelper, imageName image.AllowedImage
 	}.Image(imageName).WithGPU(1)
 	img.AutoRemove = true
 
-	img.ContainerName = kon.NewContainerName(username)
+	svgT := svcTag.New(username)
+	img.ContainerName = svgT.String()
 
 	rdsDir, rdsMountAt := getRDS(username, imageName)
 	img = img.WithMountRW(rdsDir, rdsMountAt)

@@ -4,15 +4,14 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/KevinZonda/GoX/pkg/panicx"
 	"github.com/disiqueira/gotree"
 	"github.com/docker/docker/api/types/container"
+	"github.com/kigland/HPC-Scheduler/lib/utils"
 	"github.com/kigland/HPC-Scheduler/tools/common"
 )
 
 func List() {
-	uidToContainers, err := common.DockerHelper.UserContainerRelations()
-	panicx.NotNilErr(err)
+	uidToContainers := utils.RdrErr(common.DockerHelper.UserContainerRelations())
 	tree := SummaryToTree(uidToContainers, false)
 	fmt.Println(tree.Print())
 }
@@ -51,8 +50,7 @@ func SummaryToTree(uidToContainers map[string]map[string]container.Summary, show
 	return tree
 }
 func ListUser(u string) {
-	uidToContainers, err := common.DockerHelper.UserContainerRelations()
-	panicx.NotNilErr(err)
+	uidToContainers := utils.RdrErr(common.DockerHelper.UserContainerRelations())
 	u = strings.TrimSpace(u)
 	if u == "" {
 		panic("user is empty")

@@ -6,13 +6,13 @@ import (
 	"strconv"
 
 	"github.com/gin-gonic/gin"
-	"github.com/kigland/HPC-Scheduler/coodinator/container"
 	"github.com/kigland/HPC-Scheduler/coodinator/controller/mid"
 	"github.com/kigland/HPC-Scheduler/coodinator/models/dboper"
 	"github.com/kigland/HPC-Scheduler/coodinator/models/openapi"
 	"github.com/kigland/HPC-Scheduler/coodinator/shared"
 	"github.com/kigland/HPC-Scheduler/coodinator/utils"
 	"github.com/kigland/HPC-Scheduler/lib/image"
+	"github.com/kigland/HPC-Scheduler/lib/svcTag"
 )
 
 func request(c *gin.Context) {
@@ -34,7 +34,9 @@ func request(c *gin.Context) {
 		BindPort: strconv.Itoa(40000 + rand.Intn(1000)), // 40000-41000
 	}.Image(image.ImageTorchBook).WithGPU(1)
 	img.AutoRemove = true
-	img.ContainerName = container.NewContainerName(user.ID)
+
+	svgT := svcTag.New(user.ID)
+	img.ContainerName = svgT.String()
 
 	id, err := shared.DockerHelper.StartContainer(img)
 	if err != nil {

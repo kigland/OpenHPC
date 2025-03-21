@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"log"
 	"strconv"
-	"strings"
 
 	"github.com/KevinZonda/GoX/pkg/panicx"
 )
@@ -14,8 +13,7 @@ func InputPort(left int, right int) int {
 		left, right = right, left
 	}
 	fmt.Printf("Port of the container (%d-%d):\n", left, right)
-	portStr, err := Rl.Readline()
-	panicx.NotNilErr(err)
+	portStr := rlStr()
 
 	port, err := strconv.Atoi(portStr)
 	panicx.NotNilErr(err)
@@ -28,9 +26,7 @@ func InputPort(left int, right int) int {
 
 func InputUsername() string {
 	fmt.Println("Username:")
-	username, err := Rl.Readline()
-	panicx.NotNilErr(err)
-	username = strings.TrimSpace(username)
+	username := rlStr()
 	if username == "" {
 		log.Fatalf("Username cannot be empty")
 		return ""

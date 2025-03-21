@@ -2,6 +2,7 @@ package dockerHelper
 
 import (
 	"github.com/docker/docker/client"
+	"github.com/kigland/HPC-Scheduler/lib/consts"
 )
 
 type DockerHelper struct {
@@ -12,7 +13,7 @@ type DockerHelper struct {
 func NewDockerHelper(cli *client.Client) *DockerHelper {
 	return &DockerHelper{
 		cli:    cli,
-		Prefix: "KHS",
+		Prefix: consts.IDENTIFIER,
 	}
 }
 

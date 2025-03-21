@@ -6,10 +6,11 @@ import (
 	"time"
 
 	"github.com/docker/docker/client"
-	kon "github.com/kigland/HPC-Scheduler/coodinator/container"
+	"github.com/kigland/HPC-Scheduler/coodinator/utils"
 	"github.com/kigland/HPC-Scheduler/lib/consts"
 	"github.com/kigland/HPC-Scheduler/lib/dockerHelper"
 	"github.com/kigland/HPC-Scheduler/lib/image"
+	"github.com/kigland/HPC-Scheduler/lib/svcTag"
 )
 
 func main() {
@@ -19,7 +20,7 @@ func main() {
 		return
 	}
 
-	passwd := kon.RndId(32) // 256bit = 32bytes
+	passwd := utils.RndId(32) // 256bit = 32bytes
 
 	img := image.Factory{
 		Password: passwd,
@@ -29,7 +30,8 @@ func main() {
 	img.AutoRemove = true
 
 	dk := dockerHelper.NewDockerHelper(cli)
-	img.ContainerName = kon.NewContainerName("KevinZonda")
+	svgT := svcTag.New("KevinZonda")
+	img.ContainerName = svgT.String()
 	id, err := dk.StartContainer(img)
 	if err != nil {
 		log.Fatalf("Failed to start container: %v", err)
