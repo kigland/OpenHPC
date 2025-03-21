@@ -7,6 +7,16 @@ import (
 	"github.com/kigland/HPC-Scheduler/lib/svcTag"
 )
 
+func (d *DockerHelper) getRelatedName(c container.Summary) (string, svcTag.SvcTag) {
+	for _, n := range c.Names {
+		tag, err := svcTag.Parse(n)
+		if err != nil || tag.Identifier != d.Identifier {
+			continue
+		}
+		return n, tag
+	}
+	return "", svcTag.SvcTag{}
+}
 func (d *DockerHelper) AllKHSContainers() (map[string]container.Summary, error) {
 	docker := d
 	containers, err := docker.ListAllContainers(false)
@@ -15,14 +25,8 @@ func (d *DockerHelper) AllKHSContainers() (map[string]container.Summary, error) 
 	}
 	cs := map[string]container.Summary{}
 	for _, c := range containers {
-		for _, n := range c.Names {
-			tag, err := svcTag.Parse(n)
-			if err != nil || tag.Identifier != d.Identifier {
-				continue
-			}
-			cs[n] = c
-			break
-		}
+		n, _ := d.getRelatedName(c)
+		cs[n] = c
 	}
 	return cs, nil
 }

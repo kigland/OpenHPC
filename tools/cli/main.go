@@ -27,6 +27,8 @@ func main() {
 		handler.Env()
 	case "token", "t":
 		handler.Token()
+	case "stop", "s":
+		handler.Stop()
 	default:
 		help()
 	}
@@ -39,6 +41,7 @@ Usage hpc [command]:
   - list|ls|ps          : list all VNodes
   - env|e      [cid?]   : show environment variables of the VNode
   - token|t    [cid?]   : show tokens of the VNode
+  - stop|s              : stop the VNode
 `
 	fmt.Println(strings.TrimSpace(h))
 }
