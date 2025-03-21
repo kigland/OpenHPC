@@ -44,11 +44,19 @@ func containerToStr(c container.Summary, tag string, showCID bool) string {
 		tagName = svcTag.ShortName()
 	}
 	mount = strings.TrimSpace(mount)
+	scid := shortCid(c.ID)
 	if showCID {
-		return fmt.Sprintf("[%s] %s %s %s CID: %s", tagName, c.Status, strings.Join(ports, ", "), mount, c.ID)
+		return fmt.Sprintf("[%s][%s] %s %s %s CID: %s", scid, tagName, c.Status, strings.Join(ports, ", "), mount, c.ID)
 	}
-	return fmt.Sprintf("[%s] %s %s %s", tagName, c.Status, strings.Join(ports, ", "), mount)
+	return fmt.Sprintf("[%s][%s] %s %s %s", scid, tagName, c.Status, strings.Join(ports, ", "), mount)
 
+}
+
+func shortCid(cid string) string {
+	if len(cid) > 12 {
+		return cid[:12]
+	}
+	return cid
 }
 
 func SummaryToTree(uidToContainers map[string]map[string]container.Summary, showCID bool) gotree.Tree {
