@@ -9,7 +9,7 @@ import (
 	"github.com/kigland/HPC-Scheduler/lib/utils"
 )
 
-func inputWithPrompt(prompt string) string {
+func InputWithPrompt(prompt string) string {
 	fmt.Println(prompt)
 	return rlStr()
 }
@@ -18,7 +18,7 @@ func InputPort(left int, right int) int {
 	if left > right {
 		left, right = right, left
 	}
-	portStr := inputWithPrompt(fmt.Sprintf("Port of the container (%d-%d):", left, right))
+	portStr := InputWithPrompt(fmt.Sprintf("Port of the container (%d-%d):", left, right))
 
 	port, err := strconv.Atoi(portStr)
 	panicx.NotNilErr(err)
@@ -30,7 +30,7 @@ func InputPort(left int, right int) int {
 }
 
 func InputUsername() string {
-	username := inputWithPrompt("Username:")
+	username := InputWithPrompt("Username:")
 	if username == "" {
 		log.Fatalf("Username cannot be empty")
 		return ""
@@ -39,6 +39,6 @@ func InputUsername() string {
 }
 
 func InputProject() string {
-	project := inputWithPrompt("Project:")
+	project := InputWithPrompt("Project:")
 	return utils.TrimLower(project)
 }
