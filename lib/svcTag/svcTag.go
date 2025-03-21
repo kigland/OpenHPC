@@ -17,9 +17,9 @@ type SvcTag struct {
 
 func (s SvcTag) ShortName() string {
 	if s.Project == "" {
-		return s.Owner + "@" + s.Rand
+		return s.Rand + "@" + s.Owner
 	}
-	return s.Owner + "/" + s.Project + "@" + s.Rand
+	return s.Rand + "@" + s.Owner + "/" + s.Project
 }
 
 func (s SvcTag) String() string {
