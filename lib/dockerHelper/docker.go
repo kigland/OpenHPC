@@ -5,12 +5,14 @@ import (
 )
 
 type DockerHelper struct {
-	cli *client.Client
+	cli    *client.Client
+	Prefix string
 }
 
 func NewDockerHelper(cli *client.Client) *DockerHelper {
 	return &DockerHelper{
-		cli: cli,
+		cli:    cli,
+		Prefix: "KHS",
 	}
 }
 

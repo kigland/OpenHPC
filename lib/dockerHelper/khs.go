@@ -1,22 +1,22 @@
-package container
+package dockerHelper
 
 import (
 	"strings"
 
 	"github.com/docker/docker/api/types/container"
-	"github.com/kigland/HPC-Scheduler/coodinator/shared"
 )
 
-func AllKHSContainers() (map[string]container.Summary, error) {
-	docker := shared.DockerHelper
-	containers, err := docker.ListAllContainers(true)
+func (d *DockerHelper) AllKHSContainers() (map[string]container.Summary, error) {
+	docker := d
+	containers, err := docker.ListAllContainers(false)
 	if err != nil {
 		return nil, err
 	}
+	prefix := d.Prefix + "-"
 	cs := map[string]container.Summary{}
 	for _, c := range containers {
 		for _, n := range c.Names {
-			if strings.HasPrefix(n, PREFIX+"-") || strings.HasPrefix(n, "/"+PREFIX+"-") {
+			if strings.HasPrefix(n, prefix) || strings.HasPrefix(n, "/"+prefix) {
 				cs[n] = c
 				break
 			}
@@ -25,8 +25,8 @@ func AllKHSContainers() (map[string]container.Summary, error) {
 	return cs, nil
 }
 
-func UserContainerRelations() (map[string]map[string]container.Summary, error) {
-	cs, err := AllKHSContainers()
+func (d *DockerHelper) UserContainerRelations() (map[string]map[string]container.Summary, error) {
+	cs, err := d.AllKHSContainers()
 
 	if err != nil {
 		return nil, err
@@ -46,14 +46,16 @@ func UserContainerRelations() (map[string]map[string]container.Summary, error) {
 	return rsh, nil
 }
 
-func UserContainers(userID string) (map[string]container.Summary, error) {
-	cs, err := AllKHSContainers()
+func (d *DockerHelper) UserContainers(userID string) (map[string]container.Summary, error) {
+	cs, err := d.AllKHSContainers()
 	if err != nil {
 		return nil, err
 	}
+	prefix := d.Prefix + "-"
+	userID = strings.ToLower(userID)
 	userCs := map[string]container.Summary{}
 	for n, c := range cs {
-		if strings.HasPrefix(n, PREFIX+"-"+userID+"-") || strings.HasPrefix(n, "/"+PREFIX+"-"+userID+"-") {
+		if strings.HasPrefix(n, prefix+userID+"-") || strings.HasPrefix(n, "/"+prefix+userID+"-") {
 			userCs[n] = c
 		}
 	}

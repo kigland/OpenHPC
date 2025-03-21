@@ -11,7 +11,7 @@ import (
 )
 
 func List() {
-	uidToContainers, err := common.UserContainerRelations()
+	uidToContainers, err := common.DockerHelper.UserContainerRelations()
 	panicx.NotNilErr(err)
 	tree := SummaryToTree(uidToContainers, false)
 	fmt.Println(tree.Print())
@@ -51,7 +51,7 @@ func SummaryToTree(uidToContainers map[string]map[string]container.Summary, show
 	return tree
 }
 func ListUser(u string) {
-	uidToContainers, err := common.UserContainerRelations()
+	uidToContainers, err := common.DockerHelper.UserContainerRelations()
 	panicx.NotNilErr(err)
 	u = strings.TrimSpace(u)
 	if u == "" {

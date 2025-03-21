@@ -10,9 +10,9 @@ docker-run:
 	docker run -d --restart always -p 127.0.0.1:8080:8080 "HPC-Scheduler"
 
 build:
-	bash build.sh
+	go build -v -o out/coodinator coodinator/cmd/main.go
 
-build-debug:
+publish:
 	go build -v -gcflags="all=-N -l" -o out/serv cmd/serv/main.go
 
 run:
@@ -26,6 +26,8 @@ tester:
 tools:
 	go build -v -o out/tools/requester tools/requester/main.go
 	go build -v -o out/tools/cli tools/cli/main.go
+
+all: build tools
 
 tool: tools
 

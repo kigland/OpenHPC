@@ -5,7 +5,6 @@ import (
 	"strings"
 	"time"
 
-	"github.com/kigland/HPC-Scheduler/coodinator/container"
 	"github.com/kigland/HPC-Scheduler/coodinator/shared"
 )
 
@@ -21,7 +20,7 @@ func (s *Scheduler) StartGCDaemon() {
 }
 
 func (s *Scheduler) GC() {
-	containers, err := container.AllKHSContainers()
+	containers, err := shared.DockerHelper.AllKHSContainers()
 	if err != nil {
 		log.Println("Error getting all containers:", err)
 		return
