@@ -35,11 +35,11 @@ func (d *DockerHelper) UserContainerRelations() (map[string]map[string]container
 	}
 	rsh := map[string]map[string]container.Summary{}
 	for n, c := range cs {
-		names := strings.Split(n, "-")
-		if len(names) != 3 {
+		tag, err := svcTag.Parse(n)
+		if err != nil || tag.Identifier != d.Identifier {
 			continue
 		}
-		userID := names[1]
+		userID := tag.Owner
 		if _, ok := rsh[userID]; !ok {
 			rsh[userID] = map[string]container.Summary{}
 		}
