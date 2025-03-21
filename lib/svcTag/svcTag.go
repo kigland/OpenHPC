@@ -31,7 +31,28 @@ func (s SvcTag) String() string {
 	return s.Identifier + "-" + o + "-" + proj + "-" + s.Rand
 }
 
+func ParseShortName(shortName string) (SvcTag, error) {
+	parts := strings.Split(shortName, "@")
+	if len(parts) != 2 {
+		return SvcTag{}, fmt.Errorf("invalid short name: %s", shortName)
+	}
+	// [rand]@[owner]/[project]
+	tails := strings.Split(parts[1], "/")
+	project := ""
+	if len(tails) > 1 {
+		project = tails[1]
+	}
+	return SvcTag{
+		Identifier: consts.IDENTIFIER,
+		Owner:      tails[0],
+		Project:    project,
+		Rand:       parts[0],
+	}, nil
+}
 func Parse(tag string) (SvcTag, error) {
+	if strings.Contains(tag, "@") {
+		return ParseShortName(tag)
+	}
 	tag = strings.TrimLeft(tag, "/")
 	tag = strings.TrimSpace(tag)
 	parts := strings.Split(tag, "-")
