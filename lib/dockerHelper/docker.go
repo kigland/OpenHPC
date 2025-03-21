@@ -6,14 +6,14 @@ import (
 )
 
 type DockerHelper struct {
-	cli    *client.Client
-	Prefix string
+	cli        *client.Client
+	Identifier string
 }
 
 func NewDockerHelper(cli *client.Client) *DockerHelper {
 	return &DockerHelper{
-		cli:    cli,
-		Prefix: consts.IDENTIFIER,
+		cli:        cli,
+		Identifier: consts.IDENTIFIER,
 	}
 }
 

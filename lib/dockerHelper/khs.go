@@ -4,6 +4,7 @@ import (
 	"strings"
 
 	"github.com/docker/docker/api/types/container"
+	"github.com/kigland/HPC-Scheduler/lib/svcTag"
 )
 
 func (d *DockerHelper) AllKHSContainers() (map[string]container.Summary, error) {
@@ -12,14 +13,15 @@ func (d *DockerHelper) AllKHSContainers() (map[string]container.Summary, error) 
 	if err != nil {
 		return nil, err
 	}
-	prefix := d.Prefix + "-"
 	cs := map[string]container.Summary{}
 	for _, c := range containers {
 		for _, n := range c.Names {
-			if strings.HasPrefix(n, prefix) || strings.HasPrefix(n, "/"+prefix) {
-				cs[n] = c
-				break
+			tag, err := svcTag.Parse(n)
+			if err != nil || tag.Identifier != d.Identifier {
+				continue
 			}
+			cs[n] = c
+			break
 		}
 	}
 	return cs, nil
@@ -51,11 +53,14 @@ func (d *DockerHelper) UserContainers(userID string) (map[string]container.Summa
 	if err != nil {
 		return nil, err
 	}
-	prefix := d.Prefix + "-"
 	userID = strings.ToLower(userID)
 	userCs := map[string]container.Summary{}
 	for n, c := range cs {
-		if strings.HasPrefix(n, prefix+userID+"-") || strings.HasPrefix(n, "/"+prefix+userID+"-") {
+		tag, err := svcTag.Parse(n)
+		if err != nil || tag.Identifier != d.Identifier {
+			continue
+		}
+		if tag.Owner == userID {
 			userCs[n] = c
 		}
 	}

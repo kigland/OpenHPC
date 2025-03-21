@@ -16,10 +16,12 @@ type SvcTag struct {
 }
 
 func (s SvcTag) String() string {
-	if s.Project == "" {
-		return s.Identifier + "-" + s.Owner + "-" + s.Rand
+	o := utils.TrimLower(s.Owner)
+	proj := utils.TrimLower(s.Project)
+	if proj == "" {
+		return s.Identifier + "-" + o + "-" + s.Rand
 	}
-	return s.Identifier + "-" + s.Owner + "-" + s.Project + "-" + s.Rand
+	return s.Identifier + "-" + o + "-" + proj + "-" + s.Rand
 }
 
 func Parse(tag string) (SvcTag, error) {
@@ -37,12 +39,12 @@ func Parse(tag string) (SvcTag, error) {
 }
 
 func New(owner string) SvcTag {
-	rand := utils.RndId(DEFAUL_RAND_LENGTH)
-	return SvcTag{Identifier: consts.IDENTIFIER, Owner: owner, Rand: rand}
+	rand := utils.RndId(DEFAULT_RAND_LENGTH)
+	return SvcTag{Identifier: consts.IDENTIFIER, Owner: utils.TrimLower(owner), Rand: rand}
 }
 
 func (s SvcTag) WithProject(project string) SvcTag {
-	s.Project = project
+	s.Project = utils.TrimLower(project)
 	return s
 }
 
@@ -52,7 +54,7 @@ func (s SvcTag) WithIdentifier(identifier string) SvcTag {
 }
 
 func (s SvcTag) WithOwner(owner string) SvcTag {
-	s.Owner = owner
+	s.Owner = utils.TrimLower(owner)
 	return s
 }
 
@@ -61,4 +63,4 @@ func (s SvcTag) WithRand(rand string) SvcTag {
 	return s
 }
 
-const DEFAUL_RAND_LENGTH = 8
+const DEFAULT_RAND_LENGTH = 8
