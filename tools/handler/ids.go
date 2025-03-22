@@ -2,7 +2,6 @@ package handler
 
 import (
 	"fmt"
-	"log"
 	"os"
 
 	"github.com/kigland/HPC-Scheduler/lib/dockerHelper"
@@ -20,23 +19,23 @@ func IDs() {
 
 func ids(cid string) {
 	summary, ok := common.DockerHelper.TryGetContainer(cid)
-	if !ok {
-		fmt.Println("Container not found or not managed by KHS. Only limited information will be available!")
-		svcTag, err := svcTag.Parse(cid)
+	if ok {
+		cid = summary.ID
+		svcTag, err := svcTag.Parse(summary.Names[0])
 		if err != nil {
 			fmt.Println("Failed to parse service tag: ", err)
-			printIDs(cid, svcTag)
-			return
 		}
-		printIDs("", svcTag)
+		printIDs(cid, svcTag)
 		return
 	}
-	cid = summary.ID
+	fmt.Println("Container not found or not managed by KHS. Only limited information will be available!")
 	svcTag, err := svcTag.Parse(cid)
 	if err != nil {
-		log.Fatalf("Failed to parse service tag: %v", err)
+		fmt.Println("Failed to parse service tag: ", err)
+		printIDs(cid, svcTag)
+		return
 	}
-	printIDs(cid, svcTag)
+	printIDs("", svcTag)
 }
 
 func printIDs(cid string, svcTag svcTag.SvcTag) {
