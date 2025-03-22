@@ -12,7 +12,10 @@ docker-run:
 coordinator:
 	go build -v -o out/coodinator coodinator/cmd/main.go
 
-build: coordinator tools
+build: coordinator tools cp-to-pwd
+
+cp-to-pwd:
+	cp out/tools/cli hpc
 
 publish:
 	go build -v -gcflags="all=-N -l" -o out/serv cmd/serv/main.go
