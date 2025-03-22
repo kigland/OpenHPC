@@ -12,7 +12,7 @@ docker-run:
 coordinator:
 	go build -v -o out/coodinator coodinator/cmd/main.go
 
-build: coordinator tools cp-to-pwd i
+build: coordinator tools cp-to-pwd
 
 cp-to-pwd:
 	cp out/tools/cli hpc
