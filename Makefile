@@ -35,6 +35,9 @@ tools:
 
 tool: tools
 
+install:
+	cp out/tools/cli /usr/bin/hpc
+
 clean:
 	rm -rf out
 
