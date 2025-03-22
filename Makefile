@@ -35,6 +35,8 @@ tools:
 
 tool: tools
 
+i: install
+
 install:
 	cp out/tools/cli /usr/bin/hpc
 
