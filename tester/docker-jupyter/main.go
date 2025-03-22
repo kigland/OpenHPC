@@ -24,8 +24,8 @@ func main() {
 
 	img := image.Factory{
 		Password: passwd,
-		BindHost: "127.0.0.2",
-		BindPort: "41000",
+		BindHost: consts.CONTAINER_HOST,
+		BindPort: 41000,
 	}.Image(image.ImageTorchBook).WithGPU(1)
 	img.AutoRemove = true
 

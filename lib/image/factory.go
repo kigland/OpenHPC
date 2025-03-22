@@ -2,6 +2,7 @@ package image
 
 import (
 	"path/filepath"
+	"strconv"
 
 	"github.com/docker/go-connections/nat"
 	"github.com/kigland/HPC-Scheduler/lib/dockerHelper"
@@ -11,7 +12,7 @@ type Factory struct {
 	Username string
 	Password string
 	BindHost string
-	BindPort string
+	BindPort int
 }
 
 type AllowedImages string
@@ -57,7 +58,7 @@ func (f Factory) jupyterbook(id AllowedImages) dockerHelper.StartContainerOption
 			"8888/tcp": []nat.PortBinding{
 				{
 					HostIP:   f.BindHost,
-					HostPort: f.BindPort,
+					HostPort: strconv.Itoa(f.BindPort),
 				},
 			},
 		},

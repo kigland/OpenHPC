@@ -2,7 +2,6 @@ package common
 
 import (
 	"fmt"
-	"strconv"
 	"strings"
 
 	"github.com/KevinZonda/GoX/pkg/panicx"
@@ -40,7 +39,7 @@ type ContainerInfo struct {
 
 func (c ContainerInfo) String() string {
 	sb := strings.Builder{}
-	sb.WriteString(fmt.Sprintf("URL    : http://127.0.0.2:%d\n", c.Port))
+	sb.WriteString(fmt.Sprintf("URL    : http://%s:%d\n", consts.CONTAINER_HOST, c.Port))
 	sb.WriteString(fmt.Sprintf("Token  : %s\n", c.Token))
 	sb.WriteString(fmt.Sprintf("CID    : %s\n", c.CID))
 	sb.WriteString(fmt.Sprintf("RDS    : %s\n", c.RDSAt))
@@ -51,8 +50,8 @@ func (c ContainerInfo) String() string {
 func CreateContainer(dk *dockerHelper.DockerHelper, imageName image.AllowedImages, username, passwd string, port int, project string) (ContainerInfo, error) {
 	img := image.Factory{
 		Password: passwd,
-		BindHost: "127.0.0.2",
-		BindPort: strconv.Itoa(port),
+		BindHost: consts.CONTAINER_HOST,
+		BindPort: port,
 	}.Image(imageName).WithGPU(1)
 	img.AutoRemove = true
 

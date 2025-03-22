@@ -14,6 +14,8 @@ coordinator:
 
 build: coordinator tools cp-to-pwd i
 
+all: coordinator tools
+
 cp-to-pwd:
 	cp out/tools/cli hpc
 
@@ -31,7 +33,6 @@ tester:
 tools:
 	go build -v -o out/tools/requester tools/requester/main.go
 	go build -v -o out/tools/cli tools/cli/main.go
-	cp out/tools/cli hpc
 
 tool: tools
 

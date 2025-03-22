@@ -3,7 +3,6 @@ package vm
 import (
 	"log"
 	"math/rand"
-	"strconv"
 
 	"github.com/gin-gonic/gin"
 	"github.com/kigland/HPC-Scheduler/coodinator/controller/mid"
@@ -11,6 +10,7 @@ import (
 	"github.com/kigland/HPC-Scheduler/coodinator/models/openapi"
 	"github.com/kigland/HPC-Scheduler/coodinator/shared"
 	"github.com/kigland/HPC-Scheduler/coodinator/utils"
+	"github.com/kigland/HPC-Scheduler/lib/consts"
 	"github.com/kigland/HPC-Scheduler/lib/image"
 	"github.com/kigland/HPC-Scheduler/lib/svcTag"
 )
@@ -30,8 +30,8 @@ func request(c *gin.Context) {
 
 	img := image.Factory{
 		Password: passwd,
-		BindHost: "127.0.0.2",
-		BindPort: strconv.Itoa(40000 + rand.Intn(1000)), // 40000-41000
+		BindHost: consts.CONTAINER_HOST,
+		BindPort: consts.LOW_PORT + rand.Intn(consts.HIGH_PORT-consts.LOW_PORT),
 	}.Image(image.ImageTorchBook).WithGPU(1)
 	img.AutoRemove = true
 
