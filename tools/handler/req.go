@@ -5,13 +5,14 @@ import (
 	"log"
 	"time"
 
+	"github.com/kigland/HPC-Scheduler/lib/consts"
 	"github.com/kigland/HPC-Scheduler/lib/image"
 	"github.com/kigland/HPC-Scheduler/lib/utils"
 	"github.com/kigland/HPC-Scheduler/tools/common"
 )
 
 func Request() {
-	port := common.InputPort(40000, 41000)
+	port := common.InputPort(consts.LOW_PORT, consts.HIGH_PORT)
 	username := common.InputUsername()
 	project := common.InputProject()
 	dk := common.DockerHelper
