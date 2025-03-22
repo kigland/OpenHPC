@@ -24,7 +24,7 @@ func main() {
 		// AttachStdout: true,
 		// AttachStderr: true,
 		Cmd: []string{"nvidia-smi"},
-	})
+	}, true)
 	if err != nil {
 		log.Fatalf("Failed to start container: %v", err)
 		return

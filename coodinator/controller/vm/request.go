@@ -38,7 +38,7 @@ func request(c *gin.Context) {
 	svgT := svcTag.New(user.ID)
 	img.ContainerName = svgT.String()
 
-	id, err := shared.DockerHelper.StartContainer(img)
+	id, err := shared.DockerHelper.StartContainer(img, true)
 	if err != nil {
 		log.Fatalf("Failed to start container: %v", err)
 		return

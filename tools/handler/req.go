@@ -7,7 +7,6 @@ import (
 
 	"github.com/kigland/HPC-Scheduler/lib/consts"
 	"github.com/kigland/HPC-Scheduler/lib/image"
-	"github.com/kigland/HPC-Scheduler/lib/utils"
 	"github.com/kigland/HPC-Scheduler/tools/common"
 )
 
@@ -17,11 +16,10 @@ func Request() {
 	project := common.InputProject()
 	dk := common.DockerHelper
 
-	passwd := utils.RndId(32) // 256bit = 32bytes
+	token := common.InputTokenOrGenerate(16)
 
-	imageName := image.ImageJupyterHub
+	cinfo, err := common.CreateContainer(dk, image.ImageJupyterHub, username, token, port, project)
 
-	cinfo, err := common.CreateContainer(dk, imageName, username, passwd, port, project)
 	if err != nil {
 		log.Fatalf("Failed to start container: %v", err)
 		return

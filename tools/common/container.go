@@ -61,7 +61,7 @@ func CreateContainer(dk *dockerHelper.DockerHelper, imageName image.AllowedImage
 	rdsDir, rdsMountAt := getRDS(username, imageName)
 	img = img.WithMountRW(rdsDir, rdsMountAt)
 
-	id, err := dk.StartContainer(img)
+	id, err := dk.StartContainer(img, true)
 	if err != nil {
 		return ContainerInfo{}, err
 	}

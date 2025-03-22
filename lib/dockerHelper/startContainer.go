@@ -59,14 +59,16 @@ func (sco StartContainerOptions) ToHostConfig() *container.HostConfig {
 	}
 }
 
-func (d *DockerHelper) StartContainer(opts StartContainerOptions) (containerID string, err error) {
+func (d *DockerHelper) StartContainer(opts StartContainerOptions, pull bool) (containerID string, err error) {
 	cli := d.cli
-	out, err := cli.ImagePull(context.Background(), opts.ImageName, image.PullOptions{})
-	if err != nil {
-		return "", err
+	if pull {
+		out, err := cli.ImagePull(context.Background(), opts.ImageName, image.PullOptions{})
+		if err != nil {
+			return "", err
+		}
+		defer out.Close()
+		io.Copy(os.Stdout, out)
 	}
-	defer out.Close()
-	io.Copy(os.Stdout, out)
 
 	resp, err := cli.ContainerCreate(context.Background(), opts.ToContainerConfig(), opts.ToHostConfig(), nil, nil, opts.ContainerName)
 	if err != nil {

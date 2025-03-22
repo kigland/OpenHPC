@@ -42,3 +42,18 @@ func InputProject() string {
 	project := InputWithPrompt("Project:")
 	return utils.TrimLower(project)
 }
+
+func InputTokenOrGenerate(minLen int) string {
+	token := InputWithPrompt("Token:")
+	if len(token) < minLen {
+		log.Fatalf("Token must be at least %d characters long", minLen)
+		return ""
+	}
+	if token == "" {
+		if minLen < 8 {
+			minLen = 32
+		}
+		token = utils.RndId(minLen)
+	}
+	return token
+}

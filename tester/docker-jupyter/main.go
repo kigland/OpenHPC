@@ -32,7 +32,7 @@ func main() {
 	dk := dockerHelper.NewDockerHelper(cli)
 	svgT := svcTag.New("KevinZonda")
 	img.ContainerName = svgT.String()
-	id, err := dk.StartContainer(img)
+	id, err := dk.StartContainer(img, true)
 	if err != nil {
 		log.Fatalf("Failed to start container: %v", err)
 		return
