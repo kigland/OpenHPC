@@ -44,6 +44,7 @@ Usage hpc [command]:
   - env|e      [cid?]   : show environment variables of the VNode
   - token|t    [cid?]   : show tokens of the VNode
   - stop|s              : stop the VNode
+  - ids|id     [cid?]   : show CID/SCID/SvcTag/ShortCode of the VNode
 `
 	fmt.Println(strings.TrimSpace(h))
 }

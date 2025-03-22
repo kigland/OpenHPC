@@ -31,6 +31,7 @@ tester:
 tools:
 	go build -v -o out/tools/requester tools/requester/main.go
 	go build -v -o out/tools/cli tools/cli/main.go
+	cp out/tools/cli hpc
 
 tool: tools
 
