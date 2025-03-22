@@ -3,13 +3,21 @@ package handler
 import (
 	"context"
 	"fmt"
+	"os"
 
 	"github.com/docker/docker/api/types/container"
 	"github.com/kigland/HPC-Scheduler/tools/common"
 )
 
 func Stop() {
-	cid := common.InputWithPrompt("Container ID or Service Tag or Short Code:")
+	if len(os.Args) == 3 {
+		stop(os.Args[2])
+		return
+	}
+	stop(common.InputWithPrompt("Container ID or Service Tag or Short Code:"))
+}
+
+func stop(cid string) {
 	summary, ok := common.DockerHelper.TryGetContainer(cid)
 	if !ok {
 		panic("Container not found or not managed by KHS")

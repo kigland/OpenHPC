@@ -21,7 +21,7 @@ func main() {
 	switch strings.ToLower(os.Args[1]) {
 	case "req", "request", "create", "c":
 		handler.Request()
-	case "list", "ls", "ps":
+	case "list", "ls", "ps", "ll", "l":
 		handler.List()
 	case "env", "e":
 		handler.Env()
@@ -39,12 +39,12 @@ func main() {
 func help() {
 	h := `
 Usage hpc [command]:
-  - req|request|create|c: create a new VNode
-  - list|ls|ps          : list all VNodes
-  - env|e      [cid?]   : show environment variables of the VNode
-  - token|t    [cid?]   : show tokens of the VNode
-  - stop|s              : stop the VNode
-  - ids|id     [cid?]   : show CID/SCID/SvcTag/ShortCode of the VNode
+  - req|request|create|c  : create a new VNode
+  - list|ls|ps|ll|l       : list all VNodes
+  - env|e      [node_id?] : show environment variables of the VNode
+  - token|t    [node_id?] : show tokens of the VNode
+  - stop|s     [node_id?] : stop the VNode
+  - ids|id     [node_id?] : show CID/SCID/SvcTag/ShortCode of the VNode
 `
 	fmt.Println(strings.TrimSpace(h))
 }
