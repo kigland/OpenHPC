@@ -47,10 +47,14 @@ func InputProject() string {
 
 func InputTokenOrGenerate(minLen int) string {
 	token := InputWithPrompt("Token:")
+	if token == "" {
+		goto generate
+	}
 	if len(token) < minLen {
 		log.Fatalf("Token must be at least %d characters long", minLen)
 		return ""
 	}
+generate:
 	if token == "" {
 		if minLen < 8 {
 			minLen = 32
