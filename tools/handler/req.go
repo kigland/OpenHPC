@@ -16,7 +16,7 @@ func Request() {
 	project := common.InputProject()
 	dk := common.DockerHelper
 
-	token := common.InputTokenOrGenerate(16)
+	token := common.InputTokenOrGenerate(32)
 
 	cinfo, err := common.CreateContainer(dk, image.ImageJupyterHub, username, token, port, project)
 
