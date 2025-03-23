@@ -21,11 +21,17 @@ const (
 	ImageJupyterHub AllowedImages = "kevinzonda/notebook"
 	ImageTorchBook  AllowedImages = "kevinzonda/torchbook"
 	ImageMLBook     AllowedImages = "kevinzonda/mlbook"
+	ImageBase       AllowedImages = "jupyterhub/singleuser"
 )
+
+var ALLOWED_IMAGES = []AllowedImages{
+	ImageJupyterHub,
+	ImageBase,
+}
 
 func (a AllowedImages) HomeDir() string {
 	switch a {
-	case ImageMLBook, ImageJupyterHub, ImageTorchBook:
+	case ImageMLBook, ImageJupyterHub, ImageTorchBook, ImageBase:
 		return "/home/jovyan"
 	}
 	return ""

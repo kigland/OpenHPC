@@ -8,6 +8,7 @@ import (
 	"github.com/KevinZonda/GoX/pkg/intx"
 	"github.com/KevinZonda/GoX/pkg/panicx"
 	"github.com/KevinZonda/GoX/pkg/stringx"
+	"github.com/kigland/HPC-Scheduler/lib/image"
 	"github.com/kigland/HPC-Scheduler/lib/utils"
 )
 
@@ -62,4 +63,26 @@ generate:
 		token = utils.RndId(minLen)
 	}
 	return token
+}
+
+func InputImage() image.AllowedImages {
+	fmt.Println("Select allowed Images, default [0]:")
+	for i, img := range image.ALLOWED_IMAGES {
+		fmt.Println(i, ")", img)
+	}
+	idx := InputWithPrompt("Index:")
+	if idx == "" {
+		log.Fatalf("Index cannot be empty")
+		return ""
+	}
+	if idx == "" {
+		return image.ALLOWED_IMAGES[0]
+	}
+	idxInt, err := strconv.Atoi(idx)
+	panicx.NotNilErr(err)
+	if !intx.InRange(idxInt, 0, len(image.ALLOWED_IMAGES)-1) {
+		log.Fatalf("Invalid index: %d", idxInt)
+		return ""
+	}
+	return image.ALLOWED_IMAGES[idxInt]
 }
