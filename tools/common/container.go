@@ -73,3 +73,7 @@ func CreateContainer(dk *dockerHelper.DockerHelper, imageName image.AllowedImage
 		CName: img.ContainerName,
 	}, nil
 }
+
+func CreateContainerWithSvgTag(dk *dockerHelper.DockerHelper, imageName image.AllowedImages, svgTag svcTag.SvcTag, passwd string, port int) (ContainerInfo, error) {
+	return CreateContainer(dk, imageName, svgTag.Owner, passwd, port, svgTag.Project)
+}

@@ -54,11 +54,15 @@ func (f Factory) Image(img AllowedImages) dockerHelper.StartContainerOptions {
 	}
 }
 
+const (
+	JUPYTER_TOKEN = "JUPYTER_TOKEN"
+)
+
 func (f Factory) jupyterbook(id AllowedImages) dockerHelper.StartContainerOptions {
 	return dockerHelper.StartContainerOptions{
 		ImageName: string(id),
 		Env: []string{
-			"JUPYTER_TOKEN=" + f.Password,
+			JUPYTER_TOKEN + "=" + f.Password,
 		},
 		PortBindings: nat.PortMap{
 			"8888/tcp": []nat.PortBinding{
