@@ -47,7 +47,7 @@ func (a AllowedImages) RdsDir() string {
 
 func (f Factory) Image(img AllowedImages) dockerHelper.StartContainerOptions {
 	switch img {
-	case ImageJupyterHub, ImageTorchBook, ImageMLBook:
+	case ImageJupyterHub, ImageTorchBook, ImageMLBook, ImageBase:
 		return f.jupyterbook(img)
 	default:
 		return dockerHelper.StartContainerOptions{}
