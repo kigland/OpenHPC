@@ -48,6 +48,11 @@ func (c ContainerInfo) String() string {
 }
 
 func CreateContainer(dk *dockerHelper.DockerHelper, imageName image.AllowedImages, username, passwd string, port int, project string) (ContainerInfo, error) {
+	rdsDir, rdsMountAt := getRDS(username, imageName)
+	return CreateContainerCustomRDS(dk, imageName, username, passwd, port, project, rdsDir, rdsMountAt)
+}
+
+func CreateContainerCustomRDS(dk *dockerHelper.DockerHelper, imageName image.AllowedImages, username, passwd string, port int, project string, rdsDir string, rdsMountAt string) (ContainerInfo, error) {
 	img := image.Factory{
 		Password: passwd,
 		BindHost: consts.CONTAINER_HOST,
@@ -58,7 +63,6 @@ func CreateContainer(dk *dockerHelper.DockerHelper, imageName image.AllowedImage
 	svgT := svcTag.New(username).WithProject(project)
 	img.ContainerName = svgT.String()
 
-	rdsDir, rdsMountAt := getRDS(username, imageName)
 	img = img.WithMountRW(rdsDir, rdsMountAt)
 
 	id, err := dk.StartContainer(img, true)
@@ -72,8 +76,4 @@ func CreateContainer(dk *dockerHelper.DockerHelper, imageName image.AllowedImage
 		Port:  port,
 		CName: img.ContainerName,
 	}, nil
-}
-
-func CreateContainerWithSvgTag(dk *dockerHelper.DockerHelper, imageName image.AllowedImages, svgTag svcTag.SvcTag, passwd string, port int) (ContainerInfo, error) {
-	return CreateContainer(dk, imageName, svgTag.Owner, passwd, port, svgTag.Project)
 }

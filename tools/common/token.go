@@ -79,5 +79,15 @@ func Upgrade(cid string) (ContainerInfo, error) {
 		return ContainerInfo{}, fmt.Errorf("port not found")
 	}
 
-	return CreateContainerWithSvgTag(DockerHelper, img, ids.SvcTag, token, port)
+	rdsFrom, rdsTo := "", ""
+
+	for _, m := range inspect.Mounts {
+		if strings.Contains(m.Destination, "/rds") {
+			rdsFrom = m.Source
+			rdsTo = m.Destination
+			break
+		}
+	}
+
+	return CreateContainerCustomRDS(DockerHelper, img, ids.SvcTag.Owner, token, port, ids.SvcTag.Project, rdsFrom, rdsTo)
 }
