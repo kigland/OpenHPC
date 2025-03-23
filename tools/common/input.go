@@ -72,10 +72,6 @@ func InputImage() image.AllowedImages {
 	}
 	idx := InputWithPrompt("Index:")
 	if idx == "" {
-		log.Fatalf("Index cannot be empty")
-		return ""
-	}
-	if idx == "" {
 		return image.ALLOWED_IMAGES[0]
 	}
 	idxInt, err := strconv.Atoi(idx)
