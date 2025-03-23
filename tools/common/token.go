@@ -5,14 +5,15 @@ import (
 	"log"
 	"strings"
 
-	"github.com/kigland/HPC-Scheduler/lib/utils"
+	"github.com/KevinZonda/GoX/pkg/ruby"
+	"github.com/KevinZonda/GoX/pkg/stringx"
 )
 
 func Token(cid string) []string {
 	env := Env(cid)
 	var tokens []string
 	for _, e := range env {
-		if strings.Contains(utils.TrimLower(e), "token") {
+		if strings.Contains(stringx.TrimLower(e), "token") {
 			tokens = append(tokens, e)
 		}
 	}
@@ -25,6 +26,6 @@ func Env(cid string) []string {
 		log.Fatalf("Container not found or not managed by KHS")
 		return nil
 	}
-	inspect := utils.RdrErr(DockerHelper.Cli().ContainerInspect(context.Background(), summary.ID))
+	inspect := ruby.RdrErr(DockerHelper.Cli().ContainerInspect(context.Background(), summary.ID))
 	return inspect.Config.Env
 }

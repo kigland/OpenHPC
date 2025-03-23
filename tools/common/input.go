@@ -5,7 +5,9 @@ import (
 	"log"
 	"strconv"
 
+	"github.com/KevinZonda/GoX/pkg/intx"
 	"github.com/KevinZonda/GoX/pkg/panicx"
+	"github.com/KevinZonda/GoX/pkg/stringx"
 	"github.com/kigland/HPC-Scheduler/lib/utils"
 )
 
@@ -22,7 +24,7 @@ func InputPort(left int, right int) int {
 
 	port, err := strconv.Atoi(portStr)
 	panicx.NotNilErr(err)
-	if port < left || port > right {
+	if !intx.InRange(port, left, right) {
 		log.Fatalf("Invalid port: %d", port)
 		return 0
 	}
@@ -40,7 +42,7 @@ func InputUsername() string {
 
 func InputProject() string {
 	project := InputWithPrompt("Project:")
-	return utils.TrimLower(project)
+	return stringx.TrimLower(project)
 }
 
 func InputTokenOrGenerate(minLen int) string {

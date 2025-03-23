@@ -2,8 +2,8 @@ package vm
 
 import (
 	"log"
-	"math/rand"
 
+	"github.com/KevinZonda/GoX/pkg/randx"
 	"github.com/gin-gonic/gin"
 	"github.com/kigland/HPC-Scheduler/coodinator/controller/mid"
 	"github.com/kigland/HPC-Scheduler/coodinator/models/dboper"
@@ -31,7 +31,7 @@ func request(c *gin.Context) {
 	img := image.Factory{
 		Password: passwd,
 		BindHost: consts.CONTAINER_HOST,
-		BindPort: consts.LOW_PORT + rand.Intn(consts.HIGH_PORT-consts.LOW_PORT),
+		BindPort: randx.RndRange(consts.LOW_PORT, consts.HIGH_PORT),
 	}.Image(image.ImageTorchBook).WithGPU(1)
 	img.AutoRemove = true
 

@@ -5,11 +5,11 @@ import (
 	"os"
 	"strings"
 
+	"github.com/KevinZonda/GoX/pkg/ruby"
 	"github.com/disiqueira/gotree"
 	"github.com/docker/docker/api/types/container"
 	"github.com/kigland/HPC-Scheduler/lib/dockerHelper"
 	"github.com/kigland/HPC-Scheduler/lib/svcTag"
-	"github.com/kigland/HPC-Scheduler/lib/utils"
 	"github.com/kigland/HPC-Scheduler/tools/common"
 )
 
@@ -20,7 +20,7 @@ func List() {
 		return
 	}
 
-	uidToContainers := utils.RdrErr(common.DockerHelper.UserContainerRelations())
+	uidToContainers := ruby.RdrErr(common.DockerHelper.UserContainerRelations())
 	tree := SummaryToTree(uidToContainers, false)
 	fmt.Println(tree.Print())
 }
@@ -65,7 +65,7 @@ func SummaryToTree(uidToContainers map[string]map[string]container.Summary, show
 	return tree
 }
 func ListUser(u string) {
-	uidToContainers := utils.RdrErr(common.DockerHelper.UserContainerRelations())
+	uidToContainers := ruby.RdrErr(common.DockerHelper.UserContainerRelations())
 	u = strings.TrimSpace(u)
 	if u == "" {
 		panic("user is empty")

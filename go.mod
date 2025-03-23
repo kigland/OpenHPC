@@ -3,7 +3,7 @@ module github.com/kigland/HPC-Scheduler
 go 1.23.1
 
 require (
-	github.com/KevinZonda/GoX v0.0.18
+	github.com/KevinZonda/GoX v0.0.20
 	github.com/chzyer/readline v1.5.1
 	github.com/disiqueira/gotree v1.0.0
 	github.com/gin-contrib/cors v1.7.3

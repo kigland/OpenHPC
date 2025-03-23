@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/KevinZonda/GoX/pkg/stringx"
 	"github.com/kigland/HPC-Scheduler/lib/consts"
 	"github.com/kigland/HPC-Scheduler/lib/utils"
 )
@@ -23,8 +24,8 @@ func (s SvcTag) ShortCode() string {
 }
 
 func (s SvcTag) String() string {
-	o := utils.TrimLower(s.Owner)
-	proj := utils.TrimLower(s.Project)
+	o := stringx.TrimLower(s.Owner)
+	proj := stringx.TrimLower(s.Project)
 	if proj == "" {
 		return s.Identifier + "-" + o + "-" + s.Rand
 	}
@@ -70,11 +71,11 @@ func Parse(tag string) (SvcTag, error) {
 
 func New(owner string) SvcTag {
 	rand := utils.RndId(DEFAULT_RAND_LENGTH)
-	return SvcTag{Identifier: consts.IDENTIFIER, Owner: utils.TrimLower(owner), Rand: rand}
+	return SvcTag{Identifier: consts.IDENTIFIER, Owner: stringx.TrimLower(owner), Rand: rand}
 }
 
 func (s SvcTag) WithProject(project string) SvcTag {
-	s.Project = utils.TrimLower(project)
+	s.Project = stringx.TrimLower(project)
 	return s
 }
 
@@ -84,7 +85,7 @@ func (s SvcTag) WithIdentifier(identifier string) SvcTag {
 }
 
 func (s SvcTag) WithOwner(owner string) SvcTag {
-	s.Owner = utils.TrimLower(owner)
+	s.Owner = stringx.TrimLower(owner)
 	return s
 }
 
