@@ -31,6 +31,8 @@ func main() {
 		handler.Stop()
 	case "ids", "id":
 		handler.IDs()
+	case "rds", "r":
+		handler.RDS()
 	default:
 		help()
 	}
@@ -45,6 +47,7 @@ Usage hpc [command]:
   - token|t    [node_id?] : show tokens of the VNode
   - stop|s     [node_id?] : stop the VNode
   - ids|id     [node_id?] : show CID/SCID/SvcTag/ShortCode of the VNode
+  - rds|r      [action]   : manage RDS
 `
 	fmt.Println(strings.TrimSpace(h))
 }

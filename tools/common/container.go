@@ -12,7 +12,7 @@ import (
 	"github.com/kigland/HPC-Scheduler/lib/svcTag"
 )
 
-var r = rds.RDS{
+var Rds = rds.RDS{
 	BasePath: consts.RDS_PATH,
 }
 
@@ -21,7 +21,7 @@ func getRDS(username string, imageName image.AllowedImages) (rdsDir string, rdsM
 	subfolder, err := Rl.Readline()
 	panicx.NotNilErr(err)
 
-	rdsDir, err = r.GetRDSPath(username, subfolder)
+	rdsDir, err = Rds.GetRDSPath(username, subfolder)
 	if err == nil {
 		return rdsDir, imageName.RdsDir()
 	}
