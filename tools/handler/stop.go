@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/KevinZonda/GoX/pkg/panicx"
 	"github.com/docker/docker/api/types/container"
 	"github.com/kigland/HPC-Scheduler/tools/common"
 )
@@ -29,5 +30,5 @@ func stop(cid string) {
 		return
 	}
 
-	common.DockerHelper.Cli().ContainerStop(context.Background(), summary.ID, container.StopOptions{})
+	panicx.NotNilErr(common.DockerHelper.Cli().ContainerStop(context.Background(), summary.ID, container.StopOptions{}))
 }
