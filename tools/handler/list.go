@@ -49,7 +49,7 @@ func containerToStr(c container.Summary, tag string, showCID bool) string {
 		return fmt.Sprintf("[%s] %s %s %s CID: %s", tagName, c.Status, strings.Join(ports, ", "), mount, c.ID)
 	}
 	scid := dockerHelper.ShortId(c.ID)
-	return fmt.Sprintf("[%s][%s] %s %s\n%s", scid, tagName, c.Status, strings.Join(ports, ", "), mount)
+	return fmt.Sprintf("[%s][%s] %s %s %s", scid, tagName, c.Status, strings.Join(ports, ", "), mount)
 
 }
 
