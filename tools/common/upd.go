@@ -60,5 +60,5 @@ func Upgrade(cid string) (ContainerInfo, error) {
 	time.Sleep(time.Second * 4)
 
 	fmt.Println("Creating new container...")
-	return CreateContainerCustomRDS(DockerHelper, img, ids.SvcTag.Owner, token, port, ids.SvcTag.Project, rdsFrom, rdsTo)
+	return CreateContainerCustomRDS(DockerHelper, img, ids.SvcTag, token, port, rdsFrom, rdsTo)
 }

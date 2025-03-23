@@ -49,10 +49,11 @@ func (c ContainerInfo) String() string {
 
 func CreateContainer(dk *dockerHelper.DockerHelper, imageName image.AllowedImages, username, passwd string, port int, project string) (ContainerInfo, error) {
 	rdsDir, rdsMountAt := getRDS(username, imageName)
-	return CreateContainerCustomRDS(dk, imageName, username, passwd, port, project, rdsDir, rdsMountAt)
+	tag := svcTag.New(username).WithProject(project)
+	return CreateContainerCustomRDS(dk, imageName, tag, passwd, port, rdsDir, rdsMountAt)
 }
 
-func CreateContainerCustomRDS(dk *dockerHelper.DockerHelper, imageName image.AllowedImages, username, passwd string, port int, project string, rdsDir string, rdsMountAt string) (ContainerInfo, error) {
+func CreateContainerCustomRDS(dk *dockerHelper.DockerHelper, imageName image.AllowedImages, tag svcTag.SvcTag, passwd string, port int, rdsDir string, rdsMountAt string) (ContainerInfo, error) {
 	img := image.Factory{
 		Password: passwd,
 		BindHost: consts.CONTAINER_HOST,
@@ -60,8 +61,7 @@ func CreateContainerCustomRDS(dk *dockerHelper.DockerHelper, imageName image.All
 	}.Image(imageName).WithGPU(1)
 	img.AutoRemove = true
 
-	svgT := svcTag.New(username).WithProject(project)
-	img.ContainerName = svgT.String()
+	img.ContainerName = tag.String()
 
 	img = img.WithMountRW(rdsDir, rdsMountAt)
 
