@@ -29,6 +29,8 @@ type StartContainerOptions struct {
 	AutoRemove   bool
 	Labels       map[string]string
 
+	ShmSize int64
+
 	Resources container.Resources
 }
 
@@ -56,6 +58,7 @@ func (sco StartContainerOptions) ToHostConfig() *container.HostConfig {
 		PortBindings: sco.PortBindings,
 		Binds:        sco.Binds,
 		AutoRemove:   sco.AutoRemove,
+		ShmSize:      sco.ShmSize,
 	}
 }
 

@@ -65,6 +65,9 @@ func CreateContainerCustomRDS(dk *dockerHelper.DockerHelper, imageName image.All
 
 	img = img.WithMountRW(rdsDir, rdsMountAt)
 
+	shmSize := InputShmSize()
+	img = img.WithShmSize(shmSize)
+
 	id, err := dk.StartContainer(img, true)
 	if err != nil {
 		return ContainerInfo{}, err

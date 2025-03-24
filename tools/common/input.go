@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/KevinZonda/GoX/pkg/intx"
 	"github.com/KevinZonda/GoX/pkg/panicx"
@@ -81,4 +82,19 @@ func InputImage() image.AllowedImages {
 		return ""
 	}
 	return image.ALLOWED_IMAGES[idxInt]
+}
+
+func InputShmSize() int64 {
+	shmSize := InputWithPrompt("ShmSize (MB) or (_GB):")
+	if shmSize == "" {
+		return 64
+	}
+	factor := 1
+	if strings.HasSuffix(shmSize, "GB") {
+		factor = 1024
+		shmSize = strings.TrimSuffix(shmSize, "GB")
+	}
+	shmSizeInt, err := strconv.Atoi(shmSize)
+	panicx.NotNilErr(err)
+	return int64(shmSizeInt) * int64(factor)
 }
