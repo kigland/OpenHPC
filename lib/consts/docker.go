@@ -2,6 +2,7 @@ package consts
 
 const (
 	DOCKER_UNIX_SOCKET = "unix:///var/run/docker.sock"
+	PODMAN_UNIX_SOCKET = "unix:///run/podman/podman.sock"
 )
 
 const (
