@@ -14,8 +14,11 @@ import (
 )
 
 func InputWithPrompt(prompt string) string {
-	fmt.Println(prompt)
-	return rlStr()
+	prompt = strings.TrimSpace(prompt)
+	if prompt != "" {
+		prompt += " "
+	}
+	return rlStrWithPrompt(prompt)
 }
 
 func InputPort(left int, right int) int {
@@ -33,22 +36,22 @@ func InputPort(left int, right int) int {
 	return port
 }
 
-func InputUsername() string {
-	username := InputWithPrompt("Username:")
-	if username == "" {
-		log.Fatalf("Username cannot be empty")
+func InputOwner() string {
+	owner := InputWithPrompt("Enter VNode's Owner:")
+	if owner == "" {
+		log.Fatalf("Owner cannot be empty")
 		return ""
 	}
-	return username
+	return owner
 }
 
 func InputProject() string {
-	project := InputWithPrompt("Project:")
+	project := InputWithPrompt("Enter VNode's Project (for SvcTag only):")
 	return stringx.TrimLower(project)
 }
 
 func InputTokenOrGenerate(minLen int) string {
-	token := InputWithPrompt("Token:")
+	token := InputWithPrompt("Enter VNode's Token (Keep empty to generate):")
 	if token == "" {
 		goto generate
 	}
@@ -67,11 +70,11 @@ generate:
 }
 
 func InputImage() image.AllowedImages {
-	fmt.Println("Select allowed Images, default [0]:")
+	fmt.Println("Select allowed Images:")
 	for i, img := range image.ALLOWED_IMAGES {
 		fmt.Println(i, ")", img)
 	}
-	idx := InputWithPrompt("Index:")
+	idx := InputWithPrompt("Index (default [0]):")
 	if idx == "" {
 		return image.ALLOWED_IMAGES[0]
 	}

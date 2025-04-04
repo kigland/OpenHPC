@@ -11,7 +11,7 @@ import (
 
 func Request() {
 	port := common.InputPort(consts.LOW_PORT, consts.HIGH_PORT)
-	username := common.InputUsername()
+	owner := common.InputOwner()
 	project := common.InputProject()
 	dk := common.DockerHelper
 
@@ -19,7 +19,7 @@ func Request() {
 
 	image := common.InputImage()
 
-	cinfo, err := common.CreateContainer(dk, image, username, token, port, project)
+	cinfo, err := common.CreateContainer(dk, image, owner, token, port, project)
 
 	if err != nil {
 		log.Fatalf("Failed to start container: %v", err)

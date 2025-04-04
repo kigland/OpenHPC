@@ -39,9 +39,9 @@ func rdsList() {
 
 }
 func rdsCreate() {
-	username := common.InputUsername()
+	owner := common.InputOwner()
 	subfolder := common.InputProject()
-	err := common.Rds.Create(username, subfolder)
+	err := common.Rds.Create(owner, subfolder)
 	if err != nil {
 		fmt.Println(err)
 		return
