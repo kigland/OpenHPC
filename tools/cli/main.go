@@ -25,7 +25,7 @@ func main() {
 		handler.List()
 	case "env", "e":
 		handler.Env()
-	case "token", "t":
+	case "token", "t", "tk":
 		handler.Token()
 	case "stop", "s", "rm", "remove":
 		handler.Stop()
@@ -47,7 +47,7 @@ Usage hpc [command]:
   - stop|s|rm|remove [node_id?] : stop the VNode
   - list|ls|ps|ll|l|status      : list all VNodes
   - env|e         [node_id?]    : show environment variables of the VNode
-  - token|t       [node_id?]    : show tokens of the VNode
+  - token|t|tk    [node_id?]    : show tokens of the VNode
   - ids|id        [node_id?]    : show CID/SCID/SvcTag/ShortCode of the VNode
   - rds|r         [action]      : manage RDS
   - upd|upgrade|u [node_id?]    : upgrade the VNode
