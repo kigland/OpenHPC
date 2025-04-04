@@ -96,5 +96,12 @@ func (d *DockerHelper) StartContainer(opts StartContainerOptions, pull bool) (co
 
 func (ops StartContainerOptions) WithAutoRestart() StartContainerOptions {
 	ops.AlwaysRestart = true
+	ops.AutoRemove = false
+	return ops
+}
+
+func (ops StartContainerOptions) WithAutoRemove() StartContainerOptions {
+	ops.AlwaysRestart = false
+	ops.AutoRemove = true
 	return ops
 }

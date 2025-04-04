@@ -26,8 +26,7 @@ func main() {
 		Password: passwd,
 		BindHost: consts.CONTAINER_HOST,
 		BindPort: 41000,
-	}.Image(image.ImageTorchBook).WithGPU(1)
-	img.AutoRemove = true
+	}.Image(image.ImageTorchBook).WithGPU(1).WithAutoRemove()
 
 	dk := dockerHelper.NewDockerHelper(cli)
 	svgT := svcTag.New("KevinZonda")
