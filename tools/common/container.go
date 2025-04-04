@@ -17,11 +17,9 @@ var Rds = rds.RDS{
 }
 
 func getRDS(username string, imageName image.AllowedImages) (rdsDir string, rdsMountAt string) {
-	fmt.Println("RDS Submodule?")
-	subfolder, err := Rl.Readline()
-	panicx.NotNilErr(err)
+	subfolder := InputWithPrompt("RDS Submodule (default \"\")")
 
-	rdsDir, err = Rds.GetRDSPath(username, subfolder)
+	rdsDir, err := Rds.GetRDSPath(username, subfolder)
 	if err == nil {
 		return rdsDir, imageName.RdsDir()
 	}
