@@ -21,6 +21,16 @@ func InputWithPrompt(prompt string) string {
 	return rlStrWithPrompt(prompt)
 }
 
+func ValidateInputAsSvgTagPart(input string) {
+	invalid := []string{"-", " ", "@", ";", "/"}
+	for _, v := range invalid {
+		if strings.Contains(input, v) {
+			log.Fatalf("Input cannot contain '%s': %s", v, input)
+			return
+		}
+	}
+}
+
 func InputPort(left int, right int) int {
 	if left > right {
 		left, right = right, left
@@ -42,12 +52,16 @@ func InputOwner() string {
 		log.Fatalf("Owner cannot be empty")
 		return ""
 	}
+	owner = stringx.TrimLower(owner)
+	ValidateInputAsSvgTagPart(owner)
 	return owner
 }
 
 func InputProject() string {
 	project := InputWithPrompt("Enter VNode's Project (for SvcTag only):")
-	return stringx.TrimLower(project)
+	project = stringx.TrimLower(project)
+	ValidateInputAsSvgTagPart(project)
+	return project
 }
 
 func InputTokenOrGenerate(minLen int) string {
