@@ -29,6 +29,8 @@ type StartContainerOptions struct {
 	AutoRemove   bool
 	Labels       map[string]string
 
+	AlwaysRestart bool
+
 	ShmSize int64
 
 	Resources container.Resources
@@ -53,12 +55,19 @@ func (sco StartContainerOptions) ToContainerConfig() *container.Config {
 }
 
 func (sco StartContainerOptions) ToHostConfig() *container.HostConfig {
+	restartPolicy := container.RestartPolicy{}
+	if sco.AlwaysRestart {
+		restartPolicy = container.RestartPolicy{
+			Name: "always",
+		}
+	}
 	return &container.HostConfig{
-		Resources:    sco.Resources,
-		PortBindings: sco.PortBindings,
-		Binds:        sco.Binds,
-		AutoRemove:   sco.AutoRemove,
-		ShmSize:      sco.ShmSize,
+		Resources:     sco.Resources,
+		PortBindings:  sco.PortBindings,
+		Binds:         sco.Binds,
+		AutoRemove:    sco.AutoRemove,
+		ShmSize:       sco.ShmSize,
+		RestartPolicy: restartPolicy,
 	}
 }
 
@@ -83,4 +92,9 @@ func (d *DockerHelper) StartContainer(opts StartContainerOptions, pull bool) (co
 	}
 
 	return resp.ID, nil
+}
+
+func (ops StartContainerOptions) WithAutoRestart() StartContainerOptions {
+	ops.AlwaysRestart = true
+	return ops
 }
