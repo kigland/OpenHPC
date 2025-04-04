@@ -40,7 +40,7 @@ func (c ContainerInfo) String() string {
 	sb := strings.Builder{}
 	sb.WriteString(fmt.Sprintf("URL    : http://%s:%d\n", consts.CONTAINER_HOST, c.Port))
 	if c.SSHPort != 0 {
-		sb.WriteString(fmt.Sprintf("SSH    : ssh -p %d jovyan@%s\n", c.SSHPort, consts.CONTAINER_HOST))
+		sb.WriteString(fmt.Sprintf("SSH    : ssh -p %d jovyan@%s\n", c.SSHPort, consts.SSH_BIND_HOST))
 	}
 	sb.WriteString(fmt.Sprintf("Token  : %s\n", c.Token))
 	sb.WriteString(fmt.Sprintf("RDS    : %s\n", c.RDSAt))
