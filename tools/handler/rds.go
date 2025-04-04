@@ -6,7 +6,7 @@ import (
 	"strings"
 
 	"github.com/KevinZonda/GoX/pkg/ruby"
-	"github.com/kigland/HPC-Scheduler/tools/common"
+	"github.com/kigland/OpenHPC/tools/common"
 )
 
 func RDS() {

@@ -2,7 +2,7 @@ package mid
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/kigland/HPC-Scheduler/coodinator/models/dboper"
+	"github.com/kigland/OpenHPC/coodinator/models/dboper"
 )
 
 const MID_USER_ID = "mid_user_id"

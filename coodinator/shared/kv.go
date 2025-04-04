@@ -1,8 +1,8 @@
 package shared
 
 import (
-	"github.com/kigland/HPC-Scheduler/coodinator/models/dbmod"
-	"github.com/kigland/HPC-Scheduler/lib/store"
+	"github.com/kigland/OpenHPC/coodinator/models/dbmod"
+	"github.com/kigland/OpenHPC/lib/store"
 )
 
 var GCKVStore store.IKVStore

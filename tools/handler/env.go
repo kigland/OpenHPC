@@ -5,7 +5,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/kigland/HPC-Scheduler/tools/common"
+	"github.com/kigland/OpenHPC/tools/common"
 )
 
 func Env() {

@@ -1,4 +1,4 @@
-module github.com/kigland/HPC-Scheduler
+module github.com/kigland/OpenHPC
 
 go 1.23.1
 

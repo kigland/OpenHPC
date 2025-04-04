@@ -6,7 +6,7 @@ import (
 
 	"github.com/docker/docker/api/types/container"
 	"github.com/docker/docker/api/types/filters"
-	"github.com/kigland/HPC-Scheduler/lib/svcTag"
+	"github.com/kigland/OpenHPC/lib/svcTag"
 )
 
 func (d *DockerHelper) ListAllContainers(runningOnly bool) ([]container.Summary, error) {

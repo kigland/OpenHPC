@@ -2,7 +2,7 @@ package dockerHelper
 
 import (
 	"github.com/docker/docker/client"
-	"github.com/kigland/HPC-Scheduler/lib/consts"
+	"github.com/kigland/OpenHPC/lib/consts"
 )
 
 type DockerHelper struct {

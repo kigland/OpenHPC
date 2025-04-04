@@ -6,11 +6,11 @@ import (
 	"time"
 
 	"github.com/docker/docker/client"
-	"github.com/kigland/HPC-Scheduler/coodinator/utils"
-	"github.com/kigland/HPC-Scheduler/lib/consts"
-	"github.com/kigland/HPC-Scheduler/lib/dockerHelper"
-	"github.com/kigland/HPC-Scheduler/lib/image"
-	"github.com/kigland/HPC-Scheduler/lib/svcTag"
+	"github.com/kigland/OpenHPC/coodinator/utils"
+	"github.com/kigland/OpenHPC/lib/consts"
+	"github.com/kigland/OpenHPC/lib/dockerHelper"
+	"github.com/kigland/OpenHPC/lib/image"
+	"github.com/kigland/OpenHPC/lib/svcTag"
 )
 
 func main() {

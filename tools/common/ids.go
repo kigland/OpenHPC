@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/kigland/HPC-Scheduler/lib/dockerHelper"
-	"github.com/kigland/HPC-Scheduler/lib/svcTag"
+	"github.com/kigland/OpenHPC/lib/dockerHelper"
+	"github.com/kigland/OpenHPC/lib/svcTag"
 )
 
 type VNodeId struct {

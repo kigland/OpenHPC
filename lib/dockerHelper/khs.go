@@ -4,7 +4,7 @@ import (
 	"strings"
 
 	"github.com/docker/docker/api/types/container"
-	"github.com/kigland/HPC-Scheduler/lib/svcTag"
+	"github.com/kigland/OpenHPC/lib/svcTag"
 )
 
 func (d *DockerHelper) getRelatedName(c container.Summary) (string, svcTag.SvcTag) {

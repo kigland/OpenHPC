@@ -9,8 +9,8 @@ import (
 	"github.com/KevinZonda/GoX/pkg/intx"
 	"github.com/KevinZonda/GoX/pkg/panicx"
 	"github.com/KevinZonda/GoX/pkg/stringx"
-	"github.com/kigland/HPC-Scheduler/lib/image"
-	"github.com/kigland/HPC-Scheduler/lib/utils"
+	"github.com/kigland/OpenHPC/lib/image"
+	"github.com/kigland/OpenHPC/lib/utils"
 )
 
 func InputWithPrompt(prompt string) string {

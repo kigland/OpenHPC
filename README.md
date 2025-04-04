@@ -1,4 +1,4 @@
-# HPC Scheduler
+# Kigland OpenHPC
 
 A lightweight workload scheduler. Similar to Slurm, but simpler and easier for small-size distributed HPC cluster.
 

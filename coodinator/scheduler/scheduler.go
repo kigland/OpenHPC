@@ -5,7 +5,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/kigland/HPC-Scheduler/coodinator/shared"
+	"github.com/kigland/OpenHPC/coodinator/shared"
 )
 
 type Scheduler struct {

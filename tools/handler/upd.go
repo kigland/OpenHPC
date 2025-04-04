@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/kigland/HPC-Scheduler/tools/common"
+	"github.com/kigland/OpenHPC/tools/common"
 )
 
 func Upd() {

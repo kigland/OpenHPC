@@ -2,7 +2,7 @@ package ping
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/kigland/HPC-Scheduler/coodinator/controller/types"
+	"github.com/kigland/OpenHPC/coodinator/controller/types"
 )
 
 type Controller struct{}

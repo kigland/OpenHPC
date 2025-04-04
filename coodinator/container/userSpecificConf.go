@@ -6,9 +6,9 @@ import (
 	"time"
 
 	"github.com/docker/docker/api/types/container"
-	"github.com/kigland/HPC-Scheduler/coodinator/models/dbmod"
-	"github.com/kigland/HPC-Scheduler/coodinator/shared"
-	"github.com/kigland/HPC-Scheduler/lib/dockerHelper"
+	"github.com/kigland/OpenHPC/coodinator/models/dbmod"
+	"github.com/kigland/OpenHPC/coodinator/shared"
+	"github.com/kigland/OpenHPC/lib/dockerHelper"
 )
 
 type UserSpecificConf struct {

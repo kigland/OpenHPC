@@ -5,8 +5,8 @@ import (
 
 	"github.com/docker/docker/api/types/container"
 	"github.com/docker/docker/client"
-	"github.com/kigland/HPC-Scheduler/lib/consts"
-	"github.com/kigland/HPC-Scheduler/lib/dockerHelper"
+	"github.com/kigland/OpenHPC/lib/consts"
+	"github.com/kigland/OpenHPC/lib/dockerHelper"
 )
 
 func main() {

@@ -5,14 +5,14 @@ import (
 
 	"github.com/KevinZonda/GoX/pkg/randx"
 	"github.com/gin-gonic/gin"
-	"github.com/kigland/HPC-Scheduler/coodinator/controller/mid"
-	"github.com/kigland/HPC-Scheduler/coodinator/models/dboper"
-	"github.com/kigland/HPC-Scheduler/coodinator/models/openapi"
-	"github.com/kigland/HPC-Scheduler/coodinator/shared"
-	"github.com/kigland/HPC-Scheduler/coodinator/utils"
-	"github.com/kigland/HPC-Scheduler/lib/consts"
-	"github.com/kigland/HPC-Scheduler/lib/image"
-	"github.com/kigland/HPC-Scheduler/lib/svcTag"
+	"github.com/kigland/OpenHPC/coodinator/controller/mid"
+	"github.com/kigland/OpenHPC/coodinator/models/dboper"
+	"github.com/kigland/OpenHPC/coodinator/models/openapi"
+	"github.com/kigland/OpenHPC/coodinator/shared"
+	"github.com/kigland/OpenHPC/coodinator/utils"
+	"github.com/kigland/OpenHPC/lib/consts"
+	"github.com/kigland/OpenHPC/lib/image"
+	"github.com/kigland/OpenHPC/lib/svcTag"
 )
 
 func request(c *gin.Context) {

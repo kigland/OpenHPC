@@ -1,7 +1,7 @@
 package dbmod
 
 import (
-	"github.com/kigland/HPC-Scheduler/lib/store"
+	"github.com/kigland/OpenHPC/lib/store"
 	"gorm.io/gorm"
 )
 

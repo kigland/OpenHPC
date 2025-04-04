@@ -5,8 +5,8 @@ import (
 	"strings"
 
 	"github.com/KevinZonda/GoX/pkg/stringx"
-	"github.com/kigland/HPC-Scheduler/lib/consts"
-	"github.com/kigland/HPC-Scheduler/lib/utils"
+	"github.com/kigland/OpenHPC/lib/consts"
+	"github.com/kigland/OpenHPC/lib/utils"
 )
 
 type SvcTag struct {

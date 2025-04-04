@@ -8,9 +8,9 @@ import (
 	"github.com/KevinZonda/GoX/pkg/ruby"
 	"github.com/disiqueira/gotree"
 	"github.com/docker/docker/api/types/container"
-	"github.com/kigland/HPC-Scheduler/lib/dockerHelper"
-	"github.com/kigland/HPC-Scheduler/lib/svcTag"
-	"github.com/kigland/HPC-Scheduler/tools/common"
+	"github.com/kigland/OpenHPC/lib/dockerHelper"
+	"github.com/kigland/OpenHPC/lib/svcTag"
+	"github.com/kigland/OpenHPC/tools/common"
 )
 
 func List() {

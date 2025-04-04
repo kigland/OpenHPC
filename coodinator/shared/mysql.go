@@ -3,7 +3,7 @@ package shared
 import (
 	"log"
 
-	"github.com/kigland/HPC-Scheduler/coodinator/models/dbmod"
+	"github.com/kigland/OpenHPC/coodinator/models/dbmod"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )

@@ -3,7 +3,7 @@ package svcTag_test
 import (
 	"testing"
 
-	"github.com/kigland/HPC-Scheduler/lib/svcTag"
+	"github.com/kigland/OpenHPC/lib/svcTag"
 )
 
 func TestSvcTag(t *testing.T) {

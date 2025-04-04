@@ -5,8 +5,8 @@ import (
 	"os"
 	"strings"
 
-	"github.com/kigland/HPC-Scheduler/tools/common"
-	"github.com/kigland/HPC-Scheduler/tools/handler"
+	"github.com/kigland/OpenHPC/tools/common"
+	"github.com/kigland/OpenHPC/tools/handler"
 )
 
 func main() {

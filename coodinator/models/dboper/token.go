@@ -1,8 +1,8 @@
 package dboper
 
 import (
-	"github.com/kigland/HPC-Scheduler/coodinator/models/dbmod"
-	"github.com/kigland/HPC-Scheduler/coodinator/shared"
+	"github.com/kigland/OpenHPC/coodinator/models/dbmod"
+	"github.com/kigland/OpenHPC/coodinator/shared"
 )
 
 func GetTokenByToken(token string) (dbmod.Token, error) {

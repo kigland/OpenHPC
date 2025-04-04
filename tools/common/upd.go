@@ -10,7 +10,7 @@ import (
 	"github.com/KevinZonda/GoX/pkg/panicx"
 	"github.com/KevinZonda/GoX/pkg/ruby"
 	"github.com/docker/docker/api/types/container"
-	"github.com/kigland/HPC-Scheduler/lib/image"
+	"github.com/kigland/OpenHPC/lib/image"
 )
 
 func Upgrade(cid string) (ContainerInfo, error) {

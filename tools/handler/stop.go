@@ -7,7 +7,7 @@ import (
 
 	"github.com/KevinZonda/GoX/pkg/panicx"
 	"github.com/docker/docker/api/types/container"
-	"github.com/kigland/HPC-Scheduler/tools/common"
+	"github.com/kigland/OpenHPC/tools/common"
 )
 
 func Stop() {
