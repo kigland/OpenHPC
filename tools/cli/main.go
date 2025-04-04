@@ -21,7 +21,7 @@ func main() {
 	switch strings.ToLower(os.Args[1]) {
 	case "req", "request", "create", "c", "start":
 		handler.Request()
-	case "list", "ls", "ps", "ll", "l":
+	case "list", "ls", "ps", "ll", "l", "status":
 		handler.List()
 	case "env", "e":
 		handler.Env()
@@ -45,7 +45,7 @@ func help() {
 Usage hpc [command]:
   - req|request|create|c|start  : create a new VNode
   - stop|s|rm|remove [node_id?] : stop the VNode
-  - list|ls|ps|ll|l             : list all VNodes
+  - list|ls|ps|ll|l|status      : list all VNodes
   - env|e         [node_id?]    : show environment variables of the VNode
   - token|t       [node_id?]    : show tokens of the VNode
   - ids|id        [node_id?]    : show CID/SCID/SvcTag/ShortCode of the VNode

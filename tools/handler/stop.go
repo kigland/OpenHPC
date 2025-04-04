@@ -1,12 +1,10 @@
 package handler
 
 import (
-	"context"
 	"fmt"
 	"os"
 
 	"github.com/KevinZonda/GoX/pkg/panicx"
-	"github.com/docker/docker/api/types/container"
 	"github.com/kigland/OpenHPC/tools/common"
 )
 
@@ -30,5 +28,6 @@ func stop(cid string) {
 		return
 	}
 
-	panicx.NotNilErr(common.DockerHelper.Cli().ContainerStop(context.Background(), summary.ID, container.StopOptions{}))
+	panicx.NotNilErr(common.DockerHelper.StopContainer(summary.ID))
+	panicx.NotNilErr(common.DockerHelper.RemoveContainer(summary.ID))
 }
