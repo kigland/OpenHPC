@@ -32,7 +32,7 @@ func request(c *gin.Context) {
 		Password: passwd,
 		BindHost: consts.CONTAINER_HOST,
 		BindPort: randx.RndRange(consts.LOW_PORT, consts.HIGH_PORT),
-	}.Image(image.ImageTorchBook).WithGPU(true, 1).WithAutoRestart()
+	}.Image(image.ImageTorchBook).WithGPU(1).WithAutoRestart()
 
 	svgT := svcTag.New(user.ID)
 	img.ContainerName = svgT.String()
