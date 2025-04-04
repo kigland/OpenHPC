@@ -29,11 +29,11 @@ func getRDS(username string, imageName image.AllowedImages) (rdsDir string, rdsM
 
 type ContainerInfo struct {
 	CID     string
-	CName   string
 	RDSAt   string
 	Token   string
 	Port    int
 	SSHPort int
+	SvcTag  svcTag.SvcTag
 }
 
 func (c ContainerInfo) String() string {
@@ -43,9 +43,11 @@ func (c ContainerInfo) String() string {
 		sb.WriteString(fmt.Sprintf("SSH    : ssh -p %d jovyan@%s\n", c.SSHPort, consts.CONTAINER_HOST))
 	}
 	sb.WriteString(fmt.Sprintf("Token  : %s\n", c.Token))
-	sb.WriteString(fmt.Sprintf("CID    : %s\n", c.CID))
 	sb.WriteString(fmt.Sprintf("RDS    : %s\n", c.RDSAt))
-	sb.WriteString(fmt.Sprintf("SvcTag : %s", c.CName))
+	sb.WriteString(fmt.Sprintf("CID    : %s\n", c.CID))
+	sb.WriteString(fmt.Sprintf("SCID   : %s\n", dockerHelper.ShortId(c.CID)))
+	sb.WriteString(fmt.Sprintf("SvcTag : %s\n", c.SvcTag.String()))
+	sb.WriteString(fmt.Sprintf("SC     : %s\n", c.SvcTag.ShortCode()))
 	return sb.String()
 }
 
@@ -80,12 +82,15 @@ func CreateContainerCustomRDS(dk *dockerHelper.DockerHelper, imageName image.All
 	if err != nil {
 		return ContainerInfo{}, err
 	}
+	if tag.String() != img.ContainerName {
+		fmt.Printf("container name mismatch: %s (SvcTag) != %s (CID)\n", tag.String(), img.ContainerName)
+	}
 	return ContainerInfo{
 		CID:     id,
 		RDSAt:   rdsMountAt,
 		Token:   passwd,
 		Port:    port,
 		SSHPort: sshPort,
-		CName:   img.ContainerName,
+		SvcTag:  tag,
 	}, nil
 }
