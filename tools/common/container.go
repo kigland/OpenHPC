@@ -16,10 +16,8 @@ var Rds = rds.RDS{
 	BasePath: consts.RDS_PATH,
 }
 
-func getRDS(username string, imageName image.AllowedImages) (rdsDir string, rdsMountAt string) {
-	subfolder := InputWithPrompt("RDS Submodule (default \"\")")
-
-	rdsDir, err := Rds.GetRDSPath(username, subfolder)
+func GetRDSWithSubfolder(owner string, subfolder string, imageName image.AllowedImages) (rdsDir string, rdsMountAt string) {
+	rdsDir, err := Rds.GetRDSPath(owner, subfolder)
 	if err == nil {
 		return rdsDir, imageName.RdsDir()
 	}
@@ -49,12 +47,6 @@ func (c ContainerInfo) String() string {
 	sb.WriteString(fmt.Sprintf("SvcTag : %s\n", c.SvcTag.String()))
 	sb.WriteString(fmt.Sprintf("SC     : %s", c.SvcTag.ShortCode()))
 	return sb.String()
-}
-
-func CreateContainer(dk *dockerHelper.DockerHelper, imageName image.AllowedImages, username, passwd string, port int, project string, needSSH bool) (ContainerInfo, error) {
-	rdsDir, rdsMountAt := getRDS(username, imageName)
-	tag := svcTag.New(username).WithProject(project)
-	return CreateContainerCustomRDS(dk, imageName, tag, passwd, port, rdsDir, rdsMountAt, needSSH)
 }
 
 func CreateContainerCustomRDS(dk *dockerHelper.DockerHelper, imageName image.AllowedImages, tag svcTag.SvcTag, passwd string, port int, rdsDir string, rdsMountAt string, needSSH bool) (ContainerInfo, error) {

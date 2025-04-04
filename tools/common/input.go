@@ -31,17 +31,27 @@ func ValidateInputAsSvgTagPart(input string) {
 	}
 }
 
-func InputNeedSSH() bool {
-	ssh := stringx.TrimLower(InputWithPrompt("Need SSH? (y/n):"))
-	switch ssh {
+func InputYesNo(prompt string, defaultVal bool) bool {
+	yesNo := stringx.TrimLower(InputWithPrompt(prompt))
+	switch yesNo {
 	case "y", "yes", "true", "1":
 		return true
 	case "n", "no", "false", "0":
 		return false
+	case "":
+		return defaultVal
 	default:
-		log.Fatalf("Invalid input: %s", ssh)
-		return false
+		log.Fatalf("Invalid input: %s", yesNo)
+		return defaultVal
 	}
+}
+
+func InputNeedSSH() bool {
+	return InputYesNo("Need SSH? (y/n) (default: n):", false)
+}
+
+func InputEnableRDS() bool {
+	return InputYesNo("Enable RDS? (y/n) (default: y):", true)
 }
 
 func InputPort(left int, right int) int {
@@ -115,14 +125,15 @@ func InputImage() image.AllowedImages {
 }
 
 func InputShmSize() int64 {
-	shmSize := InputWithPrompt("ShmSize (MB) or (_GB):")
+	shmSize := InputWithPrompt("ShmSize (MB) or (_GB) (default: 64MB):")
+	shmSize = stringx.TrimLower(shmSize)
 	if shmSize == "" {
 		return 64
 	}
 	factor := 1
-	if strings.HasSuffix(shmSize, "GB") {
+	if strings.HasSuffix(shmSize, "gb") {
 		factor = 1024
-		shmSize = strings.TrimSuffix(shmSize, "GB")
+		shmSize = strings.TrimSuffix(shmSize, "gb")
 	}
 	shmSizeInt, err := strconv.Atoi(shmSize)
 	panicx.NotNilErr(err)
