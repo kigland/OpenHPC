@@ -31,6 +31,19 @@ func ValidateInputAsSvgTagPart(input string) {
 	}
 }
 
+func InputNeedSSH() bool {
+	ssh := stringx.TrimLower(InputWithPrompt("Need SSH? (y/n):"))
+	switch ssh {
+	case "y", "yes", "true", "1":
+		return true
+	case "n", "no", "false", "0":
+		return false
+	default:
+		log.Fatalf("Invalid input: %s", ssh)
+		return false
+	}
+}
+
 func InputPort(left int, right int) int {
 	if left > right {
 		left, right = right, left

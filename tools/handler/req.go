@@ -19,7 +19,9 @@ func Request() {
 
 	image := common.InputImage()
 
-	cinfo, err := common.CreateContainer(dk, image, owner, token, port, project)
+	needSSH := common.InputNeedSSH()
+
+	cinfo, err := common.CreateContainer(dk, image, owner, token, port, project, needSSH)
 
 	if err != nil {
 		log.Fatalf("Failed to start container: %v", err)

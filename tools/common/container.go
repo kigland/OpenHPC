@@ -28,16 +28,20 @@ func getRDS(username string, imageName image.AllowedImages) (rdsDir string, rdsM
 }
 
 type ContainerInfo struct {
-	CID   string
-	CName string
-	RDSAt string
-	Token string
-	Port  int
+	CID     string
+	CName   string
+	RDSAt   string
+	Token   string
+	Port    int
+	SSHPort int
 }
 
 func (c ContainerInfo) String() string {
 	sb := strings.Builder{}
 	sb.WriteString(fmt.Sprintf("URL    : http://%s:%d\n", consts.CONTAINER_HOST, c.Port))
+	if c.SSHPort != 0 {
+		sb.WriteString(fmt.Sprintf("SSH    : ssh -p %d jovyan@%s\n", c.SSHPort, consts.CONTAINER_HOST))
+	}
 	sb.WriteString(fmt.Sprintf("Token  : %s\n", c.Token))
 	sb.WriteString(fmt.Sprintf("CID    : %s\n", c.CID))
 	sb.WriteString(fmt.Sprintf("RDS    : %s\n", c.RDSAt))
@@ -45,17 +49,23 @@ func (c ContainerInfo) String() string {
 	return sb.String()
 }
 
-func CreateContainer(dk *dockerHelper.DockerHelper, imageName image.AllowedImages, username, passwd string, port int, project string) (ContainerInfo, error) {
+func CreateContainer(dk *dockerHelper.DockerHelper, imageName image.AllowedImages, username, passwd string, port int, project string, needSSH bool) (ContainerInfo, error) {
 	rdsDir, rdsMountAt := getRDS(username, imageName)
 	tag := svcTag.New(username).WithProject(project)
-	return CreateContainerCustomRDS(dk, imageName, tag, passwd, port, rdsDir, rdsMountAt)
+	return CreateContainerCustomRDS(dk, imageName, tag, passwd, port, rdsDir, rdsMountAt, needSSH)
 }
 
-func CreateContainerCustomRDS(dk *dockerHelper.DockerHelper, imageName image.AllowedImages, tag svcTag.SvcTag, passwd string, port int, rdsDir string, rdsMountAt string) (ContainerInfo, error) {
+func CreateContainerCustomRDS(dk *dockerHelper.DockerHelper, imageName image.AllowedImages, tag svcTag.SvcTag, passwd string, port int, rdsDir string, rdsMountAt string, needSSH bool) (ContainerInfo, error) {
+	sshPort := 0
+	if needSSH {
+		sshPort = port + consts.SSH_SHIFT
+	}
+
 	img := image.Factory{
-		Password: passwd,
-		BindHost: consts.CONTAINER_HOST,
-		BindPort: port,
+		Password:    passwd,
+		BindHost:    consts.CONTAINER_HOST,
+		BindPort:    port,
+		BindSSHPort: sshPort,
 	}.Image(imageName).WithGPU(1).WithAutoRestart()
 
 	img.ContainerName = tag.String()
@@ -70,10 +80,11 @@ func CreateContainerCustomRDS(dk *dockerHelper.DockerHelper, imageName image.All
 		return ContainerInfo{}, err
 	}
 	return ContainerInfo{
-		CID:   id,
-		RDSAt: rdsMountAt,
-		Token: passwd,
-		Port:  port,
-		CName: img.ContainerName,
+		CID:     id,
+		RDSAt:   rdsMountAt,
+		Token:   passwd,
+		Port:    port,
+		SSHPort: sshPort,
+		CName:   img.ContainerName,
 	}, nil
 }

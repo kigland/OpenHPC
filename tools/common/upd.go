@@ -34,9 +34,14 @@ func Upgrade(cid string) (ContainerInfo, error) {
 	}
 
 	port := -1
+	needSSH := false
 	for _, p := range summary.Ports {
 		if p.PrivatePort == 8888 {
 			port = int(p.PublicPort)
+			break
+		}
+		if p.PrivatePort == 22 {
+			needSSH = true
 			break
 		}
 	}
@@ -57,8 +62,8 @@ func Upgrade(cid string) (ContainerInfo, error) {
 	panicx.NotNilErr(DockerHelper.Cli().ContainerStop(context.Background(), summary.ID, container.StopOptions{}))
 
 	fmt.Println("Waiting for container to stop...")
-	time.Sleep(time.Second * 4)
+	time.Sleep(time.Second * 6)
 
 	fmt.Println("Creating new container...")
-	return CreateContainerCustomRDS(DockerHelper, img, ids.SvcTag, token, port, rdsFrom, rdsTo)
+	return CreateContainerCustomRDS(DockerHelper, img, ids.SvcTag, token, port, rdsFrom, rdsTo, needSSH)
 }

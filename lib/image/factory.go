@@ -13,6 +13,9 @@ type Factory struct {
 	Password string
 	BindHost string
 	BindPort int
+
+	NeedSSH     bool
+	BindSSHPort int
 }
 
 type AllowedImages string
@@ -59,19 +62,23 @@ const (
 )
 
 func (f Factory) jupyterbook(id AllowedImages) dockerHelper.StartContainerOptions {
+	port := nat.PortMap{}
+	port["8888/tcp"] = []nat.PortBinding{{
+		HostIP:   f.BindHost,
+		HostPort: strconv.Itoa(f.BindPort),
+	}}
+	if f.NeedSSH {
+		port["22/tcp"] = []nat.PortBinding{{
+			HostIP:   f.BindHost,
+			HostPort: strconv.Itoa(f.BindSSHPort),
+		}}
+	}
 	return dockerHelper.StartContainerOptions{
 		ImageName: string(id),
 		Env: []string{
 			JUPYTER_TOKEN + "=" + f.Password,
 		},
-		PortBindings: nat.PortMap{
-			"8888/tcp": []nat.PortBinding{
-				{
-					HostIP:   f.BindHost,
-					HostPort: strconv.Itoa(f.BindPort),
-				},
-			},
-		},
+		PortBindings: port,
 	}
 }
 
