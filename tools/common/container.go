@@ -47,7 +47,7 @@ func (c ContainerInfo) String() string {
 	sb.WriteString(fmt.Sprintf("CID    : %s\n", c.CID))
 	sb.WriteString(fmt.Sprintf("SCID   : %s\n", dockerHelper.ShortId(c.CID)))
 	sb.WriteString(fmt.Sprintf("SvcTag : %s\n", c.SvcTag.String()))
-	sb.WriteString(fmt.Sprintf("SC     : %s\n", c.SvcTag.ShortCode()))
+	sb.WriteString(fmt.Sprintf("SC     : %s", c.SvcTag.ShortCode()))
 	return sb.String()
 }
 
