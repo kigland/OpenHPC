@@ -13,6 +13,7 @@ type Factory struct {
 	Password    string
 	BindHost    string
 	BindPort    int
+	BindSSHHost string
 	BindSSHPort int
 }
 
@@ -67,7 +68,7 @@ func (f Factory) jupyterbook(id AllowedImages) dockerHelper.StartContainerOption
 	}}
 	if f.BindSSHPort > 0 {
 		port["22/tcp"] = []nat.PortBinding{{
-			HostIP:   f.BindHost,
+			HostIP:   f.BindSSHHost,
 			HostPort: strconv.Itoa(f.BindSSHPort),
 		}}
 	}

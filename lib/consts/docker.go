@@ -16,3 +16,4 @@ const LOW_PORT = 40_000
 const HIGH_PORT = 40_499
 const SSH_SHIFT = 500
 const CONTAINER_HOST = "127.0.0.2"
+const SSH_BIND_HOST = "127.0.0.3"
