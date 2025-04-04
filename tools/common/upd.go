@@ -5,11 +5,9 @@ import (
 	"fmt"
 	"slices"
 	"strings"
-	"time"
 
 	"github.com/KevinZonda/GoX/pkg/panicx"
 	"github.com/KevinZonda/GoX/pkg/ruby"
-	"github.com/docker/docker/api/types/container"
 	"github.com/kigland/OpenHPC/lib/image"
 )
 
@@ -59,10 +57,10 @@ func Upgrade(cid string) (ContainerInfo, error) {
 		}
 	}
 
-	panicx.NotNilErr(DockerHelper.Cli().ContainerStop(context.Background(), summary.ID, container.StopOptions{}))
-
-	fmt.Println("Waiting for container to stop...")
-	time.Sleep(time.Second * 6)
+	fmt.Println("Stopping container...")
+	panicx.NotNilErr(DockerHelper.StopContainer(summary.ID))
+	fmt.Println("Removing container...")
+	panicx.NotNilErr(DockerHelper.RemoveContainer(summary.ID))
 
 	fmt.Println("Creating new container...")
 	return CreateContainerCustomRDS(DockerHelper, img, ids.SvcTag, token, port, rdsFrom, rdsTo, needSSH)
