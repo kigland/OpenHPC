@@ -33,7 +33,7 @@ func main() {
 	case "ids", "id":
 		f = handler.IDs
 	case "rds", "r":
-		f = handler.RDS
+		handler.RDS()
 	case "upd", "upgrade", "u":
 		f = handler.Upd
 	default:

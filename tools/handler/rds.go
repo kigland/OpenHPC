@@ -10,6 +10,10 @@ import (
 )
 
 func RDS() {
+	if len(os.Args) < 2 {
+		rdsHelp()
+		os.Exit(1)
+	}
 	// [exec] [rds] [action]
 	switch os.Args[2] {
 	case "list", "ls", "ps":
@@ -17,7 +21,13 @@ func RDS() {
 	case "create", "new":
 		rdsCreate()
 	default:
-		help := `
+		rdsHelp()
+		os.Exit(1)
+	}
+}
+
+func rdsHelp() {
+	help := `
 Usage:
   hpc rds [action]
 
@@ -25,10 +35,8 @@ Actions:
   list|ls|ps : List all RDS
   create|new : Create a new RDS
 `
-		fmt.Println(strings.TrimSpace(help))
-	}
+	fmt.Println(strings.TrimSpace(help))
 }
-
 func rdsList() {
 	names := common.Rds.List()
 	if len(names) == 0 {
