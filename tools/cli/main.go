@@ -23,8 +23,6 @@ func main() {
 	common.InitRL()
 	defer common.Rl.Close()
 
-	var f func()
-
 	switch strings.ToLower(os.Args[1]) {
 	case "req", "request", "create", "c", "start":
 		runWithConfigAndDocker(handler.Request)
