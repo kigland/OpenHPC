@@ -26,7 +26,7 @@ func (ops StartContainerOptions) WithGPU(gpuCount int) StartContainerOptions {
 	case ProviderPodman:
 		ops.Resources.DeviceRequests = []container.DeviceRequest{
 			{
-				Driver: "cid",
+				Driver: "cdi",
 				DeviceIDs: []string{
 					"nvidia.com/gpu=all", // TODO: Make this dynamic,
 					// Related issue: https://github.com/containers/podman/pull/25171
