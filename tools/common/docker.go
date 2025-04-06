@@ -13,7 +13,7 @@ var (
 )
 
 func InitDocker() {
-	d, err := client.NewClientWithOpts(client.WithHost(consts.DOCKER_UNIX_SOCKET), client.WithAPIVersionNegotiation())
+	d, err := client.NewClientWithOpts(client.WithHost(consts.PODMAN_UNIX_SOCKET), client.WithAPIVersionNegotiation())
 	panicx.NotNilErr(err)
 	h := dockerProv.NewDockerHelper(d)
 	DockerClient = d
