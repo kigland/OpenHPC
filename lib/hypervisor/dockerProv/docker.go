@@ -1,4 +1,4 @@
-package dockerHelper
+package dockerProv
 
 import (
 	"github.com/docker/docker/client"

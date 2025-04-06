@@ -6,7 +6,7 @@ import (
 	"github.com/docker/docker/api/types/container"
 	"github.com/docker/docker/client"
 	"github.com/kigland/OpenHPC/lib/consts"
-	"github.com/kigland/OpenHPC/lib/hypervisor/dockerHelper"
+	"github.com/kigland/OpenHPC/lib/hypervisor/dockerProv"
 )
 
 func main() {
@@ -15,11 +15,11 @@ func main() {
 		log.Fatalf("Failed to create docker client: %v", err)
 		return
 	}
-	dk := dockerHelper.NewDockerHelper(cli)
-	id, err := dk.StartContainer(dockerHelper.StartContainerOptions{
+	dk := dockerProv.NewDockerHelper(cli)
+	id, err := dk.StartContainer(dockerProv.StartContainerOptions{
 		ImageName: "ubuntu",
 		Resources: container.Resources{
-			DeviceRequests: dockerHelper.GetGPUDeviceRequests(1),
+			DeviceRequests: dockerProv.GetGPUDeviceRequests(1),
 		},
 		// AttachStdout: true,
 		// AttachStderr: true,

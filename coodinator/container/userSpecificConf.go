@@ -8,7 +8,7 @@ import (
 	"github.com/docker/docker/api/types/container"
 	"github.com/kigland/OpenHPC/coodinator/models/dbmod"
 	"github.com/kigland/OpenHPC/coodinator/shared"
-	"github.com/kigland/OpenHPC/lib/hypervisor/dockerHelper"
+	"github.com/kigland/OpenHPC/lib/hypervisor/dockerProv"
 )
 
 type UserSpecificConf struct {
@@ -67,8 +67,8 @@ func (u UserSpecificConf) GetStoragePath() string {
 	return filepath.Join(shared.GetConfig().Storage, "user", u.User.ID)
 }
 
-func (u UserSpecificConf) GetDockerOpts() dockerHelper.StartContainerOptions {
-	return dockerHelper.StartContainerOptions{
+func (u UserSpecificConf) GetDockerOpts() dockerProv.StartContainerOptions {
+	return dockerProv.StartContainerOptions{
 		ImageName: u.ImageName,
 		Binds: []string{
 			u.GetStoragePath() + ":/rds",
@@ -76,7 +76,7 @@ func (u UserSpecificConf) GetDockerOpts() dockerHelper.StartContainerOptions {
 		Resources: container.Resources{
 			Memory:         int64(u.RequestedMem * 1024 * 1024), // MB -> B
 			NanoCPUs:       int64(u.RequestedCPU * 1000000000),  // Number of CPUs in nanoseconds precision
-			DeviceRequests: dockerHelper.GetGPUDeviceRequests(u.RequestedGPU),
+			DeviceRequests: dockerProv.GetGPUDeviceRequests(u.RequestedGPU),
 		},
 	}
 }

@@ -5,7 +5,7 @@ import (
 	"strconv"
 
 	"github.com/docker/go-connections/nat"
-	"github.com/kigland/OpenHPC/lib/hypervisor/dockerHelper"
+	"github.com/kigland/OpenHPC/lib/hypervisor/dockerProv"
 )
 
 type Factory struct {
@@ -47,12 +47,12 @@ func (a AllowedImages) RdsDir() string {
 	return "/rds"
 }
 
-func (f Factory) Image(img AllowedImages) dockerHelper.StartContainerOptions {
+func (f Factory) Image(img AllowedImages) dockerProv.StartContainerOptions {
 	switch img {
 	case ImageJupyterHub, ImageTorchBook, ImageMLBook, ImageBase:
 		return f.jupyterbook(img)
 	default:
-		return dockerHelper.StartContainerOptions{}
+		return dockerProv.StartContainerOptions{}
 	}
 }
 
@@ -60,7 +60,7 @@ const (
 	JUPYTER_TOKEN = "JUPYTER_TOKEN"
 )
 
-func (f Factory) jupyterbook(id AllowedImages) dockerHelper.StartContainerOptions {
+func (f Factory) jupyterbook(id AllowedImages) dockerProv.StartContainerOptions {
 	port := nat.PortMap{}
 	port["8888/tcp"] = []nat.PortBinding{{
 		HostIP:   f.BindHost,
@@ -72,7 +72,7 @@ func (f Factory) jupyterbook(id AllowedImages) dockerHelper.StartContainerOption
 			HostPort: strconv.Itoa(f.BindSSHPort),
 		}}
 	}
-	return dockerHelper.StartContainerOptions{
+	return dockerProv.StartContainerOptions{
 		ImageName: string(id),
 		Env: []string{
 			JUPYTER_TOKEN + "=" + f.Password,
@@ -81,14 +81,14 @@ func (f Factory) jupyterbook(id AllowedImages) dockerHelper.StartContainerOption
 	}
 }
 
-func (f Factory) JupyterHub() dockerHelper.StartContainerOptions {
+func (f Factory) JupyterHub() dockerProv.StartContainerOptions {
 	return f.jupyterbook(ImageJupyterHub)
 }
 
-func (f Factory) TorchBook() dockerHelper.StartContainerOptions {
+func (f Factory) TorchBook() dockerProv.StartContainerOptions {
 	return f.jupyterbook(ImageTorchBook)
 }
 
-func (f Factory) MLBook() dockerHelper.StartContainerOptions {
+func (f Factory) MLBook() dockerProv.StartContainerOptions {
 	return f.jupyterbook(ImageMLBook)
 }

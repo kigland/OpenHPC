@@ -6,7 +6,7 @@ import (
 
 	"github.com/KevinZonda/GoX/pkg/panicx"
 	"github.com/kigland/OpenHPC/lib/consts"
-	"github.com/kigland/OpenHPC/lib/hypervisor/dockerHelper"
+	"github.com/kigland/OpenHPC/lib/hypervisor/dockerProv"
 	"github.com/kigland/OpenHPC/lib/image"
 	"github.com/kigland/OpenHPC/lib/rds"
 	"github.com/kigland/OpenHPC/lib/svcTag"
@@ -50,7 +50,7 @@ func (c ContainerInfo) String() string {
 	return sb.String()
 }
 
-func CreateContainerCustomRDS(dk *dockerHelper.DockerHelper, imageName image.AllowedImages, tag svcTag.SvcTag, passwd string, port int, rdsDir string, rdsMountAt string, needSSH bool) (ContainerInfo, error) {
+func CreateContainerCustomRDS(dk *dockerProv.DockerHelper, imageName image.AllowedImages, tag svcTag.SvcTag, passwd string, port int, rdsDir string, rdsMountAt string, needSSH bool) (ContainerInfo, error) {
 	sshPort := 0
 	if needSSH {
 		sshPort = port + consts.SSH_SHIFT

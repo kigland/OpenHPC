@@ -8,7 +8,7 @@ import (
 	"github.com/docker/docker/client"
 	"github.com/kigland/OpenHPC/coodinator/utils"
 	"github.com/kigland/OpenHPC/lib/consts"
-	"github.com/kigland/OpenHPC/lib/hypervisor/dockerHelper"
+	"github.com/kigland/OpenHPC/lib/hypervisor/dockerProv"
 	"github.com/kigland/OpenHPC/lib/image"
 	"github.com/kigland/OpenHPC/lib/svcTag"
 )
@@ -28,7 +28,7 @@ func main() {
 		BindPort: 41000,
 	}.Image(image.ImageTorchBook).WithGPU(1).WithAutoRemove()
 
-	dk := dockerHelper.NewDockerHelper(cli)
+	dk := dockerProv.NewDockerHelper(cli)
 	svgT := svcTag.New("KevinZonda")
 	img.ContainerName = svgT.String()
 	id, err := dk.StartContainer(img, true)
