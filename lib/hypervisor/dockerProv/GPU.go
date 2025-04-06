@@ -17,6 +17,18 @@ func GetGPUDeviceRequests(gpuCount int) []container.DeviceRequest {
 }
 
 func (ops StartContainerOptions) WithGPU(gpuCount int) StartContainerOptions {
+	if ops.Podman {
+		ops.Resources.DeviceRequests = []container.DeviceRequest{
+			{
+				Driver: "cid",
+				DeviceIDs: []string{
+					"nvidia.com/gpu=all", // TODO: Make this dynamic,
+					// Related issue: https://github.com/containers/podman/pull/25171
+					// Should works in podman v5.4.2+
+				},
+			},
+		}
+	}
 	ops.Resources.DeviceRequests = GetGPUDeviceRequests(gpuCount)
 	return ops
 }

@@ -9,6 +9,8 @@ import (
 )
 
 type StartContainerOptions struct {
+	Podman bool
+
 	ImageName       string
 	Env             []string
 	User            string
