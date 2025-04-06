@@ -37,7 +37,7 @@ func LoadProvider() dockerProv.Provider {
 
 	provider = inputProvider()
 success:
-	fmt.Println("Using provider: ", provider)
+	fmt.Println("Using provider:", provider)
 	return provider
 }
 

@@ -2,6 +2,7 @@ package dockerProv
 
 import (
 	"context"
+	"fmt"
 	"slices"
 
 	"github.com/KevinZonda/GoX/pkg/stringx"
@@ -112,6 +113,10 @@ func (d *DockerHelper) StartContainer(opts StartContainerOptions, pull bool) (co
 	}
 
 	if err := cli.ContainerStart(context.Background(), resp.ID, container.StartOptions{}); err != nil {
+		_err := d.RemoveContainer(resp.ID)
+		if _err != nil {
+			fmt.Println("Sad. Start container failed. But also remove it failed:", _err)
+		}
 		return "", err
 	}
 
