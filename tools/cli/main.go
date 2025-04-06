@@ -41,7 +41,8 @@ func main() {
 		os.Exit(1)
 	}
 
-	common.MustInitDocker()
+	common.InitConfig()
+	common.InitDocker()
 	f()
 }
 

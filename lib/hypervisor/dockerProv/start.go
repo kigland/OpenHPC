@@ -2,7 +2,9 @@ package dockerProv
 
 import (
 	"context"
+	"slices"
 
+	"github.com/KevinZonda/GoX/pkg/stringx"
 	"github.com/docker/docker/api/types/container"
 	"github.com/docker/docker/api/types/strslice"
 	"github.com/docker/go-connections/nat"
@@ -11,9 +13,27 @@ import (
 type Provider string
 
 const (
-	ProviderDocker Provider = ""
+	ProviderDocker Provider = "docker"
 	ProviderPodman Provider = "podman"
 )
+
+var AllProviders = []Provider{
+	ProviderDocker,
+	ProviderPodman,
+}
+
+func ValidateProvider(provider Provider) bool {
+	return slices.Contains(AllProviders, provider)
+}
+
+func ParseProvider(provider string) (Provider, bool) {
+	provider = stringx.TrimLower(provider)
+	prv := Provider(provider)
+	if ValidateProvider(prv) {
+		return prv, true
+	}
+	return "", false
+}
 
 type StartContainerOptions struct {
 	Provider Provider
