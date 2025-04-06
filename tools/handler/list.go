@@ -8,8 +8,8 @@ import (
 	"github.com/KevinZonda/GoX/pkg/ruby"
 	"github.com/disiqueira/gotree"
 	"github.com/docker/docker/api/types/container"
-	"github.com/kigland/OpenHPC/lib/dockerHelper"
 	"github.com/kigland/OpenHPC/lib/svcTag"
+	"github.com/kigland/OpenHPC/lib/utils"
 	"github.com/kigland/OpenHPC/tools/common"
 )
 
@@ -48,7 +48,7 @@ func containerToStr(c container.Summary, tag string, showCID bool) string {
 	if showCID {
 		return fmt.Sprintf("[%s] %s %s %s CID: %s", tagName, c.Status, strings.Join(ports, ", "), mount, c.ID)
 	}
-	scid := dockerHelper.ShortId(c.ID)
+	scid := utils.ShortId(c.ID)
 	return fmt.Sprintf("[%s][%s] %s %s %s", scid, tagName, c.Status, strings.Join(ports, ", "), mount)
 
 }

@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/kigland/OpenHPC/lib/dockerHelper"
 	"github.com/kigland/OpenHPC/lib/svcTag"
+	"github.com/kigland/OpenHPC/lib/utils"
 )
 
 type VNodeId struct {
@@ -42,7 +42,7 @@ func IDs(cid string) VNodeId {
 }
 
 func (v VNodeId) SCID() string {
-	return dockerHelper.ShortId(v.ID)
+	return utils.ShortId(v.ID)
 }
 
 func (v VNodeId) String() string {
@@ -51,7 +51,7 @@ func (v VNodeId) String() string {
 	sb.WriteString(v.ID)
 	sb.WriteString("\n")
 	sb.WriteString("SCID       : ")
-	sb.WriteString(dockerHelper.ShortId(v.ID))
+	sb.WriteString(utils.ShortId(v.ID))
 	sb.WriteString("\n")
 	sb.WriteString("SvcTag     : ")
 	sb.WriteString(v.SvcTag.String())
