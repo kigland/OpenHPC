@@ -16,28 +16,33 @@ func main() {
 	}
 	common.InitRL()
 	defer common.Rl.Close()
-	common.InitDocker()
+
+	var f func()
 
 	switch strings.ToLower(os.Args[1]) {
 	case "req", "request", "create", "c", "start":
-		handler.Request()
+		f = handler.Request
 	case "list", "ls", "ps", "ll", "l", "status":
-		handler.List()
+		f = handler.List
 	case "env", "e":
-		handler.Env()
+		f = handler.Env
 	case "token", "t", "tk":
-		handler.Token()
+		f = handler.Token
 	case "stop", "s", "rm", "remove":
-		handler.Stop()
+		f = handler.Stop
 	case "ids", "id":
-		handler.IDs()
+		f = handler.IDs
 	case "rds", "r":
-		handler.RDS()
+		f = handler.RDS
 	case "upd", "upgrade", "u":
-		handler.Upd()
+		f = handler.Upd
 	default:
 		help()
+		os.Exit(1)
 	}
+
+	common.MustInitDocker()
+	f()
 }
 
 func help() {

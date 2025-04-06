@@ -1,9 +1,6 @@
 package dockerProv
 
 import (
-	"encoding/json"
-	"fmt"
-
 	"github.com/docker/docker/api/types/container"
 )
 
@@ -38,8 +35,6 @@ func (ops StartContainerOptions) WithGPU(gpuCount int) StartContainerOptions {
 		ops.Resources.DeviceRequests = GetGPUDeviceRequests(gpuCount)
 	}
 
-	bs, _ := json.Marshal(ops.ToHostConfig())
-	fmt.Println(string(bs))
 	return ops
 }
 
