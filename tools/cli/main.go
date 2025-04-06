@@ -9,6 +9,12 @@ import (
 	"github.com/kigland/OpenHPC/tools/handler"
 )
 
+func runWithConfigAndDocker(f func()) {
+	common.InitConfig()
+	common.InitDocker()
+	f()
+}
+
 func main() {
 	if len(os.Args) < 2 {
 		help()
@@ -21,30 +27,24 @@ func main() {
 
 	switch strings.ToLower(os.Args[1]) {
 	case "req", "request", "create", "c", "start":
-		f = handler.Request
+		runWithConfigAndDocker(handler.Request)
 	case "list", "ls", "ps", "ll", "l", "status":
-		f = handler.List
+		runWithConfigAndDocker(handler.List)
 	case "env", "e":
-		f = handler.Env
+		runWithConfigAndDocker(handler.Env)
 	case "token", "t", "tk":
-		f = handler.Token
+		runWithConfigAndDocker(handler.Token)
 	case "stop", "s", "rm", "remove":
-		f = handler.Stop
+		runWithConfigAndDocker(handler.Stop)
 	case "ids", "id":
-		f = handler.IDs
+		runWithConfigAndDocker(handler.IDs)
 	case "rds", "r":
 		handler.RDS()
-		os.Exit(0)
 	case "upd", "upgrade", "u":
-		f = handler.Upd
+		runWithConfigAndDocker(handler.Upd)
 	default:
 		help()
-		os.Exit(1)
 	}
-
-	common.InitConfig()
-	common.InitDocker()
-	f()
 }
 
 func help() {
