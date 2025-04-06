@@ -17,7 +17,8 @@ func GetGPUDeviceRequests(gpuCount int) []container.DeviceRequest {
 }
 
 func (ops StartContainerOptions) WithGPU(gpuCount int) StartContainerOptions {
-	if ops.Podman {
+	switch ops.Provider {
+	case ProviderPodman:
 		ops.Resources.DeviceRequests = []container.DeviceRequest{
 			{
 				Driver: "cid",
@@ -28,8 +29,9 @@ func (ops StartContainerOptions) WithGPU(gpuCount int) StartContainerOptions {
 				},
 			},
 		}
+	default: // Docker
+		ops.Resources.DeviceRequests = GetGPUDeviceRequests(gpuCount)
 	}
-	ops.Resources.DeviceRequests = GetGPUDeviceRequests(gpuCount)
 	return ops
 }
 

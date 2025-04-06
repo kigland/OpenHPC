@@ -11,6 +11,7 @@ import (
 	"github.com/kigland/OpenHPC/coodinator/shared"
 	"github.com/kigland/OpenHPC/coodinator/utils"
 	"github.com/kigland/OpenHPC/lib/consts"
+	"github.com/kigland/OpenHPC/lib/hypervisor/dockerProv"
 	"github.com/kigland/OpenHPC/lib/image"
 	"github.com/kigland/OpenHPC/lib/svcTag"
 )
@@ -32,6 +33,7 @@ func request(c *gin.Context) {
 		Password: passwd,
 		BindHost: consts.CONTAINER_HOST,
 		BindPort: randx.RndRange(consts.LOW_PORT, consts.HIGH_PORT),
+		Provider: dockerProv.ProviderDocker,
 	}.Image(image.ImageTorchBook).WithGPU(1).WithAutoRestart()
 
 	svgT := svcTag.New(user.ID)

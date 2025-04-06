@@ -15,6 +15,7 @@ type Factory struct {
 	BindPort    int
 	BindSSHHost string
 	BindSSHPort int
+	Provider    dockerProv.Provider
 }
 
 type AllowedImages string
@@ -78,6 +79,7 @@ func (f Factory) jupyterbook(id AllowedImages) dockerProv.StartContainerOptions 
 			JUPYTER_TOKEN + "=" + f.Password,
 		},
 		PortBindings: port,
+		Provider:     f.Provider,
 	}
 }
 

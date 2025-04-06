@@ -8,8 +8,15 @@ import (
 	"github.com/docker/go-connections/nat"
 )
 
+type Provider string
+
+const (
+	ProviderDocker Provider = ""
+	ProviderPodman Provider = "podman"
+)
+
 type StartContainerOptions struct {
-	Podman bool
+	Provider Provider
 
 	ImageName       string
 	Env             []string
