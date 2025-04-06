@@ -34,6 +34,7 @@ func main() {
 		f = handler.IDs
 	case "rds", "r":
 		handler.RDS()
+		os.Exit(0)
 	case "upd", "upgrade", "u":
 		f = handler.Upd
 	default:
