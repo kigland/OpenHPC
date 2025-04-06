@@ -8,7 +8,7 @@ import (
 	"github.com/docker/docker/client"
 	"github.com/kigland/OpenHPC/coodinator/utils"
 	"github.com/kigland/OpenHPC/lib/consts"
-	"github.com/kigland/OpenHPC/lib/dockerHelper"
+	"github.com/kigland/OpenHPC/lib/hypervisor/dockerHelper"
 	"github.com/kigland/OpenHPC/lib/image"
 	"github.com/kigland/OpenHPC/lib/svcTag"
 )

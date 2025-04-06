@@ -6,7 +6,7 @@ import (
 	"github.com/docker/docker/api/types/container"
 	"github.com/docker/docker/client"
 	"github.com/kigland/OpenHPC/lib/consts"
-	"github.com/kigland/OpenHPC/lib/dockerHelper"
+	"github.com/kigland/OpenHPC/lib/hypervisor/dockerHelper"
 )
 
 func main() {

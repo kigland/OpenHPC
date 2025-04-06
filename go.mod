@@ -5,6 +5,7 @@ go 1.23.1
 require (
 	github.com/KevinZonda/GoX v0.0.22
 	github.com/chzyer/readline v1.5.1
+	github.com/containers/podman/v5 v5.4.2
 	github.com/disiqueira/gotree v1.0.0
 	github.com/gin-contrib/cors v1.7.3
 	github.com/gin-gonic/gin v1.10.0
@@ -12,13 +13,31 @@ require (
 
 require (
 	filippo.io/edwards25519 v1.1.0 // indirect
-	github.com/containerd/log v0.1.0 // indirect
+	github.com/BurntSushi/toml v1.4.0 // indirect
+	github.com/blang/semver/v4 v4.0.0 // indirect
+	github.com/containers/common v0.62.3 // indirect
+	github.com/containers/storage v1.57.2 // indirect
+	github.com/cyphar/filepath-securejoin v0.3.6 // indirect
 	github.com/go-sql-driver/mysql v1.9.0 // indirect
-	github.com/moby/term v0.5.2 // indirect
-	github.com/morikuni/aec v1.0.0 // indirect
+	github.com/hashicorp/errwrap v1.1.0 // indirect
+	github.com/hashicorp/go-multierror v1.1.1 // indirect
+	github.com/kevinburke/ssh_config v1.2.0 // indirect
+	github.com/kr/fs v0.1.0 // indirect
+	github.com/moby/sys/capability v0.4.0 // indirect
+	github.com/moby/sys/mountinfo v0.7.2 // indirect
+	github.com/moby/sys/user v0.3.0 // indirect
+	github.com/opencontainers/runc v1.2.4 // indirect
+	github.com/opencontainers/runtime-spec v1.2.0 // indirect
+	github.com/opencontainers/selinux v1.11.1 // indirect
+	github.com/pkg/sftp v1.13.7 // indirect
+	github.com/sirupsen/logrus v1.9.3 // indirect
+	github.com/skeema/knownhosts v1.3.0 // indirect
 	go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracehttp v1.35.0 // indirect
+	golang.org/x/exp v0.0.0-20250103183323-7d7fa50e5329 // indirect
+	golang.org/x/term v0.30.0 // indirect
 	golang.org/x/time v0.11.0 // indirect
 	gotest.tools/v3 v3.5.2 // indirect
+	tags.cncf.io/container-device-interface v0.8.0 // indirect
 )
 
 require (

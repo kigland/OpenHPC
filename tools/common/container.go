@@ -6,7 +6,7 @@ import (
 
 	"github.com/KevinZonda/GoX/pkg/panicx"
 	"github.com/kigland/OpenHPC/lib/consts"
-	"github.com/kigland/OpenHPC/lib/dockerHelper"
+	"github.com/kigland/OpenHPC/lib/hypervisor/dockerHelper"
 	"github.com/kigland/OpenHPC/lib/image"
 	"github.com/kigland/OpenHPC/lib/rds"
 	"github.com/kigland/OpenHPC/lib/svcTag"

@@ -5,7 +5,7 @@ import (
 	"strconv"
 
 	"github.com/docker/go-connections/nat"
-	"github.com/kigland/OpenHPC/lib/dockerHelper"
+	"github.com/kigland/OpenHPC/lib/hypervisor/dockerHelper"
 )
 
 type Factory struct {

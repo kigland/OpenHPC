@@ -4,7 +4,7 @@ import (
 	"github.com/KevinZonda/GoX/pkg/panicx"
 	"github.com/docker/docker/client"
 	"github.com/kigland/OpenHPC/lib/consts"
-	"github.com/kigland/OpenHPC/lib/dockerHelper"
+	"github.com/kigland/OpenHPC/lib/hypervisor/dockerHelper"
 )
 
 var (
