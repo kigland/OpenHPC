@@ -10,7 +10,7 @@ type Controller struct{}
 var _ types.IController = (*Controller)(nil)
 
 func (c *Controller) Init(r gin.IRouter) {
-	r.POST("/register", register)
-	r.POST("/login", login)
-	r.GET("/quota", quota)
+	r.POST("/user/register", register)
+	r.POST("/user/login", login)
+	r.GET("/user/quota", quota)
 }
