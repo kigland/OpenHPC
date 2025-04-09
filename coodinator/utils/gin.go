@@ -17,3 +17,9 @@ func BodyAsF[T any](c *gin.Context) T {
 	}
 	return body
 }
+
+func ErrorMsg(c *gin.Context, code int, msg string) {
+	c.JSON(code, gin.H{
+		"error": msg,
+	})
+}

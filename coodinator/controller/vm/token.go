@@ -5,12 +5,12 @@ import (
 
 	"github.com/KevinZonda/GoX/pkg/stringx"
 	"github.com/gin-gonic/gin"
-	"github.com/kigland/OpenHPC/coodinator/models/openapi"
+	"github.com/kigland/OpenHPC/coodinator/models/apimod"
 	"github.com/kigland/OpenHPC/coodinator/utils"
 )
 
 func token(c *gin.Context) {
-	req := utils.BodyAsF[openapi.VmTokenReq](c)
+	req := utils.BodyAsF[apimod.VmTokenReq](c)
 
 	provider := MustGetProvider(c, req.Provider)
 	if provider == nil {
@@ -36,7 +36,7 @@ func token(c *gin.Context) {
 	env := inspect.Config.Env
 	tokens := filterToken(env)
 
-	c.JSON(200, openapi.VmTokenResp{
+	c.JSON(200, apimod.VmTokenResp{
 		Token: tokens,
 	})
 }

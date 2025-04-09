@@ -13,5 +13,7 @@ var _ types.IController = (*Controller)(nil)
 func (c *Controller) Init(r gin.IRouter) {
 	r.POST("/request", mid.FakeAuth, request)
 	r.POST("/token", mid.FakeAuth, token)
+	r.GET("/list", mid.FakeAuth, list)
+
 	r.POST("/extend", mid.FakeAuth, extend)
 }

@@ -1,0 +1,415 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "OpenHPC",
+    "description": "",
+    "version": "1.0.0"
+  },
+  "tags": [],
+  "paths": {
+    "/user/login": {
+      "post": {
+        "summary": "login",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginReq"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Token"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/user/register": {
+      "post": {
+        "summary": "register",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginReq"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/user/quota": {
+      "get": {
+        "summary": "quota",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/vm/request": {
+      "post": {
+        "summary": "vm request",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VMReq"
+              },
+              "examples": {}
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VMCreatedInfo"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "apikey-header-Authorization": []
+          }
+        ]
+      }
+    },
+    "/vm/list": {
+      "get": {
+        "summary": "list",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VMListResp"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "apikey-header-Authorization": []
+          }
+        ]
+      }
+    },
+    "/vm/token": {
+      "post": {
+        "summary": "Get VM's Token",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VMTokenReq"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VMTokenResp"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "apikey-header-Authorization": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "LoginReq": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "username",
+          "password"
+        ]
+      },
+      "Token": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "token"
+        ]
+      },
+      "VMReq": {
+        "type": "object",
+        "properties": {
+          "provider": {
+            "type": "string"
+          },
+          "owner": {
+            "type": "string"
+          },
+          "project": {
+            "type": "string"
+          },
+          "enable_rds": {
+            "type": "boolean"
+          },
+          "rds_folder": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "provider",
+          "owner",
+          "project",
+          "enable_rds",
+          "rds_folder"
+        ]
+      },
+      "VMCreatedInfo": {
+        "type": "object",
+        "properties": {
+          "cid": {
+            "type": "string"
+          },
+          "rds_at": {
+            "type": "string"
+          },
+          "token": {
+            "type": "string"
+          },
+          "ssh": {
+            "type": "string"
+          },
+          "http": {
+            "type": "string"
+          },
+          "svc_tag": {
+            "type": "string"
+          },
+          "sc": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "cid",
+          "rds_at",
+          "token",
+          "ssh",
+          "http",
+          "svc_tag",
+          "sc"
+        ]
+      },
+      "VMTokenReq": {
+        "type": "object",
+        "properties": {
+          "provider": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "provider",
+          "id"
+        ]
+      },
+      "VMTokenResp": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "token"
+        ]
+      },
+      "VMListResp": {
+        "type": "object",
+        "properties": {
+          "docker": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VMListItem"
+            }
+          },
+          "podman": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VMListItem"
+            }
+          }
+        },
+        "required": [
+          "docker",
+          "podman"
+        ]
+      },
+      "VMListItem": {
+        "type": "object",
+        "properties": {
+          "cid": {
+            "type": "string"
+          },
+          "mount": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VMListItemMount"
+            }
+          },
+          "port": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VMListItemMount"
+            }
+          },
+          "svc_tag": {
+            "type": "string"
+          },
+          "sc": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "owner": {
+            "type": "string"
+          },
+          "project": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "cid",
+          "mount",
+          "svc_tag",
+          "status",
+          "sc",
+          "owner",
+          "project",
+          "port"
+        ]
+      },
+      "VMListItemMount": {
+        "type": "object",
+        "properties": {
+          "host": {
+            "type": "string"
+          },
+          "container": {
+            "type": "string"
+          },
+          "readonly": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "host",
+          "container",
+          "readonly"
+        ]
+      }
+    },
+    "securitySchemes": {
+      "apikey-header-Authorization": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "Authorization"
+      }
+    }
+  },
+  "servers": [],
+  "security": []
+}

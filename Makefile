@@ -44,4 +44,7 @@ install:
 clean:
 	rm -rf out
 
-.PHONY: init docker docker-run build build-debug run tester clean tools tool
+api:
+	bash gen_api.sh
+
+.PHONY: init docker docker-run build build-debug run tester clean tools tool api

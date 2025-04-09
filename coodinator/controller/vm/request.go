@@ -6,7 +6,7 @@ import (
 
 	"github.com/KevinZonda/GoX/pkg/randx"
 	"github.com/gin-gonic/gin"
-	"github.com/kigland/OpenHPC/coodinator/models/openapi"
+	"github.com/kigland/OpenHPC/coodinator/models/apimod"
 	"github.com/kigland/OpenHPC/coodinator/shared"
 	"github.com/kigland/OpenHPC/coodinator/utils"
 	"github.com/kigland/OpenHPC/lib/image"
@@ -14,7 +14,7 @@ import (
 )
 
 func request(c *gin.Context) {
-	req := utils.BodyAsF[openapi.VmReq](c)
+	req := utils.BodyAsF[apimod.VmReq](c)
 
 	provider, docker := MustGetProviderWithProvId(c, req.Provider)
 	if docker == nil {
@@ -38,9 +38,9 @@ func request(c *gin.Context) {
 
 	// RDS Support
 	rdsMountAt := ""
-	if req.EnableRDS {
+	if req.EnableRds {
 		var err error
-		rdsDir, err := shared.Rds.GetRDSPath(req.Owner, req.RDSFolder)
+		rdsDir, err := shared.Rds.GetRDSPath(req.Owner, req.RdsFolder)
 		if err != nil {
 			c.JSON(400, gin.H{
 				"message": "failed to get rds path",
@@ -60,15 +60,15 @@ func request(c *gin.Context) {
 		return
 	}
 
-	cinfo := openapi.VmCreatedInfo{
-		CID:   id,
-		RDSAt: rdsMountAt,
+	cinfo := apimod.VmCreatedInfo{
+		Cid:   id,
+		RdsAt: rdsMountAt,
 		Token: passwd,
-		SSH:   shared.GetConfig().VisitSSHHost + ":" + strconv.Itoa(shared.GetConfig().BindSSHPort+rndPort),
-		HTTP:  shared.GetConfig().VisitHTTPHost + ":" + strconv.Itoa(shared.GetConfig().BindHTTPPort+rndPort),
+		Ssh:   shared.GetConfig().VisitSSHHost + ":" + strconv.Itoa(shared.GetConfig().BindSSHPort+rndPort),
+		Http:  shared.GetConfig().VisitHTTPHost + ":" + strconv.Itoa(shared.GetConfig().BindHTTPPort+rndPort),
 
-		SvcTag:    svgT.String(),
-		ShortCode: svgT.ShortCode(),
+		SvcTag: svgT.String(),
+		Sc:     svgT.ShortCode(),
 	}
 
 	c.JSON(200, cinfo)
