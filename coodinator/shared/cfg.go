@@ -17,7 +17,7 @@ type Config struct {
 	Addr  string `json:"addr"`
 	Debug bool   `json:"debug"`
 
-	AvailableProviders []ProviderConfig    `json:"avail_providers"`
+	AvailableProviders []ProviderConfig    `json:"available_providers"`
 	DefaultProvider    dockerProv.Provider `json:"default_provider"`
 
 	BindSSHHost string `json:"bind_ssh_host"`
@@ -48,6 +48,7 @@ func (c *Config) normaliseProvider() {
 				log.Printf("Unknown provider: %s", p.Provider)
 				continue
 			}
+			log.Printf("Recognised provider: %s", p.Provider)
 			providers = append(providers, p)
 		}
 	}
