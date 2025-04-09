@@ -10,12 +10,9 @@ import (
 )
 
 func RDS() {
-	if len(os.Args) < 3 {
-		rdsHelp()
-		os.Exit(1)
-	}
+	verb := popFst()
 	// [exec] [rds] [action]
-	switch os.Args[2] {
+	switch verb {
 	case "list", "ls", "ps":
 		rdsList()
 	case "create", "new":

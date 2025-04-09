@@ -5,6 +5,7 @@ import (
 	"os"
 	"strings"
 
+	"github.com/kigland/OpenHPC/lib/hypervisor/dockerProv"
 	"github.com/kigland/OpenHPC/tools/common"
 	"github.com/kigland/OpenHPC/tools/handler"
 )
@@ -23,7 +24,19 @@ func main() {
 	common.InitRL()
 	defer common.Rl.Close()
 
-	switch strings.ToLower(os.Args[1]) {
+	verb := strings.ToLower(os.Args[1])
+	os.Args = os.Args[2:]
+
+	switch verb {
+	case "docker":
+		common.SetProvider(dockerProv.ProviderDocker)
+		os.Args = os.Args[1:]
+	case "podman":
+		common.SetProvider(dockerProv.ProviderPodman)
+		os.Args = os.Args[1:]
+	}
+
+	switch verb {
 	case "req", "request", "create", "c", "start":
 		runWithConfigAndDocker(handler.Request)
 	case "list", "ls", "ps", "ll", "l", "status":

@@ -2,7 +2,6 @@ package handler
 
 import (
 	"fmt"
-	"os"
 	"strings"
 
 	"github.com/KevinZonda/GoX/pkg/ruby"
@@ -14,8 +13,7 @@ import (
 )
 
 func List() {
-	if len(os.Args) == 3 {
-		user := os.Args[2]
+	if user := popFst(); user != "" {
 		ListUser(user)
 		return
 	}

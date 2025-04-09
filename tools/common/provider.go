@@ -23,6 +23,10 @@ func providerToSocket(provider dockerProv.Provider) string {
 
 var provider dockerProv.Provider
 
+func SetProvider(p dockerProv.Provider) {
+	provider = p
+}
+
 func LoadProvider() dockerProv.Provider {
 	if dockerProv.ValidateProvider(provider) {
 		return provider

@@ -2,18 +2,13 @@ package handler
 
 import (
 	"fmt"
-	"os"
 
 	"github.com/KevinZonda/GoX/pkg/panicx"
 	"github.com/kigland/OpenHPC/tools/common"
 )
 
 func Stop() {
-	if len(os.Args) == 3 {
-		stop(os.Args[2])
-		return
-	}
-	stop(common.InputWithPrompt("Container ID or Service Tag or Short Code:"))
+	cidToFunc(stop)
 }
 
 func stop(cid string) {

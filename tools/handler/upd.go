@@ -2,17 +2,12 @@ package handler
 
 import (
 	"fmt"
-	"os"
 
 	"github.com/kigland/OpenHPC/tools/common"
 )
 
 func Upd() {
-	if len(os.Args) == 3 {
-		upd(os.Args[2])
-		return
-	}
-	upd(common.InputWithPrompt("Container ID or Service Tag or Short Code:"))
+	cidToFunc(upd)
 }
 
 func upd(cid string) {

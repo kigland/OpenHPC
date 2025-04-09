@@ -2,18 +2,13 @@ package handler
 
 import (
 	"fmt"
-	"os"
 	"strings"
 
 	"github.com/kigland/OpenHPC/tools/common"
 )
 
 func Env() {
-	if len(os.Args) == 3 {
-		env(os.Args[2])
-		return
-	}
-	env(common.InputWithPrompt("Container ID:"))
+	cidToFunc(env)
 }
 
 func env(cid string) {
@@ -23,15 +18,20 @@ func env(cid string) {
 }
 
 func Token() {
-	if len(os.Args) == 3 {
-		token(os.Args[2])
-		return
-	}
-	token(common.InputWithPrompt("Container ID:"))
+	cidToFunc(token)
 }
 
 func token(cid string) {
 	tokens := common.Token(cid)
 	tokensStr := strings.Join(tokens, "\n")
 	fmt.Println(tokensStr)
+}
+
+func IDs() {
+	cidToFunc(ids)
+}
+
+func ids(cid string) {
+	v := common.IDs(cid)
+	fmt.Println(v.String())
 }
