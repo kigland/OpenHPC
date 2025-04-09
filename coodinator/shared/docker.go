@@ -9,7 +9,7 @@ import (
 	"github.com/kigland/OpenHPC/lib/rds"
 )
 
-var Containers map[dockerProv.Provider]*dockerProv.DockerHelper
+var Containers map[dockerProv.Provider]*dockerProv.DockerHelper = map[dockerProv.Provider]*dockerProv.DockerHelper{}
 
 var Rds *rds.RDS
 var DefaultProvider dockerProv.Provider
