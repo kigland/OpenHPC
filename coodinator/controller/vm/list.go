@@ -8,12 +8,11 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/kigland/OpenHPC/coodinator/models/apimod"
 	"github.com/kigland/OpenHPC/coodinator/shared"
-	"github.com/kigland/OpenHPC/lib/hypervisor/dockerProv"
 	"github.com/kigland/OpenHPC/lib/svcTag"
 )
 
 func list(c *gin.Context) {
-	vmlists := map[dockerProv.Provider][]apimod.VmListItem{}
+	vmlists := []apimod.VmListProvider{}
 
 	for provider, docker := range shared.Containers {
 		uidToContainers, err := docker.UserContainerRelations()
@@ -31,7 +30,10 @@ func list(c *gin.Context) {
 				lists = append(lists, item)
 			}
 		}
-		vmlists[provider] = lists
+		vmlists = append(vmlists, apimod.VmListProvider{
+			Provider:   string(provider),
+			Containers: lists,
+		})
 	}
 
 	c.JSON(200, vmlists)

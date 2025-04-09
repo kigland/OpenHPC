@@ -9,9 +9,8 @@
 
 package apimod
 
-type VmListResp struct {
+type VmListProvider struct {
+	Provider string `json:"provider"`
 
-	Docker []VmListItem `json:"docker"`
-
-	Podman []VmListItem `json:"podman"`
+	Containers []VmListItem `json:"containers"`
 }

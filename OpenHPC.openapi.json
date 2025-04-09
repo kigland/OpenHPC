@@ -317,15 +317,18 @@
         ]
       },
       "VMListResp": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/VMListProvider"
+        }
+      },
+      "VMListProvider": {
         "type": "object",
         "properties": {
-          "docker": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/VMListItem"
-            }
+          "provider": {
+            "type": "string"
           },
-          "podman": {
+          "containers": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/VMListItem"
@@ -333,8 +336,8 @@
           }
         },
         "required": [
-          "docker",
-          "podman"
+          "provider",
+          "containers"
         ]
       },
       "VMListItem": {
