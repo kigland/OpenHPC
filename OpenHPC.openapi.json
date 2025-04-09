@@ -195,6 +195,44 @@
           }
         ]
       }
+    },
+    "/vm/remove": {
+      "post": {
+        "summary": "remove vm",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VMDelReq"
+              },
+              "examples": {}
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "apikey-header-Authorization": []
+          }
+        ]
+      }
     }
   },
   "components": {
@@ -402,6 +440,21 @@
           "host",
           "container",
           "readonly"
+        ]
+      },
+      "VMDelReq": {
+        "type": "object",
+        "properties": {
+          "provider": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "provider",
+          "id"
         ]
       }
     },

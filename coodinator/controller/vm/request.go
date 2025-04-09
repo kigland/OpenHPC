@@ -57,6 +57,12 @@ func request(c *gin.Context) {
 	id, err := docker.StartContainer(img, false)
 	if err != nil {
 		log.Fatalf("Failed to start container: %v", err)
+		defer func() {
+			err := docker.RemoveContainer(id)
+			if err != nil {
+				log.Fatalf("Failed to remove container: %v", err)
+			}
+		}()
 		return
 	}
 

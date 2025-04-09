@@ -9,9 +9,9 @@
 
 package apimod
 
-type VmListProvider struct {
+type VmDelReq struct {
 
 	Provider string `json:"provider"`
 
-	Containers []VmListItem `json:"containers"`
+	Id string `json:"id"`
 }
