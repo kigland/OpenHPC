@@ -196,7 +196,7 @@
         ]
       }
     },
-    "/vm/remove": {
+    "/vm/del": {
       "post": {
         "summary": "remove vm",
         "deprecated": false,
@@ -209,7 +209,10 @@
               "schema": {
                 "$ref": "#/components/schemas/VMDelReq"
               },
-              "examples": {}
+              "example": {
+                "provider": "podman",
+                "id": "453f436aaac5710eba1861f6c2ba0936a6ca332f33495d4d1349a0d014c77354"
+              }
             }
           }
         },
