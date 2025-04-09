@@ -4,10 +4,10 @@ init:
 	git submodule update --init --recursive
 
 docker:
-	docker build -t "HPC-Scheduler" .
+	docker build -t "OpenHPC" .
 
 docker-run:
-	docker run -d --restart always -p 127.0.0.1:8080:8080 "HPC-Scheduler"
+	docker run -d --restart always -p 127.0.0.1:8080:8080 "OpenHPC"
 
 coordinator:
 	go build -v -o out/coodinator coodinator/cmd/main.go
@@ -31,7 +31,7 @@ tester:
 	go build -v -o out/tester/docker-jupyter tester/docker-jupyter/main.go
 
 tools:
-	go build -v -o out/tools/requester tools/requester/main.go
+# go build -v -o out/tools/requester tools/requester/main.go
 	go build -v -o out/tools/cli tools/cli/main.go
 
 tool: tools
