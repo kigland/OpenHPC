@@ -10,6 +10,29 @@
 package openapi
 
 type VmReq struct {
+	Provider  string `json:"provider"`
+	Owner     string `json:"owner"`
+	Project   string `json:"project"`
+	EnableRDS bool   `json:"enable_rds"`
+	RDSFolder string `json:"rds_folder"`
+}
 
-	Image string `json:"image"`
+type VmCreatedInfo struct {
+	CID   string `json:"cid"`
+	RDSAt string `json:"rds_at"`
+	Token string `json:"token"`
+	SSH   string `json:"ssh"`
+	HTTP  string `json:"http"`
+
+	SvcTag    string `json:"svc_tag"`
+	ShortCode string `json:"sc"`
+}
+
+type VmTokenReq struct {
+	Provider string `json:"provider"`
+	Id       string `json:"id"`
+}
+
+type VmTokenResp struct {
+	Token []string `json:"token"`
 }

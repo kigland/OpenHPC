@@ -7,6 +7,11 @@ import (
 
 const MID_USER_ID = "mid_user_id"
 
+func FakeAuth(c *gin.Context) {
+	c.Set(MID_USER_ID, "1")
+	c.Next()
+}
+
 func MustAuth(c *gin.Context) {
 	token := c.GetHeader("Authorization")
 	if token == "" {

@@ -1,0 +1,22 @@
+{
+    "addr": "127.0.0.1:8080",
+    "debug": false,
+
+    "default_provider": "docker",
+    "available_providers": [
+        {
+            "provider": "docker"
+        },
+        {
+            "provider": "podman",
+            "socket": "/var/run/podman/podman.sock"
+        }
+    ],
+    "bind_ssh_host": "127.0.0.3",
+    "bind_ssh_port": 40000,
+    "bind_http_host": "127.0.0.2",
+    "bind_http_port": 40500,
+    "max_port_shift": 500,
+    "visit_http_host": "https://openhpc.example.com",
+    "visit_ssh_host": "ssh.openhpc.example.com"
+}

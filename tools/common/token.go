@@ -1,7 +1,6 @@
 package common
 
 import (
-	"context"
 	"log"
 	"strings"
 
@@ -41,6 +40,6 @@ func Env(cid string) []string {
 		log.Fatalf("Container not found or not managed by KHS")
 		return nil
 	}
-	inspect := ruby.RdrErr(DockerHelper.Cli().ContainerInspect(context.Background(), summary.ID))
+	inspect := ruby.RdrErr(DockerHelper.ContainerInspect(summary.ID))
 	return inspect.Config.Env
 }

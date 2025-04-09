@@ -1,7 +1,6 @@
 package common
 
 import (
-	"context"
 	"fmt"
 	"slices"
 	"strings"
@@ -16,7 +15,7 @@ func Upgrade(cid string) (ContainerInfo, error) {
 	if !ok {
 		return ContainerInfo{}, fmt.Errorf("container not found or not managed by KHS")
 	}
-	inspect := ruby.RdrErr(DockerHelper.Cli().ContainerInspect(context.Background(), summary.ID))
+	inspect := ruby.RdrErr(DockerHelper.ContainerInspect(summary.ID))
 	ids := IDs(summary.ID)
 	imgStr := inspect.Config.Image
 	img := image.AllowedImages(imgStr)

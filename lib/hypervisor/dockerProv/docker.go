@@ -1,6 +1,9 @@
 package dockerProv
 
 import (
+	"context"
+
+	"github.com/docker/docker/api/types/container"
 	"github.com/docker/docker/client"
 	"github.com/kigland/OpenHPC/lib/consts"
 )
@@ -19,4 +22,8 @@ func NewDockerHelper(cli *client.Client) *DockerHelper {
 
 func (d *DockerHelper) Cli() *client.Client {
 	return d.cli
+}
+
+func (d *DockerHelper) ContainerInspect(cid string) (container.InspectResponse, error) {
+	return d.cli.ContainerInspect(context.Background(), cid)
 }

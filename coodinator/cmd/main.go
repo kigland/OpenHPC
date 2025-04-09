@@ -8,7 +8,7 @@ import (
 )
 
 func initCfg() {
-	bs, err := iox.ReadAllByte("config.json")
+	bs, err := iox.ReadAllByte("/etc/openhpc/host.json")
 	panicx.NotNilErr(err)
 	panicx.NotNilErr(shared.LoadConfig(bs))
 }

@@ -11,6 +11,7 @@ type Controller struct{}
 var _ types.IController = (*Controller)(nil)
 
 func (c *Controller) Init(r gin.IRouter) {
-	r.POST("/request", mid.MustAuth, request)
-	r.POST("/extend", mid.MustAuth, extend)
+	r.POST("/request", mid.FakeAuth, request)
+	r.POST("/token", mid.FakeAuth, token)
+	r.POST("/extend", mid.FakeAuth, extend)
 }
