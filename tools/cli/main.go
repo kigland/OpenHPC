@@ -24,17 +24,17 @@ func main() {
 	common.InitRL()
 	defer common.Rl.Close()
 
-	verb := strings.ToLower(os.Args[1])
-	os.Args = os.Args[2:]
+	_ = handler.PopFst()
+	verb := strings.ToLower(handler.PopFst())
 
 	switch verb {
 	case "docker":
 		common.SetProvider(dockerProv.ProviderDocker)
-		os.Args = os.Args[1:]
 	case "podman":
 		common.SetProvider(dockerProv.ProviderPodman)
-		os.Args = os.Args[1:]
 	}
+
+	verb = strings.ToLower(handler.PopFst())
 
 	switch verb {
 	case "req", "request", "create", "c", "start":

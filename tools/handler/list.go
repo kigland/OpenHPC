@@ -13,7 +13,7 @@ import (
 )
 
 func List() {
-	if user := popFst(); user != "" {
+	if user := PopFst(); user != "" {
 		ListUser(user)
 		return
 	}

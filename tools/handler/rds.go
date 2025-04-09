@@ -10,7 +10,7 @@ import (
 )
 
 func RDS() {
-	verb := popFst()
+	verb := PopFst()
 	// [exec] [rds] [action]
 	switch verb {
 	case "list", "ls", "ps":

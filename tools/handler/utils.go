@@ -6,7 +6,7 @@ import (
 	"github.com/kigland/OpenHPC/tools/common"
 )
 
-func popFst() string {
+func PopFst() string {
 	if len(os.Args) == 0 {
 		return ""
 	}
@@ -16,7 +16,7 @@ func popFst() string {
 }
 
 func cidToFunc(f func(cid string)) {
-	cid := popFst()
+	cid := PopFst()
 	if cid != "" {
 		f(cid)
 		return
