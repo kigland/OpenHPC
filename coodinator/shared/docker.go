@@ -10,7 +10,7 @@ import (
 )
 
 var Containers map[dockerProv.Provider]*dockerProv.DockerHelper
-var Docker *client.Client
+
 var Rds *rds.RDS
 var DefaultProvider dockerProv.Provider
 
