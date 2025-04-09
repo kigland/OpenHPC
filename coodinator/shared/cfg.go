@@ -2,6 +2,7 @@ package shared
 
 import (
 	"encoding/json"
+	"log"
 
 	"github.com/kigland/OpenHPC/lib/consts"
 	"github.com/kigland/OpenHPC/lib/hypervisor/dockerProv"
@@ -43,7 +44,11 @@ func (c *Config) normaliseProvider() {
 				p.Socket = consts.DOCKER_UNIX_SOCKET
 			case dockerProv.ProviderPodman:
 				p.Socket = consts.PODMAN_UNIX_SOCKET
+			default:
+				log.Printf("Unknown provider: %s", p.Provider)
+				continue
 			}
+			providers = append(providers, p)
 		}
 	}
 	c.AvailableProviders = providers
