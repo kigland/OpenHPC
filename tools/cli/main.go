@@ -30,11 +30,11 @@ func main() {
 	switch verb {
 	case "docker":
 		common.SetProvider(dockerProv.ProviderDocker)
+		verb = strings.ToLower(handler.PopFst())
 	case "podman":
 		common.SetProvider(dockerProv.ProviderPodman)
+		verb = strings.ToLower(handler.PopFst())
 	}
-
-	verb = strings.ToLower(handler.PopFst())
 
 	switch verb {
 	case "req", "request", "create", "c", "start":
