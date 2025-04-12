@@ -44,6 +44,12 @@ install:
 clean:
 	rm -rf out
 
+run:
+	./out/coordinator
+
+dev:
+	./out/coordinator config.json
+
 api:
 	bash gen_api.sh
 

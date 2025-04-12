@@ -1,6 +1,8 @@
 package main
 
 import (
+	"os"
+
 	"github.com/KevinZonda/GoX/pkg/iox"
 	"github.com/KevinZonda/GoX/pkg/panicx"
 	"github.com/kigland/OpenHPC/coordinator/controller"
@@ -8,7 +10,11 @@ import (
 )
 
 func initCfg() {
-	bs, err := iox.ReadAllByte("/etc/openhpc/host.json")
+	path := "/etc/openhpc/host.json"
+	if len(os.Args) > 1 {
+		path = os.Args[1]
+	}
+	bs, err := iox.ReadAllByte(path)
 	panicx.NotNilErr(err)
 	panicx.NotNilErr(shared.LoadConfig(bs))
 }
