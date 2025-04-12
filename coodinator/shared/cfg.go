@@ -13,12 +13,19 @@ type ProviderConfig struct {
 	Socket   string              `json:"socket"`
 }
 
+type ACL struct {
+	AllowAll bool     `json:"allow_all"`
+	APIKeys  []string `json:"api_keys"`
+}
+
 type Config struct {
 	Addr  string `json:"addr"`
 	Debug bool   `json:"debug"`
 
 	AvailableProviders []ProviderConfig    `json:"available_providers"`
 	DefaultProvider    dockerProv.Provider `json:"default_provider"`
+
+	ACL ACL `json:"acl"`
 
 	BindSSHHost string `json:"bind_ssh_host"`
 	BindSSHPort int    `json:"bind_ssh_port"`
