@@ -47,4 +47,4 @@ clean:
 api:
 	bash gen_api.sh
 
-.PHONY: init docker docker-run build build-debug run tester clean tools tool api
+.PHONY: init coordinator docker docker-run build build-debug run tester clean tools tool api
