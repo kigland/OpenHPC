@@ -6,8 +6,8 @@ import (
 	"time"
 
 	"github.com/docker/docker/api/types/container"
-	"github.com/kigland/OpenHPC/coodinator/models/dbmod"
-	"github.com/kigland/OpenHPC/coodinator/shared"
+	"github.com/kigland/OpenHPC/coordinator/models/dbmod"
+	"github.com/kigland/OpenHPC/coordinator/shared"
 	"github.com/kigland/OpenHPC/lib/hypervisor/dockerProv"
 )
 

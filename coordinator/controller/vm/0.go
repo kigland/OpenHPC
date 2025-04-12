@@ -2,8 +2,8 @@ package vm
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/kigland/OpenHPC/coodinator/controller/mid"
-	"github.com/kigland/OpenHPC/coodinator/controller/types"
+	"github.com/kigland/OpenHPC/coordinator/controller/mid"
+	"github.com/kigland/OpenHPC/coordinator/controller/types"
 )
 
 type Controller struct{}

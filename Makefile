@@ -10,7 +10,7 @@ docker-run:
 	docker run -d --restart always -p 127.0.0.1:8080:8080 "OpenHPC"
 
 coordinator:
-	go build -v -o out/coodinator coodinator/cmd/main.go
+	go build -v -o out/coordinator coordinator/cmd/main.go
 
 build: coordinator tools cp-to-pwd i
 

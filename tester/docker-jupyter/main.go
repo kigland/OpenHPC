@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"github.com/docker/docker/client"
-	"github.com/kigland/OpenHPC/coodinator/utils"
+	"github.com/kigland/OpenHPC/coordinator/utils"
 	"github.com/kigland/OpenHPC/lib/consts"
 	"github.com/kigland/OpenHPC/lib/hypervisor/dockerProv"
 	"github.com/kigland/OpenHPC/lib/image"

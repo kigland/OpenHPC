@@ -6,9 +6,9 @@ import (
 
 	"github.com/KevinZonda/GoX/pkg/randx"
 	"github.com/gin-gonic/gin"
-	"github.com/kigland/OpenHPC/coodinator/models/apimod"
-	"github.com/kigland/OpenHPC/coodinator/shared"
-	"github.com/kigland/OpenHPC/coodinator/utils"
+	"github.com/kigland/OpenHPC/coordinator/models/apimod"
+	"github.com/kigland/OpenHPC/coordinator/shared"
+	"github.com/kigland/OpenHPC/coordinator/utils"
 	"github.com/kigland/OpenHPC/lib/image"
 	"github.com/kigland/OpenHPC/lib/svcTag"
 )

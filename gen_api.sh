@@ -4,7 +4,7 @@ rm -fr tmp
 
 mkdir -p tmp
 
-rm -fr coodinator/models/apimod
+rm -fr coordinator/models/apimod
 
 openapi-generator-cli generate \
     -i OpenHPC.openapi.json \
@@ -14,4 +14,4 @@ openapi-generator-cli generate \
     --global-property models,modelDocs=false \
     --skip-validate-spec
 
-mv tmp/go coodinator/models/apimod
+mv tmp/go coordinator/models/apimod

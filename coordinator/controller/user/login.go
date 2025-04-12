@@ -2,9 +2,9 @@ package user
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/kigland/OpenHPC/coodinator/models/apimod"
-	"github.com/kigland/OpenHPC/coodinator/models/dboper"
-	"github.com/kigland/OpenHPC/coodinator/utils"
+	"github.com/kigland/OpenHPC/coordinator/models/apimod"
+	"github.com/kigland/OpenHPC/coordinator/models/dboper"
+	"github.com/kigland/OpenHPC/coordinator/utils"
 )
 
 func login(c *gin.Context) {

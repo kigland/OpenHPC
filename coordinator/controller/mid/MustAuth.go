@@ -4,8 +4,8 @@ import (
 	"slices"
 
 	"github.com/gin-gonic/gin"
-	"github.com/kigland/OpenHPC/coodinator/models/dboper"
-	"github.com/kigland/OpenHPC/coodinator/shared"
+	"github.com/kigland/OpenHPC/coordinator/models/dboper"
+	"github.com/kigland/OpenHPC/coordinator/shared"
 )
 
 const MID_USER_ID = "mid_user_id"

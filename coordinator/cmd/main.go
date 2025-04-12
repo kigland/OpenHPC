@@ -3,8 +3,8 @@ package main
 import (
 	"github.com/KevinZonda/GoX/pkg/iox"
 	"github.com/KevinZonda/GoX/pkg/panicx"
-	"github.com/kigland/OpenHPC/coodinator/controller"
-	"github.com/kigland/OpenHPC/coodinator/shared"
+	"github.com/kigland/OpenHPC/coordinator/controller"
+	"github.com/kigland/OpenHPC/coordinator/shared"
 )
 
 func initCfg() {

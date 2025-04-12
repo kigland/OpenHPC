@@ -6,8 +6,8 @@ import (
 
 	"github.com/docker/docker/api/types/container"
 	"github.com/gin-gonic/gin"
-	"github.com/kigland/OpenHPC/coodinator/models/apimod"
-	"github.com/kigland/OpenHPC/coodinator/shared"
+	"github.com/kigland/OpenHPC/coordinator/models/apimod"
+	"github.com/kigland/OpenHPC/coordinator/shared"
 	"github.com/kigland/OpenHPC/lib/svcTag"
 )
 

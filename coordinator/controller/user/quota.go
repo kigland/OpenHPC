@@ -2,7 +2,7 @@ package user
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/kigland/OpenHPC/coodinator/models/dboper"
+	"github.com/kigland/OpenHPC/coordinator/models/dboper"
 )
 
 func quota(c *gin.Context) {

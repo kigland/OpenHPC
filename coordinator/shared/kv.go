@@ -1,7 +1,7 @@
 package shared
 
 import (
-	"github.com/kigland/OpenHPC/coodinator/models/dbmod"
+	"github.com/kigland/OpenHPC/coordinator/models/dbmod"
 	"github.com/kigland/OpenHPC/lib/store"
 )
 

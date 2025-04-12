@@ -2,8 +2,8 @@ package vm
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/kigland/OpenHPC/coodinator/models/apimod"
-	"github.com/kigland/OpenHPC/coodinator/utils"
+	"github.com/kigland/OpenHPC/coordinator/models/apimod"
+	"github.com/kigland/OpenHPC/coordinator/utils"
 )
 
 func del(c *gin.Context) {

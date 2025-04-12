@@ -2,7 +2,7 @@ package vm
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/kigland/OpenHPC/coodinator/shared"
+	"github.com/kigland/OpenHPC/coordinator/shared"
 	"github.com/kigland/OpenHPC/lib/hypervisor/dockerProv"
 )
 

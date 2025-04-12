@@ -2,9 +2,9 @@ package controller
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/kigland/OpenHPC/coodinator/controller/ping"
-	"github.com/kigland/OpenHPC/coodinator/controller/types"
-	"github.com/kigland/OpenHPC/coodinator/controller/vm"
+	"github.com/kigland/OpenHPC/coordinator/controller/ping"
+	"github.com/kigland/OpenHPC/coordinator/controller/types"
+	"github.com/kigland/OpenHPC/coordinator/controller/vm"
 )
 
 func Init(r gin.IRouter) {
