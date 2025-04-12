@@ -11,10 +11,12 @@ type Controller struct{}
 var _ types.IController = (*Controller)(nil)
 
 func (c *Controller) Init(r gin.IRouter) {
-	r.POST("/vm/request", mid.ACLAuth, request)
-	r.POST("/vm/token", mid.ACLAuth, token)
-	r.GET("/vm/list", mid.ACLAuth, list)
-	r.POST("/vm/del", mid.ACLAuth, del)
-
-	r.POST("/vm/extend", mid.ACLAuth, extend)
+	x := r.Use(mid.ACLAuth)
+	{
+		x.POST("/vm/request", request)
+		x.POST("/vm/token", token)
+		x.GET("/vm/list", list)
+		x.POST("/vm/del", del)
+		x.POST("/vm/extend", extend)
+	}
 }

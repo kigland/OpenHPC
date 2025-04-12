@@ -13,4 +13,8 @@ func (c *Controller) Init(r gin.IRouter) {
 	r.GET("/ping", func(c *gin.Context) {
 		c.String(200, "pong")
 	})
+
+	r.GET("/", func(c *gin.Context) {
+		c.String(200, "OpenHPC Coordination Service")
+	})
 }
