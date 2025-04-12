@@ -26,7 +26,7 @@ func IDs(cid string) VNodeId {
 			SvcTag: svcTag,
 		}
 	}
-	fmt.Println("Container not found or not managed by KHS. Only limited information will be available!")
+	fmt.Println("Container not found or not managed by OHPC. Only limited information will be available!")
 	svcTag, err := svcTag.Parse(cid)
 	if err != nil {
 		fmt.Println("Failed to parse service tag: ", err)

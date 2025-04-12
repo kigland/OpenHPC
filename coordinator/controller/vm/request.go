@@ -36,6 +36,10 @@ func request(c *gin.Context) {
 		Provider:    provider,
 	}.Image(imgName).WithGPU(1).WithAutoRestart()
 
+	if req.Shm >= 64 {
+		img = img.WithShmSize(int64(req.Shm))
+	}
+
 	// RDS Support
 	rdsMountAt := ""
 	if req.EnableRds {

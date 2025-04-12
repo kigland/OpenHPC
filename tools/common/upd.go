@@ -13,7 +13,7 @@ import (
 func Upgrade(cid string) (ContainerInfo, error) {
 	summary, ok := DockerHelper.TryGetContainer(cid)
 	if !ok {
-		return ContainerInfo{}, fmt.Errorf("container not found or not managed by KHS")
+		return ContainerInfo{}, fmt.Errorf("container not found or not managed by OHPC")
 	}
 	inspect := ruby.RdrErr(DockerHelper.ContainerInspect(summary.ID))
 	ids := IDs(summary.ID)

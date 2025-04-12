@@ -50,3 +50,14 @@ func filterToken(env []string) []string {
 	}
 	return tokens
 }
+
+func tokenMap(env []string) map[string]string {
+	tokenMap := make(map[string]string)
+	for _, token := range env {
+		parts := strings.Split(token, "=")
+		if len(parts) == 2 {
+			tokenMap[parts[0]] = parts[1]
+		}
+	}
+	return tokenMap
+}

@@ -236,6 +236,151 @@
           }
         ]
       }
+    },
+    "/vm/upgrade": {
+      "post": {
+        "summary": "VM upgrade",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VMUpgradeReq"
+              },
+              "examples": {}
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "apikey-header-Authorization": []
+          }
+        ]
+      }
+    },
+    "/stat/nvidia-smi": {
+      "get": {
+        "summary": "Nvidia-SMI",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/stat/container": {
+      "get": {
+        "summary": "容器统计",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "provider",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": "docker",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/stat/cpu": {
+      "get": {
+        "summary": "cpu状态",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/stat/mem": {
+      "get": {
+        "summary": "内存状态",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
     }
   },
   "components": {
@@ -283,6 +428,9 @@
           },
           "rds_folder": {
             "type": "string"
+          },
+          "shm": {
+            "type": "integer"
           }
         },
         "required": [
@@ -290,7 +438,8 @@
           "owner",
           "project",
           "enable_rds",
-          "rds_folder"
+          "rds_folder",
+          "shm"
         ]
       },
       "VMCreatedInfo": {
@@ -458,6 +607,25 @@
         "required": [
           "provider",
           "id"
+        ]
+      },
+      "VMUpgradeReq": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "shm": {
+            "type": "integer"
+          },
+          "provider": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "shm",
+          "id",
+          "provider"
         ]
       }
     },

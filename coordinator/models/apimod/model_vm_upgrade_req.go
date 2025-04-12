@@ -9,17 +9,11 @@
 
 package apimod
 
-type VmReq struct {
+type VmUpgradeReq struct {
 
-	Provider string `json:"provider"`
-
-	Owner string `json:"owner"`
-
-	Project string `json:"project"`
-
-	EnableRds bool `json:"enable_rds"`
-
-	RdsFolder string `json:"rds_folder"`
+	Id string `json:"id"`
 
 	Shm int32 `json:"shm"`
+
+	Provider string `json:"provider"`
 }
