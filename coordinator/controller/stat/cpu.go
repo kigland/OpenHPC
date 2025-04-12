@@ -40,13 +40,17 @@ func cpuInfo() string {
 	}
 
 	cols := 4
-	for i, percentage := range percentages {
-		if i > 0 && i%cols == 0 {
-			result.WriteString("\n")
+	rows := (len(percentages) + cols - 1) / cols
+
+	for row := 0; row < rows; row++ {
+		for col := 0; col < cols; col++ {
+			coreIndex := col*rows + row
+			if coreIndex < len(percentages) {
+				result.WriteString(fmt.Sprintf("Core %-2d: %6.2f%%    ", coreIndex, percentages[coreIndex]))
+			}
 		}
-		result.WriteString(fmt.Sprintf("Core %-2d: %6.2f%%    ", i, percentage))
+		result.WriteString("\n")
 	}
-	result.WriteString("\n")
 	return result.String()
 }
 
