@@ -39,7 +39,7 @@ func Upgrade(cid string) (ContainerInfo, error) {
 		}
 		if p.PrivatePort == 22 {
 			needSSH = true
-			break
+			continue
 		}
 	}
 	if port == -1 {
