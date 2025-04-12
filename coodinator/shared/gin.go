@@ -17,7 +17,11 @@ func initGin() {
 
 	Engine = gin.Default()
 
-	Engine.Use(cors.Default()) //allow all origins
+	c := cors.DefaultConfig()
+	c.AllowAllOrigins = true
+	c.AddAllowHeaders("Authorization")
+
+	Engine.Use(cors.New(c))
 }
 
 func RunGin() {
