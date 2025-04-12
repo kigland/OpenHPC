@@ -62,7 +62,7 @@ func CreateContainerCustomRDS(dk *dockerProv.DockerHelper, imageName image.Allow
 		BindPort:    port,
 		BindSSHHost: consts.SSH_BIND_HOST,
 		BindSSHPort: sshPort,
-		Provider:    dockerProv.ProviderPodman,
+		Provider:    LoadProvider(),
 	}.Image(imageName).WithGPU(1).WithAutoRestart()
 
 	img.ContainerName = tag.String()
