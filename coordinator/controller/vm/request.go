@@ -9,6 +9,7 @@ import (
 	"github.com/kigland/OpenHPC/coordinator/models/apimod"
 	"github.com/kigland/OpenHPC/coordinator/shared"
 	"github.com/kigland/OpenHPC/coordinator/utils"
+	"github.com/kigland/OpenHPC/lib/consts"
 	"github.com/kigland/OpenHPC/lib/image"
 	"github.com/kigland/OpenHPC/lib/svcTag"
 )
@@ -34,7 +35,9 @@ func request(c *gin.Context) {
 		BindSSHHost: shared.GetConfig().BindSSHHost,
 		BindSSHPort: shared.GetConfig().BindSSHPort + rndPort,
 		Provider:    provider,
-	}.Image(imgName).WithGPU(1).WithAutoRestart()
+	}.Image(imgName).WithGPU(1).
+		WithAutoRestart().
+		WithBaseURL(imgName.BaseURLEnvVar(), consts.BASE_URL(shared.GetConfig().BindHTTPPort+rndPort))
 
 	if req.Shm >= 64 {
 		img = img.WithShmSize(int64(req.Shm))

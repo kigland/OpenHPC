@@ -40,6 +40,14 @@ func (a AllowedImages) HomeDir() string {
 	return ""
 }
 
+func (a AllowedImages) BaseURLEnvVar() string {
+	switch a {
+	case ImageMLBook, ImageJupyterHub, ImageTorchBook:
+		return "NB_VAR_BASE_URL"
+	}
+	return ""
+}
+
 func (a AllowedImages) RdsDir() string {
 	home := a.HomeDir()
 	if home != "" {
