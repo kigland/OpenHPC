@@ -53,7 +53,7 @@ func (c ContainerInfo) String() string {
 func CreateContainerCustomRDS(dk *dockerProv.DockerHelper, imageName image.AllowedImages, tag svcTag.SvcTag, passwd string, port int, rdsDir string, rdsMountAt string, needSSH bool) (ContainerInfo, error) {
 	sshPort := 0
 	if needSSH {
-		sshPort = port + consts.SSH_SHIFT
+		sshPort = port
 	}
 
 	img := image.Factory{
