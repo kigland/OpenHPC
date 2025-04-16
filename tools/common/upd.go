@@ -10,6 +10,12 @@ import (
 	"github.com/kigland/OpenHPC/lib/image"
 )
 
+func pruneImageStr(imgStr string) string {
+	imgStr = strings.TrimPrefix(imgStr, "docker.io/")
+	imgParts := strings.Split(imgStr, ":")
+	return imgParts[0]
+}
+
 func Upgrade(cid string) (ContainerInfo, error) {
 	summary, ok := DockerHelper.TryGetContainer(cid)
 	if !ok {
@@ -18,7 +24,7 @@ func Upgrade(cid string) (ContainerInfo, error) {
 	inspect := ruby.RdrErr(DockerHelper.ContainerInspect(summary.ID))
 	ids := IDs(summary.ID)
 	imgOrg := inspect.Config.Image
-	imgStr := strings.TrimPrefix(imgOrg, "docker.io/")
+	imgStr := pruneImageStr(imgOrg)
 	img := image.AllowedImages(imgStr)
 	if !slices.Contains(image.ALLOWED_IMAGES, img) {
 		return ContainerInfo{}, fmt.Errorf("image not supported: %s(%s)", imgStr, imgOrg)
