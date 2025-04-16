@@ -17,11 +17,11 @@ func Upgrade(cid string) (ContainerInfo, error) {
 	}
 	inspect := ruby.RdrErr(DockerHelper.ContainerInspect(summary.ID))
 	ids := IDs(summary.ID)
-	imgStr := inspect.Config.Image
-	imgStr = strings.TrimPrefix(imgStr, "docker.io/")
+	imgOrg := inspect.Config.Image
+	imgStr := strings.TrimPrefix(imgOrg, "docker.io/")
 	img := image.AllowedImages(imgStr)
 	if !slices.Contains(image.ALLOWED_IMAGES, img) {
-		return ContainerInfo{}, fmt.Errorf("image not supported")
+		return ContainerInfo{}, fmt.Errorf("image not supported: %s(%s)", imgStr, imgOrg)
 	}
 
 	tokens := filterToken(inspect.Config.Env)
