@@ -48,7 +48,7 @@ func containInfo(svcTagStr string, summary container.Summary) (apimod.VmListItem
 	}
 	item := apimod.VmListItem{
 		Cid:     summary.ID,
-		Image:   image.PruneImageStr(summary.Image),
+		Image:   image.PruneImageStrWithShortID(summary.Image),
 		SvcTag:  svcTag.String(),
 		Sc:      svcTag.ShortCode(),
 		Status:  summary.Status,
