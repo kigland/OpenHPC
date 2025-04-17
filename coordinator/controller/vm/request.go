@@ -3,6 +3,7 @@ package vm
 import (
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/KevinZonda/GoX/pkg/randx"
 	"github.com/gin-gonic/gin"
@@ -88,7 +89,7 @@ func request(c *gin.Context) {
 		Image: string(imgName),
 		RdsAt: rdsMountAt,
 		Token: passwd,
-		Http:  shared.GetConfig().VisitHTTPHost + ":" + strconv.Itoa(shared.GetConfig().BindHTTPPort+rndPort),
+		Http:  parseHTTPVisitURL(shared.GetConfig().BindHTTPPort + rndPort),
 
 		SvcTag: svgT.String(),
 		Sc:     svgT.ShortCode(),
@@ -99,4 +100,8 @@ func request(c *gin.Context) {
 	}
 
 	c.JSON(200, cinfo)
+}
+
+func parseHTTPVisitURL(newPort int) string {
+	return strings.ReplaceAll(shared.GetConfig().VisitHTTPHost, "$PORT", strconv.Itoa(newPort))
 }
