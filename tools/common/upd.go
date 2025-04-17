@@ -2,19 +2,12 @@ package common
 
 import (
 	"fmt"
-	"slices"
 	"strings"
 
 	"github.com/KevinZonda/GoX/pkg/panicx"
 	"github.com/KevinZonda/GoX/pkg/ruby"
 	"github.com/kigland/OpenHPC/lib/image"
 )
-
-func pruneImageStr(imgStr string) string {
-	imgStr = strings.TrimPrefix(imgStr, "docker.io/")
-	imgParts := strings.Split(imgStr, ":")
-	return imgParts[0]
-}
 
 func Upgrade(cid string) (ContainerInfo, error) {
 	summary, ok := DockerHelper.TryGetContainer(cid)
@@ -24,9 +17,9 @@ func Upgrade(cid string) (ContainerInfo, error) {
 	inspect := ruby.RdrErr(DockerHelper.ContainerInspect(summary.ID))
 	ids := IDs(summary.ID)
 	imgOrg := inspect.Config.Image
-	imgStr := pruneImageStr(imgOrg)
+	imgStr := image.PruneImageStr(imgOrg)
 	img := image.AllowedImages(imgStr)
-	if !slices.Contains(image.ALLOWED_IMAGES, img) {
+	if !img.IsAllowed() {
 		return ContainerInfo{}, fmt.Errorf("image not supported: %s(%s)", imgStr, imgOrg)
 	}
 
@@ -49,6 +42,7 @@ func Upgrade(cid string) (ContainerInfo, error) {
 			continue
 		}
 	}
+	needSSH = needSSH && img.SupportSSH()
 	if port == -1 {
 		return ContainerInfo{}, fmt.Errorf("port not found")
 	}

@@ -36,7 +36,7 @@ func (f Factory) jupyterbook(id AllowedImages) dockerProv.StartContainerOptions 
 		HostIP:   f.BindHost,
 		HostPort: strconv.Itoa(f.BindPort),
 	}}
-	if f.BindSSHPort > 0 {
+	if f.BindSSHPort > 0 && id.SupportSSH() {
 		port["22/tcp"] = []nat.PortBinding{{
 			HostIP:   f.BindSSHHost,
 			HostPort: strconv.Itoa(f.BindSSHPort),

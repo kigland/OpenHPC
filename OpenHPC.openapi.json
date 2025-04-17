@@ -569,6 +569,9 @@
           },
           "project": {
             "type": "string"
+          },
+          "image": {
+            "type": "string"
           }
         },
         "required": [
@@ -579,7 +582,8 @@
           "sc",
           "owner",
           "project",
-          "port"
+          "port",
+          "image"
         ]
       },
       "VMListItemMount": {

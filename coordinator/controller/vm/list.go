@@ -8,6 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/kigland/OpenHPC/coordinator/models/apimod"
 	"github.com/kigland/OpenHPC/coordinator/shared"
+	"github.com/kigland/OpenHPC/lib/image"
 	"github.com/kigland/OpenHPC/lib/svcTag"
 )
 
@@ -47,6 +48,7 @@ func containInfo(svcTagStr string, summary container.Summary) (apimod.VmListItem
 	}
 	item := apimod.VmListItem{
 		Cid:     summary.ID,
+		Image:   image.PruneImageStr(summary.Image),
 		SvcTag:  svcTag.String(),
 		Sc:      svcTag.ShortCode(),
 		Status:  summary.Status,

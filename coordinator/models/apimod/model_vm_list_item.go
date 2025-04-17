@@ -26,4 +26,6 @@ type VmListItem struct {
 	Owner string `json:"owner"`
 
 	Project string `json:"project"`
+
+	Image string `json:"image"`
 }

@@ -88,11 +88,14 @@ func request(c *gin.Context) {
 		Image: string(imgName),
 		RdsAt: rdsMountAt,
 		Token: passwd,
-		Ssh:   shared.GetConfig().VisitSSHHost + ":" + strconv.Itoa(shared.GetConfig().BindSSHPort+rndPort),
 		Http:  shared.GetConfig().VisitHTTPHost + ":" + strconv.Itoa(shared.GetConfig().BindHTTPPort+rndPort),
 
 		SvcTag: svgT.String(),
 		Sc:     svgT.ShortCode(),
+	}
+
+	if imgName.SupportSSH() {
+		cinfo.Ssh = shared.GetConfig().VisitSSHHost + ":" + strconv.Itoa(shared.GetConfig().BindSSHPort+rndPort)
 	}
 
 	c.JSON(200, cinfo)

@@ -8,12 +8,14 @@ import (
 type AllowedImages string
 
 const (
-	ImageJupyterHub AllowedImages = "kevinzonda/notebook"
-	ImageBase       AllowedImages = "jupyterhub/singleuser"
+	ImageJupyterHub    AllowedImages = "kevinzonda/notebook"
+	ImageBase          AllowedImages = "jupyterhub/singleuser"
+	ImageJupyterHubIso AllowedImages = "kevinzonda/notebook-iso"
 )
 
 var ALLOWED_IMAGES = []AllowedImages{
 	ImageJupyterHub,
+	ImageJupyterHubIso,
 	ImageBase,
 }
 
@@ -23,7 +25,7 @@ func (a AllowedImages) IsAllowed() bool {
 
 func (a AllowedImages) HomeDir() string {
 	switch a {
-	case ImageJupyterHub, ImageBase:
+	case ImageJupyterHub, ImageBase, ImageJupyterHubIso:
 		return "/home/jovyan"
 	}
 	return ""
@@ -31,7 +33,7 @@ func (a AllowedImages) HomeDir() string {
 
 func (a AllowedImages) BaseURLEnvVar() string {
 	switch a {
-	case ImageJupyterHub:
+	case ImageJupyterHub, ImageJupyterHubIso:
 		return "NB_VAR_BASE_URL"
 	}
 	return ""
@@ -43,4 +45,12 @@ func (a AllowedImages) RdsDir() string {
 		return filepath.Join(home, "rds")
 	}
 	return "/rds"
+}
+
+func (a AllowedImages) SupportSSH() bool {
+	switch a {
+	case ImageJupyterHub:
+		return true
+	}
+	return false
 }
