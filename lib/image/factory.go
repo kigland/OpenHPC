@@ -19,7 +19,7 @@ type Factory struct {
 
 func (f Factory) Image(img AllowedImages) dockerProv.StartContainerOptions {
 	switch img {
-	case ImageJupyterHub, ImageBase:
+	case ImageJupyterHub, ImageJupyterHubIso, ImageBase:
 		return f.jupyterbook(img)
 	default:
 		return dockerProv.StartContainerOptions{}
