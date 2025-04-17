@@ -22,9 +22,6 @@ cp-to-pwd:
 publish:
 	go build -v -gcflags="all=-N -l" -o out/serv cmd/serv/main.go
 
-run:
-	./build/serv
-
 tester:
 	mkdir -p out/tester
 	go build -v -o out/tester/docker tester/docker/main.go
