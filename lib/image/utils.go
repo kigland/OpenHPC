@@ -11,7 +11,7 @@ func PruneImageStrWithShortID(imgStr string) string {
 }
 
 func pruneImageStr(imgStr string, shortId bool) string {
-	imgStr = strings.ToLower(imgStr)
+	imgStr = strings.TrimSpace(imgStr)
 	if strings.HasPrefix(imgStr, "sha256:") {
 		imgStr = strings.TrimPrefix(imgStr, "sha256:")
 		if shortId && len(imgStr) > 12 {
