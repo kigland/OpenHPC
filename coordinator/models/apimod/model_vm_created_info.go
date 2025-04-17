@@ -13,6 +13,8 @@ type VmCreatedInfo struct {
 
 	Cid string `json:"cid"`
 
+	Image string `json:"image"`
+
 	RdsAt string `json:"rds_at"`
 
 	Token string `json:"token"`

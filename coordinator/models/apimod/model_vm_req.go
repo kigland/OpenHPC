@@ -13,6 +13,8 @@ type VmReq struct {
 
 	Provider string `json:"provider"`
 
+	Image string `json:"image,omitempty"`
+
 	Owner string `json:"owner"`
 
 	Project string `json:"project"`

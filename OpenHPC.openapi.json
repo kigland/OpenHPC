@@ -417,6 +417,9 @@
           "provider": {
             "type": "string"
           },
+          "image": {
+            "type": "string"
+          },
           "owner": {
             "type": "string"
           },
@@ -448,6 +451,9 @@
           "cid": {
             "type": "string"
           },
+          "image": {
+            "type": "string"
+          },
           "rds_at": {
             "type": "string"
           },
@@ -474,7 +480,8 @@
           "ssh",
           "http",
           "svc_tag",
-          "sc"
+          "sc",
+          "image"
         ]
       },
       "VMTokenReq": {

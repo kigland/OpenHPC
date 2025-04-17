@@ -17,6 +17,10 @@ import (
 func request(c *gin.Context) {
 	req := utils.BodyAsF[apimod.VmReq](c)
 
+	if req.Image == "" {
+		req.Image = string(image.ImageJupyterHub)
+	}
+
 	provider, docker := MustGetProviderWithProvId(c, req.Provider)
 	if docker == nil {
 		return
@@ -26,7 +30,13 @@ func request(c *gin.Context) {
 
 	rndPort := randx.RndRange(0, shared.GetConfig().MaxPortShift)
 
-	imgName := image.ImageJupyterHub
+	imgName := image.AllowedImages(req.Image)
+	if !imgName.IsAllowed() {
+		c.JSON(400, gin.H{
+			"message": "image not supported",
+		})
+		return
+	}
 
 	img := image.Factory{
 		Password:    passwd,
@@ -75,6 +85,7 @@ func request(c *gin.Context) {
 
 	cinfo := apimod.VmCreatedInfo{
 		Cid:   id,
+		Image: string(imgName),
 		RdsAt: rdsMountAt,
 		Token: passwd,
 		Ssh:   shared.GetConfig().VisitSSHHost + ":" + strconv.Itoa(shared.GetConfig().BindSSHPort+rndPort),
