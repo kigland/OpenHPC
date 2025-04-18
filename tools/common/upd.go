@@ -42,7 +42,6 @@ func Upgrade(cid string) (ContainerInfo, error) {
 			continue
 		}
 	}
-	needSSH = needSSH && img.SupportSSH()
 	if port == -1 {
 		return ContainerInfo{}, fmt.Errorf("port not found")
 	}

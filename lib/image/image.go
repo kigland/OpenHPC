@@ -51,6 +51,8 @@ func (a AllowedImages) SupportSSH() bool {
 	switch a {
 	case ImageJupyterHub:
 		return true
+	case ImageJupyterHubIso:
+		return false
 	}
 	return false
 }
