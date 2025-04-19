@@ -16,4 +16,5 @@ func (c *Controller) Init(r gin.IRouter) {
 	r.GET("/vm/list", mid.ACLAuth, list)
 	r.POST("/vm/del", mid.ACLAuth, del)
 	r.POST("/vm/extend", mid.ACLAuth, extend)
+	r.POST("/vm/upgrade", mid.ACLAuth, upgrade)
 }

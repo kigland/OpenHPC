@@ -11,6 +11,7 @@ func del(c *gin.Context) {
 
 	docker := MustGetProvider(c, req.Provider)
 	if docker == nil {
+		utils.ErrorMsg(c, 400, "provider not found")
 		return
 	}
 

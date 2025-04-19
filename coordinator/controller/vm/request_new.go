@@ -19,6 +19,7 @@ func requestNew(c *gin.Context) {
 
 	provider, docker := MustGetProviderWithProvId(c, req.Provider)
 	if docker == nil {
+		utils.ErrorMsg(c, 400, "provider not found")
 		return
 	}
 

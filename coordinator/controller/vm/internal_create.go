@@ -1,6 +1,7 @@
 package vm
 
 import (
+	"fmt"
 	"log"
 	"strconv"
 
@@ -94,5 +95,26 @@ func CreateContainerCustomRDS(req CreateRequest) (createdInfo, error) {
 		Port:    req.BindPort,
 		SSHPort: sshPort,
 		SvcTag:  req.Tag,
+	}, nil
+}
+
+type VNodeId struct {
+	ID     string
+	SvcTag svcTag.SvcTag
+}
+
+func IDs(dk *dockerProv.DockerHelper, cid string) (VNodeId, error) {
+	summary, ok := dk.TryGetContainer(cid)
+	if !ok {
+		return VNodeId{}, fmt.Errorf("container not found or not managed by OHPC")
+	}
+	cid = summary.ID
+	svcTag, err := svcTag.Parse(summary.Names[0])
+	if err != nil {
+		return VNodeId{}, fmt.Errorf("failed to parse service tag: %w", err)
+	}
+	return VNodeId{
+		ID:     cid,
+		SvcTag: svcTag,
 	}, nil
 }
