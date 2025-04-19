@@ -96,7 +96,7 @@ func upgrade(c *gin.Context) {
 		Dk:       docker,
 		Image:    img,
 		Tag:      ids.SvcTag,
-		Passwd:   utils.RndId(32),
+		Passwd:   token,
 
 		BindHost: shared.GetConfig().BindHTTPHost,
 		BindPort: port,
