@@ -26,7 +26,6 @@ type CreateRequest struct {
 
 	RdsDir     string
 	RdsMountAt string
-	NeedSSH    bool
 	ShmSize    int
 }
 
@@ -60,7 +59,7 @@ func createdInfoToVMInfo(info createdInfo) apimod.VmCreatedInfo {
 
 func CreateContainerCustomRDS(req CreateRequest) (createdInfo, error) {
 	sshPort := 0
-	if req.NeedSSH {
+	if req.BindSSHPort > 0 { //&& req.Image.SupportSSH() {
 		sshPort = req.BindSSHPort
 	}
 
