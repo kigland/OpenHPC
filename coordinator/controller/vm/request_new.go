@@ -46,7 +46,7 @@ func requestNew(c *gin.Context) {
 		BindSSHPort: shared.GetConfig().BindSSHPort + rndPort,
 
 		NeedGPU:    req.Gpu,
-		MaxMemByte: int64(req.MaxMem) * 1024 * 1024, // B -> MB -> GB
+		MaxMemByte: int64(req.MaxMem) * 1024 * 1024, // B -> KB -> MB
 	}
 
 	if req.Shm >= 64 {
