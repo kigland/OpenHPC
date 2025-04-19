@@ -1,6 +1,7 @@
 package vm
 
 import (
+	"log"
 	"strings"
 
 	"github.com/gin-gonic/gin"
@@ -34,10 +35,11 @@ func upgrade(c *gin.Context) {
 		return
 	}
 
-	imgStr := inspect.Config.Image
+	imgStr := image.PruneImageStr(inspect.Config.Image)
 	img := image.AllowedImages(imgStr)
 	if !img.IsAllowed() {
 		utils.ErrorMsg(c, 400, "image not supported")
+		log.Println("image not supported", imgStr)
 		return
 	}
 
