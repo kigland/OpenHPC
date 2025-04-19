@@ -104,6 +104,9 @@ func upgrade(c *gin.Context) {
 		RdsDir:     rdsFrom,
 		RdsMountAt: rdsTo,
 		ShmSize:    int(req.Shm),
+
+		NeedGPU:    req.Gpu,
+		MaxMemByte: inspect.HostConfig.Resources.Memory,
 	}
 
 	if needSSH {

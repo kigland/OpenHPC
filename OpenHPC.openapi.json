@@ -260,8 +260,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {}
+                  "$ref": "#/components/schemas/VMCreatedInfo"
                 }
               }
             },
@@ -434,6 +433,12 @@
           },
           "shm": {
             "type": "integer"
+          },
+          "gpu": {
+            "type": "boolean"
+          },
+          "max_mem": {
+            "type": "integer"
           }
         },
         "required": [
@@ -442,7 +447,9 @@
           "project",
           "enable_rds",
           "rds_folder",
-          "shm"
+          "shm",
+          "gpu",
+          "max_mem"
         ]
       },
       "VMCreatedInfo": {
@@ -516,7 +523,22 @@
       "VMListResp": {
         "type": "array",
         "items": {
-          "$ref": "#/components/schemas/VMListProvider"
+          "type": "object",
+          "properties": {
+            "provider": {
+              "type": "string"
+            },
+            "containers": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/VMListItem"
+              }
+            }
+          },
+          "required": [
+            "provider",
+            "containers"
+          ]
         }
       },
       "VMListProvider": {
@@ -631,12 +653,16 @@
           },
           "provider": {
             "type": "string"
+          },
+          "gpu": {
+            "type": "boolean"
           }
         },
         "required": [
           "shm",
           "id",
-          "provider"
+          "provider",
+          "gpu"
         ]
       }
     },

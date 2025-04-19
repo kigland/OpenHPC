@@ -28,6 +28,9 @@ type CreateRequest struct {
 	RdsDir     string
 	RdsMountAt string
 	ShmSize    int
+
+	NeedGPU    bool
+	MaxMemByte int64
 }
 
 type createdInfo struct {
@@ -71,10 +74,15 @@ func CreateContainerCustomRDS(req CreateRequest) (createdInfo, error) {
 		BindSSHHost: req.BindSSHHost,
 		BindSSHPort: sshPort,
 		Provider:    req.Provider,
-	}.Image(req.Image).WithGPU(1).
+	}.Image(req.Image).
 		WithAutoRestart().
 		WithBaseURL(req.Image.BaseURLEnvVar(), consts.BASE_URL(req.BindPort)).
-		WithShmSize(int64(req.ShmSize))
+		WithShmSize(int64(req.ShmSize)).
+		WithMaxMemoryByte(req.MaxMemByte)
+
+	if req.NeedGPU {
+		img = img.WithGPU(1)
+	}
 
 	img.ContainerName = req.Tag.String()
 

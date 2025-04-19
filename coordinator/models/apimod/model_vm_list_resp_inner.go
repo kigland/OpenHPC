@@ -9,23 +9,9 @@
 
 package apimod
 
-type VmReq struct {
+type VmListRespInner struct {
 
 	Provider string `json:"provider"`
 
-	Image string `json:"image,omitempty"`
-
-	Owner string `json:"owner"`
-
-	Project string `json:"project"`
-
-	EnableRds bool `json:"enable_rds"`
-
-	RdsFolder string `json:"rds_folder"`
-
-	Shm int32 `json:"shm"`
-
-	Gpu bool `json:"gpu"`
-
-	MaxMem int32 `json:"max_mem"`
+	Containers []VmListItem `json:"containers"`
 }

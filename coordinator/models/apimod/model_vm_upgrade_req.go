@@ -16,4 +16,6 @@ type VmUpgradeReq struct {
 	Shm int32 `json:"shm"`
 
 	Provider string `json:"provider"`
+
+	Gpu bool `json:"gpu"`
 }
