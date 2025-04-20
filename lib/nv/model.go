@@ -97,24 +97,18 @@ func (log *NvidiaSmiLog) Parse() (*NVInfo, error) {
 
 func parseMiB(str string) int {
 	parts := strings.Split(str, "MiB")
-	if len(parts) != 2 {
-		return 0
-	}
-	num, err := strconv.Atoi(strings.TrimSpace(parts[0]))
-	if err != nil {
-		return -1
-	}
-	return num
+	return parseInt(parts[0], -1)
 }
 
 func parsePercent(str string) int {
 	parts := strings.Split(str, "%")
-	if len(parts) != 2 {
-		return -1
-	}
-	num, err := strconv.Atoi(strings.TrimSpace(parts[0]))
+	return parseInt(parts[0], -1)
+}
+
+func parseInt(str string, def int) int {
+	num, err := strconv.Atoi(strings.TrimSpace(str))
 	if err != nil {
-		return -1
+		return def
 	}
 	return num
 }

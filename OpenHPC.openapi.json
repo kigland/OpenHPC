@@ -380,6 +380,40 @@
         },
         "security": []
       }
+    },
+    "/stat": {
+      "get": {
+        "summary": "stat",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StatInfo"
+              },
+              "examples": {}
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
     }
   },
   "components": {
@@ -663,6 +697,81 @@
           "id",
           "provider",
           "gpu"
+        ]
+      },
+      "StatInfo": {
+        "type": "object",
+        "properties": {
+          "gpu": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GPUStatInfo"
+            }
+          },
+          "cpu": {
+            "$ref": "#/components/schemas/CPUStatInfo"
+          },
+          "mem": {
+            "$ref": "#/components/schemas/MemStatInfo"
+          }
+        },
+        "required": [
+          "gpu",
+          "cpu",
+          "mem"
+        ]
+      },
+      "GPUStatInfo": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "mem": {
+            "$ref": "#/components/schemas/MemStatInfo"
+          },
+          "mem_util": {
+            "type": "integer"
+          },
+          "util": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "name",
+          "mem_util",
+          "mem",
+          "util"
+        ]
+      },
+      "CPUStatInfo": {
+        "type": "object",
+        "properties": {
+          "avg_load": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "avg_load"
+        ]
+      },
+      "MemStatInfo": {
+        "type": "object",
+        "properties": {
+          "used": {
+            "type": "integer"
+          },
+          "total": {
+            "type": "integer"
+          },
+          "unit": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "used",
+          "total",
+          "unit"
         ]
       }
     },

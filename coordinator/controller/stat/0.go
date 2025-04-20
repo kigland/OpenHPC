@@ -13,4 +13,5 @@ func (c *Controller) Init(r gin.IRouter) {
 	r.GET("/stat/nvidia-smi", NvidiaSMIHandler)
 	r.GET("/stat/cpu", CPUHandler)
 	r.GET("/stat/mem", MemHandler)
+	r.GET("/state", StateHandler)
 }
