@@ -1,0 +1,25 @@
+{
+    "images": [
+        {
+            "img": "kevinzonda/notebook",
+            "home": "/home/jovyan",
+            "rds": "/home/jovyan/rds",
+            "ssh": 22,
+            "http": 8888,
+            "env": {
+                "base_url": "NB_VAR_BASE_URL",
+                "token": "JUPYTER_TOKEN"
+            }
+        },
+        {
+            "img": "kevinzonda/notebook-iso",
+            "home": "/home/jovyan",
+            "rds": "/home/jovyan/rds",
+            "http": 8888,
+            "env": {
+                "base_url": "NB_VAR_BASE_URL",
+                "token": "JUPYTER_TOKEN"
+            }
+        }
+    ]
+}

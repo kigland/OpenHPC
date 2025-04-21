@@ -13,8 +13,13 @@ import (
 func requestNew(c *gin.Context) {
 	req := utils.BodyAsF[apimod.VmReq](c)
 
+	if len(image.ALLOWED_IMAGES) == 0 {
+		utils.ErrorMsg(c, 500, "no image supported")
+		return
+	}
+
 	if req.Image == "" {
-		req.Image = string(image.ImageJupyterHub)
+		req.Image = string(image.ALLOWED_IMAGES[0])
 	}
 
 	provider, docker := MustGetProviderWithProvId(c, req.Provider)

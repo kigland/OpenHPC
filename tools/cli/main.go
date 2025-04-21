@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	"github.com/kigland/OpenHPC/lib/hypervisor/dockerProv"
+	"github.com/kigland/OpenHPC/lib/image"
 	"github.com/kigland/OpenHPC/tools/common"
 	"github.com/kigland/OpenHPC/tools/handler"
 )
@@ -17,6 +18,7 @@ func runWithConfigAndDocker(f func()) {
 }
 
 func main() {
+	image.InitDefaultAllowedImages()
 	if len(os.Args) < 2 {
 		help()
 		return

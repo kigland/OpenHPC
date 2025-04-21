@@ -43,9 +43,11 @@ func upgrade(c *gin.Context) {
 		return
 	}
 
+	imgCfg := img.Cfg()
+
 	tokens := filterToken(inspect.Config.Env)
 	tokenMap := tokenMap(tokens)
-	token := tokenMap[image.JUPYTER_TOKEN]
+	token := tokenMap[imgCfg.Env.Token]
 	if token == "" {
 		utils.ErrorMsg(c, 400, "token not found")
 		return
@@ -54,11 +56,11 @@ func upgrade(c *gin.Context) {
 	port := -1
 	needSSH := false
 	for _, p := range summary.Ports {
-		if p.PrivatePort == 8888 {
+		if p.PrivatePort == uint16(imgCfg.HTTP) {
 			port = int(p.PublicPort)
 			break
 		}
-		if p.PrivatePort == 22 {
+		if p.PrivatePort == uint16(imgCfg.SSH) {
 			needSSH = true
 			continue
 		}

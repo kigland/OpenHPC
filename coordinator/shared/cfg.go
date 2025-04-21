@@ -6,6 +6,7 @@ import (
 
 	"github.com/kigland/OpenHPC/lib/consts"
 	"github.com/kigland/OpenHPC/lib/hypervisor/dockerProv"
+	"github.com/kigland/OpenHPC/lib/image"
 )
 
 type ProviderConfig struct {
@@ -40,6 +41,8 @@ type Config struct {
 
 	MySQL   string `json:"mysql"`
 	Storage string `json:"storage"`
+
+	Images []image.HPCImage `json:"images"`
 }
 
 func (c *Config) normaliseProvider() {
@@ -92,5 +95,6 @@ func LoadConfig(bs []byte) error {
 	if err == nil {
 		cfg.Normalise()
 	}
+	image.InitAllowedImages(cfg.Images)
 	return err
 }

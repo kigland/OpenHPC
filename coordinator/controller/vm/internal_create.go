@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/kigland/OpenHPC/coordinator/models/apimod"
 	"github.com/kigland/OpenHPC/coordinator/shared"
@@ -125,4 +126,8 @@ func IDs(dk *dockerProv.DockerHelper, cid string) (VNodeId, error) {
 		ID:     cid,
 		SvcTag: svcTag,
 	}, nil
+}
+
+func parseHTTPVisitURL(newPort int) string {
+	return strings.ReplaceAll(shared.GetConfig().VisitHTTPHost, "$PORT", strconv.Itoa(newPort))
 }

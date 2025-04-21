@@ -18,40 +18,41 @@ type Factory struct {
 }
 
 func (f Factory) Image(img AllowedImages) dockerProv.StartContainerOptions {
-	switch img {
-	case ImageJupyterHub, ImageJupyterHubIso, ImageBase:
-		return f.jupyterbook(img)
-	default:
-		return dockerProv.StartContainerOptions{}
-	}
+	return f.image(img)
 }
 
-const (
-	JUPYTER_TOKEN = "JUPYTER_TOKEN"
-)
+func (f Factory) image(id AllowedImages) dockerProv.StartContainerOptions {
+	img, ok := allowedImages[id]
+	if !ok {
+		return dockerProv.StartContainerOptions{}
+	}
 
-func (f Factory) jupyterbook(id AllowedImages) dockerProv.StartContainerOptions {
 	port := nat.PortMap{}
-	port["8888/tcp"] = []nat.PortBinding{{
-		HostIP:   f.BindHost,
-		HostPort: strconv.Itoa(f.BindPort),
-	}}
-	if f.BindSSHPort > 0 && id.SupportSSH() {
-		port["22/tcp"] = []nat.PortBinding{{
+	if img.SupportHTTP() {
+		_p := nat.Port(strconv.Itoa(img.HTTP) + "/tcp")
+		port[_p] = []nat.PortBinding{{
+			HostIP:   f.BindHost,
+			HostPort: strconv.Itoa(f.BindPort),
+		}}
+	}
+
+	if img.SupportSSH() {
+		_p := nat.Port(strconv.Itoa(img.SSH) + "/tcp")
+		port[_p] = []nat.PortBinding{{
 			HostIP:   f.BindSSHHost,
 			HostPort: strconv.Itoa(f.BindSSHPort),
 		}}
 	}
-	return dockerProv.StartContainerOptions{
-		ImageName: string(id),
-		Env: []string{
-			JUPYTER_TOKEN + "=" + f.Password,
-		},
+
+	ops := dockerProv.StartContainerOptions{
+		ImageName:    string(id),
 		PortBindings: port,
 		Provider:     f.Provider,
 	}
-}
 
-func (f Factory) JupyterHub() dockerProv.StartContainerOptions {
-	return f.jupyterbook(ImageJupyterHub)
+	if img.Env.Token != "" {
+		ops.Env = append(ops.Env, img.Env.Token+"="+f.Password)
+	}
+
+	return ops
 }

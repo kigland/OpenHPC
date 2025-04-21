@@ -22,10 +22,11 @@ func Upgrade(cid string) (ContainerInfo, error) {
 	if !img.IsAllowed() {
 		return ContainerInfo{}, fmt.Errorf("image not supported: %s(%s)", imgStr, imgOrg)
 	}
+	imgCfg := img.Cfg()
 
 	tokens := filterToken(inspect.Config.Env)
 	tokenMap := tokenMap(tokens)
-	token := tokenMap[image.JUPYTER_TOKEN]
+	token := tokenMap[imgCfg.Env.Token]
 	if token == "" {
 		return ContainerInfo{}, fmt.Errorf("token not found")
 	}
@@ -33,11 +34,11 @@ func Upgrade(cid string) (ContainerInfo, error) {
 	port := -1
 	needSSH := false
 	for _, p := range summary.Ports {
-		if p.PrivatePort == 8888 {
+		if p.PrivatePort == uint16(imgCfg.HTTP) {
 			port = int(p.PublicPort)
 			break
 		}
-		if p.PrivatePort == 22 {
+		if p.PrivatePort == uint16(imgCfg.SSH) {
 			needSSH = true
 			continue
 		}

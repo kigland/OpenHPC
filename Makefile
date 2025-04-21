@@ -22,11 +22,6 @@ cp-to-pwd:
 publish:
 	go build -v -gcflags="all=-N -l" -o out/serv cmd/serv/main.go
 
-tester:
-	mkdir -p out/tester
-	go build -v -o out/tester/docker tester/docker/main.go
-	go build -v -o out/tester/docker-jupyter tester/docker-jupyter/main.go
-
 tools:
 # go build -v -o out/tools/requester tools/requester/main.go
 	go build -v -o out/tools/cli tools/cli/main.go
@@ -50,4 +45,4 @@ dev:
 api:
 	bash gen_api.sh
 
-.PHONY: init coordinator docker docker-run build build-debug run tester clean tools tool api
+.PHONY: init coordinator docker docker-run build build-debug run clean tools tool api
