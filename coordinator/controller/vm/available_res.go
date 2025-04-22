@@ -1,8 +1,6 @@
 package vm
 
 import (
-	"strconv"
-
 	"github.com/gin-gonic/gin"
 	"github.com/kigland/OpenHPC/coordinator/models/apimod"
 	"github.com/kigland/OpenHPC/coordinator/shared"
@@ -51,7 +49,7 @@ func availableResGpus() []apimod.VmReqAvailGpu {
 	}
 	for _, gpu := range info.GPUs {
 		gpus = append(gpus, apimod.VmReqAvailGpu{
-			GpuId:       strconv.Itoa(gpu.MinorId),
+			GpuId:       int32(gpu.MinorId),
 			DisplayName: gpu.Name,
 		})
 	}

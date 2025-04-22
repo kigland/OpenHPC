@@ -866,7 +866,7 @@
             "type": "string"
           },
           "gpu_id": {
-            "type": "string"
+            "type": "integer"
           }
         },
         "required": [

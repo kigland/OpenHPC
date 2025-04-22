@@ -13,5 +13,5 @@ type VmReqAvailGpu struct {
 
 	DisplayName string `json:"display_name"`
 
-	GpuId string `json:"gpu_id"`
+	GpuId int32 `json:"gpu_id"`
 }
