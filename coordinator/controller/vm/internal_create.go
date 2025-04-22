@@ -3,7 +3,6 @@ package vm
 import (
 	"fmt"
 	"log"
-	"slices"
 	"strconv"
 	"strings"
 
@@ -138,10 +137,4 @@ func IDs(dk *dockerProv.DockerHelper, cid string) (VNodeId, error) {
 
 func parseHTTPVisitURL(newPort int) string {
 	return strings.ReplaceAll(shared.GetConfig().VisitHTTPHost, "$PORT", strconv.Itoa(newPort))
-}
-
-func normaliseGPUIds(ids []int) []int {
-	ids = slices.Compact(ids)
-	slices.Sort(ids)
-	return ids
 }

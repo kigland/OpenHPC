@@ -55,3 +55,19 @@ func availableResGpus() []apimod.VmReqAvailGpu {
 	}
 	return gpus
 }
+
+func availableGpuIds() ([]int, error) {
+	var gpus []int
+	smi, err := nv.GetNvidiaSmiLog()
+	if err != nil {
+		return nil, err
+	}
+	info, err := smi.Parse()
+	if err != nil {
+		return nil, err
+	}
+	for _, gpu := range info.GPUs {
+		gpus = append(gpus, gpu.MinorId)
+	}
+	return gpus, nil
+}

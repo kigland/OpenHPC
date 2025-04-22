@@ -65,6 +65,7 @@ func requestNew(c *gin.Context) {
 				for i, id := range req.Gpu.Ids {
 					creq.GPUIds[i] = int(id)
 				}
+				creq.GPUIds = normaliseGPUIds(creq.GPUIds)
 			}
 		}
 	}
@@ -107,13 +108,22 @@ func validateGPUIds(ids []int) error {
 	if len(ids) == 0 {
 		return nil
 	}
-	ids = slices.Compact(ids)
-	slices.Sort(ids)
+
+	avail, err := availableGpuIds()
+	if err != nil {
+		return fmt.Errorf("failed to get available gpus")
+	}
+
 	for _, id := range ids {
-		if id < 0 {
-			return fmt.Errorf("invalid gpu id: %d", id)
+		if id < 0 || !slices.Contains(avail, id) {
+			return fmt.Errorf("gpu id %d not available", id)
 		}
 	}
-	// TODO: Verify GPU Ids
 	return nil
+}
+
+func normaliseGPUIds(ids []int) []int {
+	ids = slices.Compact(ids)
+	slices.Sort(ids)
+	return ids
 }
