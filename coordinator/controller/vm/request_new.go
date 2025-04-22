@@ -41,7 +41,7 @@ func requestNew(c *gin.Context) {
 	creq := CreateRequest{
 		Provider: provider,
 		Dk:       docker,
-		Image:    image.AllowedImages(req.Image),
+		Image:    imgName,
 		Tag:      svcTag.New(req.Owner).WithProject(req.Project),
 		Passwd:   utils.RndId(32),
 
@@ -61,7 +61,7 @@ func requestNew(c *gin.Context) {
 	// RDS Support
 	if req.EnableRds {
 		var err error
-		rdsDir, err := shared.Rds.GetRDSPath(req.Owner, req.RdsFolder)
+		rdsDir, err := shared.Rds.GetRDSPath(req.Owner, req.RdsFolder, true)
 		if err != nil {
 			c.JSON(400, gin.H{
 				"message": "failed to get rds path",

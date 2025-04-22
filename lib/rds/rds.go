@@ -1,6 +1,7 @@
 package rds
 
 import (
+	"errors"
 	"os"
 	"path/filepath"
 	"strings"
@@ -12,15 +13,23 @@ type RDS struct {
 	BasePath string
 }
 
-func (r *RDS) GetRDSPath(username string, subfolder string) (path string, err error) {
+func (r *RDS) GetRDSPath(username string, subfolder string, createIfNotExists bool) (path string, err error) {
 	path, err = r.rdsPath(username, subfolder)
 	if err != nil {
 		return "", err
 	}
-	if _, err := os.Stat(path); err != nil {
-		return "", err
+	_, err = os.Stat(path)
+	if err == nil {
+		return path, nil
 	}
-	return path, nil
+	if errors.Is(err, os.ErrNotExist) && createIfNotExists {
+		err = r.Create(username, subfolder)
+		if err != nil {
+			return "", err
+		}
+		return path, nil
+	}
+	return "", err
 }
 
 func (r *RDS) rdsPath(username string, subfolder string) (string, error) {

@@ -18,7 +18,7 @@ var Rds = rds.RDS{
 }
 
 func GetRDSWithSubfolder(owner string, subfolder string, imageName image.AllowedImages) (rdsDir string, rdsMountAt string) {
-	rdsDir, err := Rds.GetRDSPath(owner, subfolder)
+	rdsDir, err := Rds.GetRDSPath(owner, subfolder, true)
 	if err == nil {
 		return rdsDir, imageName.RdsDir()
 	}
