@@ -17,4 +17,5 @@ func (c *Controller) Init(r gin.IRouter) {
 	r.POST("/vm/del", mid.ACLAuth, del)
 	r.POST("/vm/extend", mid.ACLAuth, extend)
 	r.POST("/vm/upgrade", mid.ACLAuth, upgrade)
+	r.GET("/vm/request/avail", availableRes)
 }

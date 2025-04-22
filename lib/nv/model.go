@@ -18,6 +18,8 @@ type NvidiaSmiLog struct {
 		Text             string `xml:",chardata"`
 		ID               string `xml:"id,attr"`
 		ProductName      string `xml:"product_name"`
+		UUID             string `xml:"uuid"`
+		MinorNumber      string `xml:"minor_number"`
 		PerformanceState string `xml:"performance_state"`
 		FbMemoryUsage    struct {
 			Text     string `xml:",chardata"`
@@ -78,8 +80,9 @@ func (log *NvidiaSmiLog) Parse() (*NVInfo, error) {
 	}
 	for i, gpu := range log.Gpu {
 		info.GPUs[i] = GPU{
-			Name:  gpu.ProductName,
-			State: gpu.PerformanceState,
+			Name:    gpu.ProductName,
+			MinorId: parseInt(gpu.MinorNumber, -1),
+			State:   gpu.PerformanceState,
 			Mem: GPUMemory{
 				TotalMB:    parseMiB(gpu.FbMemoryUsage.Total),
 				ReservedMB: parseMiB(gpu.FbMemoryUsage.Reserved),
@@ -120,6 +123,7 @@ type NVInfo struct {
 
 type GPU struct {
 	Name        string
+	MinorId     int
 	State       string
 	Mem         GPUMemory
 	Utilization GPUUtilization

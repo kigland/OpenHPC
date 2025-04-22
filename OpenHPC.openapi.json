@@ -274,6 +274,33 @@
         ]
       }
     },
+    "/vm/request/avail": {
+      "get": {
+        "summary": "vm request info",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VMReqAvailResources"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "apikey-header-Authorization": []
+          }
+        ]
+      }
+    },
     "/stat/nvidia-smi": {
       "get": {
         "summary": "Nvidia-SMI",
@@ -388,24 +415,13 @@
         "description": "",
         "tags": [],
         "parameters": [],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/StatInfo"
-              },
-              "examples": {}
-            }
-          }
-        },
         "responses": {
           "200": {
             "description": "",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {}
+                  "$ref": "#/components/schemas/StatInfo"
                 }
               }
             },
@@ -772,6 +788,68 @@
           "used",
           "total",
           "unit"
+        ]
+      },
+      "VMReqAvailResources": {
+        "type": "object",
+        "properties": {
+          "images": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VMReqAvailImage"
+            }
+          },
+          "gpus": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VMReqAvailGPU"
+            }
+          },
+          "providers": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "images",
+          "gpus",
+          "providers"
+        ]
+      },
+      "VMReqAvailImage": {
+        "type": "object",
+        "properties": {
+          "image": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "display_name": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "image",
+          "description",
+          "display_name"
+        ]
+      },
+      "VMReqAvailGPU": {
+        "type": "object",
+        "properties": {
+          "display_name": {
+            "type": "string"
+          },
+          "gpu_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "display_name",
+          "gpu_id"
         ]
       }
     },

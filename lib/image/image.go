@@ -6,7 +6,11 @@ import (
 )
 
 type HPCImage struct {
-	Img  string `json:"img"`
+	Img string `json:"img"`
+
+	Description string `json:"description"`
+	DisplayName string `json:"display_name"`
+
 	Home string `json:"home"`
 	Rds  string `json:"rds"`
 
@@ -31,6 +35,10 @@ type HPCImageEnv struct {
 type AllowedImages string
 
 var allowedImages map[AllowedImages]HPCImage
+
+func AllAvailableImages() map[AllowedImages]HPCImage {
+	return allowedImages
+}
 
 func InitAllowedImages(images []HPCImage) {
 	allowedImages = make(map[AllowedImages]HPCImage)

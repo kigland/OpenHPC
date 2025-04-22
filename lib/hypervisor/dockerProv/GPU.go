@@ -38,6 +38,33 @@ func (ops StartContainerOptions) WithGPU(gpuCount int) StartContainerOptions {
 	return ops
 }
 
+func (ops StartContainerOptions) WithGPUIds(gpuIds []string) StartContainerOptions {
+	switch ops.Provider {
+	case ProviderPodman:
+		ids := []string{}
+		for _, id := range gpuIds {
+			ids = append(ids, "nvidia.com/gpu="+id)
+		}
+		ops.Resources.DeviceRequests = []container.DeviceRequest{
+			{
+				Driver:    "cdi",
+				DeviceIDs: ids,
+			},
+		}
+	default: // Docker
+		ops.Resources.DeviceRequests = []container.DeviceRequest{
+			{
+				Driver:       "nvidia",
+				Capabilities: [][]string{{"gpu"}},
+				Options:      map[string]string{"gpu": "true"},
+				DeviceIDs:    gpuIds,
+			},
+		}
+	}
+
+	return ops
+}
+
 func (ops StartContainerOptions) WithShmSize(MB int64) StartContainerOptions {
 	ops.ShmSize = MB * 1024 * 1024
 	return ops
