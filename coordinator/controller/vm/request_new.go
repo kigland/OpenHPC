@@ -1,6 +1,9 @@
 package vm
 
 import (
+	"fmt"
+	"slices"
+
 	"github.com/KevinZonda/GoX/pkg/randx"
 	"github.com/gin-gonic/gin"
 	"github.com/kigland/OpenHPC/coordinator/models/apimod"
@@ -50,8 +53,25 @@ func requestNew(c *gin.Context) {
 		BindSSHHost: shared.GetConfig().BindSSHHost,
 		BindSSHPort: shared.GetConfig().BindSSHPort + rndPort,
 
-		NeedGPU:    req.Gpu,
 		MaxMemByte: int64(req.MaxMem) * 1024 * 1024, // B -> KB -> MB
+	}
+
+	if req.EnableGpu {
+		if req.Gpu.All {
+			creq.AllGPU = true
+		} else {
+			if len(req.Gpu.Ids) > 0 {
+				creq.GPUIds = make([]int, len(req.Gpu.Ids))
+				for i, id := range req.Gpu.Ids {
+					creq.GPUIds[i] = int(id)
+				}
+			}
+		}
+	}
+
+	if err := validateGPUIds(creq.GPUIds); err != nil {
+		utils.ErrorMsg(c, 400, err.Error())
+		return
 	}
 
 	if req.Shm >= 64 {
@@ -81,4 +101,19 @@ func requestNew(c *gin.Context) {
 	}
 
 	c.JSON(200, createdInfoToVMInfo(info))
+}
+
+func validateGPUIds(ids []int) error {
+	if len(ids) == 0 {
+		return nil
+	}
+	ids = slices.Compact(ids)
+	slices.Sort(ids)
+	for _, id := range ids {
+		if id < 0 {
+			return fmt.Errorf("invalid gpu id: %d", id)
+		}
+	}
+	// TODO: Verify GPU Ids
+	return nil
 }

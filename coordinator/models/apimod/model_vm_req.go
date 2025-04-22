@@ -25,7 +25,9 @@ type VmReq struct {
 
 	Shm int32 `json:"shm"`
 
-	Gpu bool `json:"gpu"`
+	EnableGpu bool `json:"enable_gpu"`
+
+	Gpu VmReqGpu `json:"gpu"`
 
 	MaxMem int32 `json:"max_mem"`
 }

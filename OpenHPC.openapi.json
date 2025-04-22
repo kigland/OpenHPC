@@ -484,8 +484,11 @@
           "shm": {
             "type": "integer"
           },
-          "gpu": {
+          "enable_gpu": {
             "type": "boolean"
+          },
+          "gpu": {
+            "$ref": "#/components/schemas/VMReqGPU"
           },
           "max_mem": {
             "type": "integer"
@@ -498,8 +501,27 @@
           "enable_rds",
           "rds_folder",
           "shm",
-          "gpu",
-          "max_mem"
+          "enable_gpu",
+          "max_mem",
+          "gpu"
+        ]
+      },
+      "VMReqGPU": {
+        "type": "object",
+        "properties": {
+          "all": {
+            "type": "boolean"
+          },
+          "ids": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
+          }
+        },
+        "required": [
+          "all",
+          "ids"
         ]
       },
       "VMCreatedInfo": {

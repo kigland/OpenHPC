@@ -3,6 +3,7 @@ package vm
 import (
 	"fmt"
 	"log"
+	"slices"
 	"strconv"
 	"strings"
 
@@ -30,7 +31,8 @@ type CreateRequest struct {
 	RdsMountAt string
 	ShmSize    int
 
-	NeedGPU    bool
+	AllGPU     bool
+	GPUIds     []int
 	MaxMemByte int64
 }
 
@@ -81,8 +83,14 @@ func CreateContainerCustomRDS(req CreateRequest) (createdInfo, error) {
 		WithShmSize(int64(req.ShmSize)).
 		WithMaxMemoryByte(req.MaxMemByte)
 
-	if req.NeedGPU {
-		img = img.WithGPU(1)
+	if req.AllGPU {
+		img = img.WithGPU(-1)
+	} else {
+		ids := make([]string, len(req.GPUIds))
+		for i, id := range req.GPUIds {
+			ids[i] = strconv.Itoa(id)
+		}
+		img = img.WithGPUIds(ids)
 	}
 
 	img.ContainerName = req.Tag.String()
@@ -130,4 +138,10 @@ func IDs(dk *dockerProv.DockerHelper, cid string) (VNodeId, error) {
 
 func parseHTTPVisitURL(newPort int) string {
 	return strings.ReplaceAll(shared.GetConfig().VisitHTTPHost, "$PORT", strconv.Itoa(newPort))
+}
+
+func normaliseGPUIds(ids []int) []int {
+	ids = slices.Compact(ids)
+	slices.Sort(ids)
+	return ids
 }

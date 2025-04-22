@@ -107,7 +107,8 @@ func upgrade(c *gin.Context) {
 		RdsMountAt: rdsTo,
 		ShmSize:    int(req.Shm),
 
-		NeedGPU:    req.Gpu,
+		AllGPU: req.Gpu, // FIXME: ALL GPU
+
 		MaxMemByte: inspect.HostConfig.Resources.Memory,
 	}
 
