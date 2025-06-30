@@ -63,6 +63,15 @@ type StartContainerOptions struct {
 	Resources container.Resources
 }
 
+func (sco StartContainerOptions) WithPidLimit(limit int64) StartContainerOptions {
+	sco.Resources.PidsLimit = &limit
+	return sco
+}
+
+func (sco StartContainerOptions) WithNoPidLimit() StartContainerOptions {
+	return sco.WithPidLimit(-1)
+}
+
 func (sco StartContainerOptions) ToContainerConfig() *container.Config {
 	return &container.Config{
 		Image:           sco.ImageName,

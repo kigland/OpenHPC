@@ -80,7 +80,8 @@ func CreateContainerCustomRDS(req CreateRequest) (createdInfo, error) {
 		WithAutoRestart().
 		WithBaseURL(req.Image.BaseURLEnvVar(), consts.BASE_URL(req.BindPort)).
 		WithShmSize(int64(req.ShmSize)).
-		WithMaxMemoryByte(req.MaxMemByte)
+		WithMaxMemoryByte(req.MaxMemByte).
+		WithNoPidLimit()
 
 	if req.AllGPU {
 		img = img.WithGPU(-1)

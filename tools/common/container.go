@@ -65,7 +65,8 @@ func CreateContainerCustomRDS(dk *dockerProv.DockerHelper, imageName image.Allow
 		Provider:    LoadProvider(),
 	}.Image(imageName).WithGPU(1).
 		WithAutoRestart().
-		WithBaseURL(imageName.BaseURLEnvVar(), consts.BASE_URL(port))
+		WithBaseURL(imageName.BaseURLEnvVar(), consts.BASE_URL(port)).
+		WithNoPidLimit()
 
 	img.ContainerName = tag.String()
 
