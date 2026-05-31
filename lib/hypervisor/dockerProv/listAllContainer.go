@@ -2,6 +2,7 @@ package dockerProv
 
 import (
 	"context"
+	"log"
 	"strings"
 
 	"github.com/docker/docker/api/types/container"
@@ -43,6 +44,7 @@ func (d *DockerHelper) TryGetContainer(cid string) (ContainerSummaryWithSvcTag, 
 	}
 	for n, c := range cs {
 		if n == cid || n == "/"+cid || strings.HasPrefix(c.ID, cid) {
+			log.Println("Container found for id:", cid, "with svcTag:", c.Labels["svcTag"])
 			return ContainerSummaryWithSvcTag{
 				Summary: c,
 				SvcTag:  tag,
