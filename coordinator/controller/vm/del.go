@@ -22,7 +22,7 @@ func del(c *gin.Context) {
 	}
 
 	if !verifyACL(c, summary.SvcTag) {
-		utils.ErrorMsg(c, 403, "Unauthhorised")
+		utils.Unauthorised(c)
 		return
 	}
 

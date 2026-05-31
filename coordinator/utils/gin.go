@@ -23,3 +23,8 @@ func ErrorMsg(c *gin.Context, code int, msg string) {
 		"error": msg,
 	})
 }
+
+func Unauthorised(c *gin.Context) {
+	ErrorMsg(c, 401, "Unauthorised")
+	c.Abort()
+}

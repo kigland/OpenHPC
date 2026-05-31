@@ -43,7 +43,7 @@ func requestNew(c *gin.Context) {
 
 	tag := svcTag.New(req.Owner).WithProject(req.Project)
 	if !verifyACL(c, tag) {
-		utils.ErrorMsg(c, 403, "Unauthhorised")
+		utils.Unauthorised(c)
 		return
 	}
 

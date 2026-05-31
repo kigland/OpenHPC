@@ -25,7 +25,7 @@ func upgrade(c *gin.Context) {
 		return
 	}
 	if !verifyACL(c, summary.SvcTag) {
-		utils.ErrorMsg(c, 403, "Unauthhorised")
+		utils.Unauthorised(c)
 		return
 	}
 

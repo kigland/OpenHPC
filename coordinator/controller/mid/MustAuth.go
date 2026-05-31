@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/kigland/OpenHPC/coordinator/models/dboper"
 	"github.com/kigland/OpenHPC/coordinator/shared"
+	"github.com/kigland/OpenHPC/coordinator/utils"
 )
 
 const MID_USER_ID = "mid_user_id"
@@ -23,10 +24,7 @@ func ACLAuth(c *gin.Context) {
 	}
 
 	if len(allowList) == 0 {
-		c.JSON(401, gin.H{
-			"message": "Unauthorised",
-		})
-		c.Abort()
+		utils.Unauthorised(c)
 		return
 	}
 	c.Set(MID_ACL_ALLOW_LIST, allowList)
@@ -35,19 +33,13 @@ func ACLAuth(c *gin.Context) {
 func MustAuth(c *gin.Context) {
 	token := c.GetHeader("Authorization")
 	if token == "" {
-		c.JSON(401, gin.H{
-			"message": "Unauthorized",
-		})
-		c.Abort()
+		utils.Unauthorised(c)
 		return
 	}
 
 	tk, err := dboper.GetTokenByToken(token)
 	if err != nil {
-		c.JSON(401, gin.H{
-			"message": "Unauthorized",
-		})
-		c.Abort()
+		utils.Unauthorised(c)
 		return
 	}
 
