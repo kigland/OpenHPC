@@ -5,6 +5,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/kigland/OpenHPC/coordinator/controller/mid"
+	"github.com/kigland/OpenHPC/lib/hypervisor/dockerProv"
 	"github.com/kigland/OpenHPC/lib/svcTag"
 )
 
@@ -28,4 +29,26 @@ func verifyACLFromSvcTagStr(c *gin.Context, svcTagStr string) bool {
 		return false
 	}
 	return verifyACL(c, t)
+}
+
+func verifyACLFromContainerSummary(c *gin.Context, summary dockerProv.ContainerSummaryWithSvcTag) bool {
+	aclAllowedList := c.GetStringSlice(mid.MID_ACL_ALLOW_LIST)
+	if len(aclAllowedList) == 0 {
+		return false
+	}
+
+	if summary.SvcTag != nil {
+		return verifyACL(c, *summary.SvcTag)
+	}
+	for _, name := range summary.Names {
+		if strings.HasPrefix(name, "/") {
+			name = name[1:]
+		}
+		for _, s := range aclAllowedList {
+			if strings.HasPrefix(name, s) {
+				return true
+			}
+		}
+	}
+	return false
 }

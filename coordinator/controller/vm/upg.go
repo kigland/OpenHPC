@@ -24,7 +24,7 @@ func upgrade(c *gin.Context) {
 		utils.ErrorMsg(c, 404, "container not found")
 		return
 	}
-	if !verifyACL(c, summary.SvcTag) {
+	if !verifyACLFromContainerSummary(c, summary) {
 		utils.Unauthorised(c)
 		return
 	}
