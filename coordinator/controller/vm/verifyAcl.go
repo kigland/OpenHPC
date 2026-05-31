@@ -1,6 +1,7 @@
 package vm
 
 import (
+	"log"
 	"strings"
 
 	"github.com/gin-gonic/gin"
@@ -38,9 +39,11 @@ func verifyACLFromContainerSummary(c *gin.Context, summary dockerProv.ContainerS
 	}
 
 	if summary.SvcTag != nil {
+		log.Println("Container has svcTag, verifying with svcTag:", summary.SvcTag.String())
 		return verifyACL(c, *summary.SvcTag)
 	}
 	for _, name := range summary.Names {
+		log.Println("Verifying container name with ACL, name:", name)
 		if strings.HasPrefix(name, "/") {
 			name = name[1:]
 		}
