@@ -1,6 +1,8 @@
 package vm
 
 import (
+	"log"
+
 	"github.com/gin-gonic/gin"
 	"github.com/kigland/OpenHPC/coordinator/models/apimod"
 	"github.com/kigland/OpenHPC/coordinator/utils"
@@ -21,6 +23,7 @@ func del(c *gin.Context) {
 		return
 	}
 
+	log.Println("Verifying ACL for container:", summary.SvcTag, summary.ID)
 	if !verifyACL(c, summary.SvcTag) {
 		utils.Unauthorised(c)
 		return
