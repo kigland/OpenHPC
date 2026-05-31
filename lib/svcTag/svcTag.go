@@ -23,6 +23,14 @@ func (s SvcTag) ShortCode() string {
 	return s.Rand + "@" + s.Owner + "/" + s.Project
 }
 
+func (s SvcTag) ACLCode() string {
+	if s.Project == "" {
+		return s.Owner + "@" + s.Rand
+	}
+	return s.Owner + "/" + s.Project + "@" + s.Rand
+
+}
+
 func (s SvcTag) String() string {
 	o := stringx.TrimLower(s.Owner)
 	proj := stringx.TrimLower(s.Project)

@@ -23,22 +23,31 @@ func (d *DockerHelper) ListAllContainers(runningOnly bool) ([]container.Summary,
 	})
 }
 
-func (d *DockerHelper) TryGetContainer(cid string) (container.Summary, bool) {
+type ContainerSummaryWithSvcTag struct {
+	container.Summary
+	svcTag.SvcTag
+}
+
+func (d *DockerHelper) TryGetContainer(cid string) (ContainerSummaryWithSvcTag, bool) {
 	cs, err := d.AllKHSContainers()
 	if err != nil {
-		return container.Summary{}, false
+		return ContainerSummaryWithSvcTag{}, false
 	}
+	var tag svcTag.SvcTag
 	if strings.Contains(cid, "@") {
-		svcTag, err := svcTag.Parse(cid)
+		tag, err = svcTag.Parse(cid)
 		if err != nil {
-			return container.Summary{}, false
+			return ContainerSummaryWithSvcTag{}, false
 		}
-		cid = svcTag.String()
+		cid = tag.String()
 	}
 	for n, c := range cs {
 		if n == cid || n == "/"+cid || strings.HasPrefix(c.ID, cid) {
-			return c, true
+			return ContainerSummaryWithSvcTag{
+				Summary: c,
+				SvcTag:  tag,
+			}, true
 		}
 	}
-	return container.Summary{}, false
+	return ContainerSummaryWithSvcTag{}, false
 }

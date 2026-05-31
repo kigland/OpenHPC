@@ -41,11 +41,17 @@ func requestNew(c *gin.Context) {
 
 	rndPort := randx.RndRange(0, shared.GetConfig().MaxPortShift)
 
+	tag := svcTag.New(req.Owner).WithProject(req.Project)
+	if !verifyACL(c, tag) {
+		utils.ErrorMsg(c, 403, "Unauthhorised")
+		return
+	}
+
 	creq := CreateRequest{
 		Provider: provider,
 		Dk:       docker,
 		Image:    imgName,
-		Tag:      svcTag.New(req.Owner).WithProject(req.Project),
+		Tag:      tag,
 		Passwd:   utils.RndId(32),
 
 		BindHost:    shared.GetConfig().BindHTTPHost,

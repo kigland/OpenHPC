@@ -28,6 +28,9 @@ func list(c *gin.Context) {
 				if !ok {
 					continue
 				}
+				if !verifyACLFromSvcTagStr(c, svcTagStr) {
+					continue
+				}
 				lists = append(lists, item)
 			}
 		}

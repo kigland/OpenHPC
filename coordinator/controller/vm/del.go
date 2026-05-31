@@ -21,6 +21,11 @@ func del(c *gin.Context) {
 		return
 	}
 
+	if !verifyACL(c, summary.SvcTag) {
+		utils.ErrorMsg(c, 403, "Unauthhorised")
+		return
+	}
+
 	err := docker.StopContainer(summary.ID)
 	if err != nil {
 		utils.ErrorMsg(c, 500, "Failed to stop container")

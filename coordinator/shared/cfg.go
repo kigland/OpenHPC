@@ -3,7 +3,9 @@ package shared
 import (
 	"encoding/json"
 	"log"
+	"strings"
 
+	"github.com/KevinZonda/GoX/pkg/stringx"
 	"github.com/kigland/OpenHPC/lib/consts"
 	"github.com/kigland/OpenHPC/lib/hypervisor/dockerProv"
 	"github.com/kigland/OpenHPC/lib/image"
@@ -19,6 +21,18 @@ type ACL struct {
 	APIKeys  []string `json:"api_keys"`
 }
 
+type ACLParsed struct {
+	Raw     ACL
+	apikeys map[string][]string
+}
+
+func (a ACLParsed) GetACLAllowList(k string) []string {
+	if a.Raw.AllowAll {
+		return []string{""}
+	}
+	return a.apikeys[k]
+}
+
 type Config struct {
 	Addr  string `json:"addr"`
 	Debug bool   `json:"debug"`
@@ -26,7 +40,8 @@ type Config struct {
 	AvailableProviders []ProviderConfig    `json:"available_providers"`
 	DefaultProvider    dockerProv.Provider `json:"default_provider"`
 
-	ACL ACL `json:"acl"`
+	ACL       ACL       `json:"acl"`
+	ACLParsed ACLParsed `json:"-"`
 
 	BindSSHHost string `json:"bind_ssh_host"`
 	BindSSHPort int    `json:"bind_ssh_port"`
@@ -80,6 +95,31 @@ func (c *Config) normaliseProvider() {
 	}
 }
 
+func (c *Config) parseACL() {
+	acl := c.ACL
+	mapList := make(map[string][]string)
+	for _, apikey := range acl.APIKeys {
+		parts := strings.SplitN(apikey, ":", 2)
+		left := ""
+		var right []string
+		if len(parts) <= 0 {
+			continue
+		}
+
+		left = parts[0]
+		if len(parts) == 1 {
+			right = []string{""}
+		} else {
+			right = stringx.TrimAll(strings.Split(parts[1], ","))
+		}
+		mapList[left] = right
+	}
+	c.ACLParsed = ACLParsed{
+		Raw:     acl,
+		apikeys: mapList,
+	}
+}
+
 func (c *Config) Normalise() {
 	c.normaliseProvider()
 }
@@ -93,6 +133,7 @@ func GetConfig() *Config {
 func LoadConfig(bs []byte) error {
 	err := json.Unmarshal(bs, &cfg)
 	if err == nil {
+		cfg.parseACL()
 		cfg.Normalise()
 	}
 	image.InitAllowedImages(cfg.Images)

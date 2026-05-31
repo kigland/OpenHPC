@@ -24,6 +24,11 @@ func upgrade(c *gin.Context) {
 		utils.ErrorMsg(c, 404, "container not found")
 		return
 	}
+	if !verifyACL(c, summary.SvcTag) {
+		utils.ErrorMsg(c, 403, "Unauthhorised")
+		return
+	}
+
 	inspect, err := docker.ContainerInspect(summary.ID)
 	if err != nil {
 		utils.ErrorMsg(c, 500, "failed to inspect container")
