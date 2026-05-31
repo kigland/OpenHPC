@@ -44,7 +44,7 @@ func (d *DockerHelper) TryGetContainer(cid string) (ContainerSummaryWithSvcTag, 
 	}
 	for n, c := range cs {
 		if n == cid || n == "/"+cid || strings.HasPrefix(c.ID, cid) {
-			log.Println("Container found for id:", cid, "with svcTag:", c.Labels["svcTag"])
+			log.Println("Container found for id:", cid, "with svcTag:", c.ID, c.Names)
 			return ContainerSummaryWithSvcTag{
 				Summary: c,
 				SvcTag:  tag,
