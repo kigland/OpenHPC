@@ -10,8 +10,7 @@ import (
 	"github.com/kigland/OpenHPC/lib/svcTag"
 )
 
-func verifyACL(c *gin.Context, svcTag svcTag.SvcTag) bool {
-	aclAllowedList := c.GetStringSlice(mid.MID_ACL_ALLOW_LIST)
+func _verifyACL(aclAllowedList []string, svcTag svcTag.SvcTag) bool {
 	if len(aclAllowedList) == 0 {
 		return false
 	}
@@ -22,6 +21,11 @@ func verifyACL(c *gin.Context, svcTag svcTag.SvcTag) bool {
 		}
 	}
 	return false
+}
+
+func verifyACL(c *gin.Context, svcTag svcTag.SvcTag) bool {
+	aclAllowedList := c.GetStringSlice(mid.MID_ACL_ALLOW_LIST)
+	return _verifyACL(aclAllowedList, svcTag)
 }
 
 func verifyACLFromSvcTagStr(c *gin.Context, svcTagStr string) bool {
@@ -40,17 +44,19 @@ func verifyACLFromContainerSummary(c *gin.Context, summary dockerProv.ContainerS
 
 	if summary.SvcTag != nil {
 		log.Println("Container has svcTag, verifying with svcTag:", summary.SvcTag.String())
-		return verifyACL(c, *summary.SvcTag)
+		return _verifyACL(aclAllowedList, *summary.SvcTag)
 	}
 	for _, name := range summary.Names {
 		log.Println("Verifying container name with ACL, name:", name)
 		if strings.HasPrefix(name, "/") {
 			name = name[1:]
 		}
-		for _, s := range aclAllowedList {
-			if strings.HasPrefix(name, s) {
-				return true
-			}
+		svcTagParse, err := svcTag.Parse(name)
+		if err != nil {
+			continue
+		}
+		if _verifyACL(aclAllowedList, svcTagParse) {
+			return true
 		}
 	}
 	return false
