@@ -45,4 +45,8 @@ dev:
 api:
 	bash gen_api.sh
 
-.PHONY: init coordinator docker docker-run build build-debug run clean tools tool api
+nvinspec:
+	go build -v -o out/nvinspec-killer nvinspec/cmd/killer/main.go
+	go build -v -o out/nvinspec nvinspec/cmd/monitor/main.go
+
+.PHONY: init coordinator docker docker-run build build-debug run clean tools tool api nvinspec
